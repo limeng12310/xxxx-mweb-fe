@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "eslint": "gulp lint"
   },
   "author": "",
   "license": "ISC",
@@ -12,11 +12,14 @@
     "framework7": "^1.4.2"
   },
   "devDependencies": {
+    "eslint": "^2.13.1",
+    "eslint-config-google": "^0.6.0",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-clean-css": "^2.0.8",
     "gulp-connect": "^4.0.0",
     "gulp-connect-proxy": "^0.3.1",
+    "gulp-eslint": "^2.0.0",
     "gulp-htmlmin": "^2.0.0",
     "gulp-less": "^3.0.5",
     "gulp-rename": "^1.2.2",

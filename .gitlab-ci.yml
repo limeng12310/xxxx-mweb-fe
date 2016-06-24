@@ -1,0 +1,30 @@
+stages:
+  - lint
+  - test
+
+eslint:
+  stage:
+    lint
+  script:
+  - npm install
+  - npm run eslint
+  cache:
+    key: "$CI_BUILD_REF_NAME"
+    paths:
+    - node_modules/
+  except:
+  - master
+  tags:
+  - docker
+
+test:
+  stage:
+    test
+  script:
+  - gulp clean
+  - gulp dist
+  - rsync -avzP dist root@test.thorgene.com:/srv/docker/thorgene-mweb-nginx/html/
+  only:
+  - master
+  tags:
+  - shell

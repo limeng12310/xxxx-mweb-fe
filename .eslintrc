@@ -1,0 +1,39 @@
+{
+  "extends": "google",
+  "globals": {
+    "window": true,
+    "Dom7": true,
+    "Framework7": true,
+    "Template7": true,
+    "ThorgeneGlobal": true,
+    "wx": true,
+    "dateFormat": true,
+    "Cookies": true,
+    "Base64": true,
+    "$$": true,
+    "echarts": true,
+    "f7": true
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jasmine": true
+  },
+  "rules": {
+    "no-negated-condition": "off",
+    "radix": [
+      "error",
+      "as-needed"
+    ],
+    "indent": [
+      "error",
+      4
+    ],
+    "eol-last": "off",
+    "max-len": [
+      "error",
+      120
+    ],
+    "linebreak-style": "off"
+  }
+}

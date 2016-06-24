@@ -2,6 +2,7 @@
     var path = require('path');
     var fs = require('fs');
     var gulp = require('gulp');
+    var eslint = require('gulp-eslint');
     var less = require('gulp-less');
     var connect = require('gulp-connect');
     var ConnectProxy = require('gulp-connect-proxy');
@@ -39,7 +40,7 @@
                     // 'node_modules/framework7/dist/css/framework7.material.min.css'
                 ],
                 js: [
-                    'node_modules/framework7/dist/js/framework7.min.js',
+                    'node_modules/framework7/dist/js/framework7.min.js'
                     // 'node_modules/framework7/dist/js/framework7.min.js.map'
                 ]
 
@@ -71,6 +72,19 @@
         }
 
         paths.pages.list.push(file);
+    });
+
+    gulp.task('lint', function() {
+        return gulp.src(
+            [
+                '**/*.js',
+                '!node_modules/**/*',
+                '!build/**/*',
+                '!dist/**/*'
+            ])
+            .pipe(eslint())
+            .pipe(eslint.format())
+            .pipe(eslint.failAfterError());
     });
 
     gulp.task('dependencies', function(cb) {
