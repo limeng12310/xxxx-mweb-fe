@@ -21,8 +21,8 @@ test:
   stage:
     test
   script:
-  - gulp clean
-  - gulp dist
+  - node_modules/.bin/gulp clean
+  - node_modules/.bin/gulp dist
   - rsync -avzP dist root@test.thorgene.com:/srv/docker/thorgene-mweb-nginx/html/
   only:
   - master
