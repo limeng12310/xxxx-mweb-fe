@@ -94,7 +94,7 @@ ThorgeneGlobal = {
     })(),
     memCache: {},
     cacheDuration: 10 * 60 * 1000,
-    apiPrefix: 'http://test.thorgene.com:8000/thorgene-mweb-ios',
+    apiPrefix: 'http://test.thorgene.com:8000/thorgene-mweb-api',
     aliOssPrefix: 'http://thorgene-mweb.img-cn-beijing.aliyuncs.com',
     aliOssSuffix: '@!thumbnail',
     reportsLimit: 5,
