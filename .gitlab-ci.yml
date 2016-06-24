@@ -24,7 +24,7 @@ test:
   - npm install
   - node_modules/.bin/gulp clean
   - node_modules/.bin/gulp dist
-  - rsync -avzP dist root@test.thorgene.com:/srv/docker/thorgene-mweb-nginx/html/
+  - rsync -avzP dist/ root@test.thorgene.com:/srv/docker/thorgene-mweb-nginx/html/
   cache:
     key: "$CI_BUILD_REF_NAME"
     paths:
