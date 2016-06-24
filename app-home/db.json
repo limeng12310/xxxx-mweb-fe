@@ -1,0 +1,280 @@
+
+{
+  "reports-1": [],
+  "collect-items": [
+    {
+      "id": 1,
+      "name": "白细胞计数",
+      "iconFontCode": "&#xe610;"
+    },
+    {
+      "id": 2,
+      "name": "白细胞计数",
+      "iconFontCode": "&#xe610;"
+    },
+    {
+      "id": 3,
+      "name": "白细胞计数",
+      "iconFontCode": "&#xe610;"
+    },
+    {
+      "id": 4,
+      "name": "白细胞计数",
+      "iconFontCode": "&#xe610;"
+    },
+    {
+      "id": 5,
+      "name": "白细胞计数",
+      "iconFontCode": "&#xe610;"
+    },
+    {
+      "id": 6,
+      "name": "白细胞计数",
+      "iconFontCode": "&#xe610;"
+    },
+    {
+      "id": 7,
+      "name": "白细胞计数",
+      "iconFontCode": "&#xe610;"
+    }
+  ],
+  "check-items-1": [
+    {
+      "headLetter": "B",
+      "items": [
+        {
+          "id": 1,
+          "name": "白细胞计数",
+          "iconFontCode": "&#xe610;"
+        },
+        {
+          "id": 2,
+          "name": "白细胞计数",
+          "iconFontCode": "&#xe610;"
+        },
+        {
+          "id": 8,
+          "name": "白细胞计数",
+          "iconFontCode": "&#xe610;"
+        }
+      ]
+    }
+  ],
+  "check-items-2": [
+    {
+      "id": 1,
+      "name": "白细胞计数",
+      "unit": "mg/L",
+      "dataType": "数值",
+      "low": 10,
+      "high": 100,
+      "default": 60,
+      "accurary": 1
+    },
+    {
+      "id": 2,
+      "name": "白细胞计数",
+      "unit": "mg/L",
+      "dataType": "数值",
+      "low": 10,
+      "high": 100,
+      "default": 60,
+      "accurary": 1
+    },    {
+      "id": 3,
+      "name": "白细胞计数",
+      "unit": "mg/L",
+      "dataType": "数值",
+      "low": 10,
+      "high": 100,
+      "default": 60,
+      "accurary": 1
+    },
+    {
+      "id": 4,
+      "name": "白细胞计数",
+      "unit": "mg/L",
+      "dataType": "数值",
+      "low": 10,
+      "high": 100,
+      "default": 60,
+      "accurary": 1
+    },
+    {
+      "id": 5,
+      "name": "白细胞计数",
+      "unit": "mg/L",
+      "dataType": "数值",
+      "low": 10,
+      "high": 100,
+      "default": 60,
+      "accurary": 1
+    },
+    {
+      "id": 6,
+      "name": "白细胞计数",
+      "unit": "mg/L",
+      "dataType": "数值",
+      "low": 10,
+      "high": 100,
+      "default": 60,
+      "accurary": 1
+    },
+    {
+      "id": 7,
+      "name": "白细胞计数",
+      "unit": "mg/L",
+      "dataType": "数值",
+      "low": 10,
+      "high": 100,
+      "default": 60,
+      "accurary": 1
+    },
+    {
+      "id": 8,
+      "name": "白细胞计数",
+      "unit": "mg/L",
+      "dataType": "数值",
+      "low": 10,
+      "high": 100,
+      "default": 60,
+      "accurary": 1
+    }
+  ],
+  "reportDetails": [
+    {
+      "id": 1,
+      "name": "白细胞计数",
+      "iconfontCode": "&#xe610;",
+      "result": "",
+      "numberResult": 3.6,
+      "warning": "正常",
+      "unit": "10^9U/L",
+      "intro": "白细胞计数，是指计数单位体积血液中所含的白细胞数目。旧称白血球，是机体防御系统的重要组成部分",
+      "abnormal": "1.生理性主要见于月经前、妊娠、分娩、哺乳期妇女、剧烈运动、兴奋激动、饮酒、餐后等。新生儿及婴儿明显高于成人。<br>2.病理性急性化脓性感染（脓肿、脑膜炎、肺炎阑尾炎扁桃体炎等），某些病毒感染（传染性单核细胞增多症，流行性乙型脑炎）白血病，类白血病反应，糖尿病酮症酸中毒，严重烧伤，急性大出血，恶性肿瘤及某些金属（如铅、汞等）中毒生理性增高见于新生儿月经期，分娩，情绪变化及注射肾上腺素后等。",
+      "refLow": 50,
+      "refHigh": 200,
+      "reportId": 12
+    },
+    {
+      "id": 1,
+      "name": "氨基酸的检查1",
+      "iconfontCode": "&#xe610;",
+      "result": "",
+      "numberResult": 123.4,
+      "warning": "预警",
+      "unit": "mg/L",
+      "intro": "氨基酸的检查\n氨基酸的检查",
+      "abnormal": "氨基酸的检查\n氨基酸的检查",
+      "refLow": 50,
+      "refHigh": 200,
+      "reportId": 12
+    },
+    {
+      "id": 1,
+      "name": "氨基酸的检查2",
+      "iconfontCode": "&#xe610;",
+      "result": "",
+      "numberResult": 123.4,
+      "warning": "危险",
+      "unit": "mg/L",
+      "intro": "氨基酸的检查\n氨基酸的检查",
+      "abnormal": "氨基酸的检查\n氨基酸的检查",
+      "refLow": 50,
+      "refHigh": 200,
+      "reportId": 12
+    }
+  ],
+  "report-aggregation": {
+    "score": 98,
+    "normal": 1,
+    "warning": 999,
+    "danger": 9999
+  },
+  "reports": [
+    {
+      "id": 12,
+      "checkTime": "2016-04-29 11:37:45",
+      "normal": 1,
+      "warning": 0,
+      "danger": 3
+    },
+    {
+      "id": 11,
+      "checkTime": "2016-04-28 11:37:45",
+      "normal": 1,
+      "warning": 0,
+      "danger": 3
+    },
+    {
+      "id": 10,
+      "checkTime": "2016-04-27 11:37:45",
+      "normal": 1,
+      "warning": 0,
+      "danger": 3
+    },
+    {
+      "id": 9,
+      "checkTime": "2016-04-26 11:37:45",
+      "normal": 1,
+      "warning": 0,
+      "danger": 3
+    },
+    {
+      "id": 8,
+      "checkTime": "2016-04-25 11:37:45",
+      "normal": 1,
+      "warning": 0,
+      "danger": 3
+    },
+    {
+      "id": 7,
+      "checkTime": "2016-04-24 11:37:45",
+      "normal": 1,
+      "warning": 0,
+      "danger": 3
+    },
+    {
+      "id": 6,
+      "checkTime": "2016-04-23 11:37:45",
+      "normal": 1,
+      "warning": 0,
+      "danger": 3
+    },
+    {
+      "id": 5,
+      "checkTime": "2016-04-22 11:37:45",
+      "normal": 1,
+      "warning": 0,
+      "danger": 3
+    },
+    {
+      "id": 4,
+      "checkTime": "2016-04-21 11:37:45",
+      "normal": 1,
+      "warning": 0,
+      "danger": 3
+    },
+    {
+      "id": 3,
+      "checkTime": "2016-04-20 11:37:45",
+      "normal": 1,
+      "warning": 0,
+      "danger": 3
+    },
+    {
+      "id": 2,
+      "checkTime": "2016-04-19 11:37:45",
+      "normal": 1,
+      "warning": 0,
+      "danger": 3
+    },
+    {
+      "id": 1,
+      "checkTime": "2016-04-18 11:37:45",
+      "normal": 1,
+      "warning": 0,
+      "danger": 3
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "thorgene-mweb-ios",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "framework7": "^1.4.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-clean-css": "^2.0.8",
+    "gulp-connect": "^4.0.0",
+    "gulp-connect-proxy": "^0.3.1",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-less": "^3.0.5",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.0.0-alpha",
+    "gulp-uglify": "^1.5.3",
+    "json-server": "^0.8.14"
+  }
+}
