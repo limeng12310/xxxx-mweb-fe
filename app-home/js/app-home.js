@@ -94,7 +94,7 @@ ThorgeneGlobal = {
     })(),
     memCache: {},
     cacheDuration: 10 * 60 * 1000,
-    apiPrefix: 'http://test.thorgene.com:8000/thorgene-mweb-api',
+    apiPrefix: 'http://test.thorgene.com/thorgene-mweb-api',
     aliOssPrefix: 'http://thorgene-mweb.img-cn-beijing.aliyuncs.com',
     aliOssSuffix: '@!thumbnail',
     reportsLimit: 5,
@@ -104,13 +104,15 @@ ThorgeneGlobal = {
         var date = new Date(checkTime);
         return {
             id: report.id,
+            type: report.type,
+            status: report.status === '返回用户' ? '返回用户' : '处理中',
             time: checkTime,
             reportDate: ThorgeneGlobal.week[date.getDay()] + ',' + dateFormat(date, 'mm') + '月' +
                 dateFormat(date, 'dd') + '日',
             reportTime: dateFormat(date, 'HH') + ':' + dateFormat(date, 'MM'),
-            normal: report.normal,
-            warning: report.warning,
-            danger: report.danger
+            normal: isNaN(parseInt(report.normal)) ? '-' : report.normal,
+            warning: isNaN(parseInt(report.warning)) ? '-' : report.warning,
+            danger: isNaN(parseInt(report.danger)) ? '-' : report.danger
         };
     },
     cacheGet: function(key) {
@@ -297,7 +299,11 @@ ThorgeneGlobal = {
             }
         });
     },
-    showReportDetail: function(ele) {
+    showReportDetail: function(ele, status) {
+        if (status === '处理中') {
+            f7.alert('该报告还在处理中,请稍后', '');
+            return;
+        }
         f7.showIndicator();
         $$.ajax({
             method: 'GET',

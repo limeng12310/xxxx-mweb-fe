@@ -151,10 +151,16 @@
                     <ul>
                         <li class="swipeout">
                             <div class="item-link item-content swipeout-content" report-id="{{id}}"
-                                 check-time="{{time}}" onclick="ThorgeneGlobal.showReportDetail(this)">
+                                 check-time="{{time}}" onclick="ThorgeneGlobal.showReportDetail(this, '{{this.status}}')">
                                 <div class="report-left">
-                                    <i class="iconfont report-icon">&#xe60b;</i>
+                                    <i class="iconfont report-icon">
+                                        {{#js_compare "this.type === '图片'"}}&#xe618;{{else}}&#xe60b;{{/js_compare}}
+                                    </i>
+                                    {{#js_compare "this.type === '图片' && this.status === '处理中'"}}
+                                    <div class="report-status">{{status}}</div>
+                                    {{else}}
                                     <div class="report-time">{{reportTime}}</div>
+                                    {{/js_compare}}
                                 </div>
                                 <div class="item-inner">
                                     <div class="item-title-row report-container">
@@ -191,10 +197,17 @@
             <ul>
                 <li class="swipeout">
                     <div class="item-link item-content swipeout-content" report-id="{{id}}" check-time="{{time}}"
-                         onclick="ThorgeneGlobal.showReportDetail(this)">
+                         onclick="ThorgeneGlobal.showReportDetail(this, '{{this.status}}')">
                         <div class="report-left">
-                            <i class="iconfont report-icon">&#xe60b;</i>
+                            <i class="iconfont report-icon">
+                                {{#js_compare "this.type === '图片'"}}&#xe618;{{/js_compare}}
+                                {{#js_compare "this.type === '手动'"}}&#xe60b;{{/js_compare}}
+                            </i>
+                            {{#js_compare "this.type === '图片' && this.status === '处理中'"}}
+                            <div class="report-status">{{status}}</div>
+                            {{else}}
                             <div class="report-time">{{reportTime}}</div>
+                            {{/js_compare}}
                         </div>
                         <div class="item-inner">
                             <div class="item-title-row report-container">
