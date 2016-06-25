@@ -24,7 +24,7 @@ f7.addView('.view-main', {
 
 ThorgeneGlobal = {
     // apiPrefix: 'http://192.168.1.28:3001/thorgene-mweb-ios',
-    apiPrefix: 'http://test.thorgene.com/thorgene-mweb-ios',
+    apiPrefix: 'http://test.thorgene.com/thorgene-mweb-api',
     today: function() {
         var date = new Date();
         var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
