@@ -99,22 +99,6 @@ ThorgeneGlobal = {
     aliOssSuffix: '@!thumbnail',
     reportsLimit: 5,
     week: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-    reportAOToVO: function(report) {
-        var checkTime = Framework7.prototype.device.ios ? report.checkTime.split('-').join('/') : report.checkTime;
-        var date = new Date(checkTime);
-        return {
-            id: report.id,
-            type: report.type,
-            status: report.status === '返回用户' ? '返回用户' : '处理中',
-            time: checkTime,
-            reportDate: ThorgeneGlobal.week[date.getDay()] + ',' + dateFormat(date, 'mm') + '月' +
-                dateFormat(date, 'dd') + '日',
-            reportTime: dateFormat(date, 'HH') + ':' + dateFormat(date, 'MM'),
-            normal: isNaN(parseInt(report.normal)) ? '-' : report.normal,
-            warning: isNaN(parseInt(report.warning)) ? '-' : report.warning,
-            danger: isNaN(parseInt(report.danger)) ? '-' : report.danger
-        };
-    },
     cacheGet: function(key) {
         var cache;
         if (ThorgeneGlobal.supportLocalStorage) {
@@ -613,6 +597,92 @@ ThorgeneGlobal = {
             });
         }
     },
+    homePage: {
+        reportsAOToVO: function(reports) {
+            var results = [];
+            reports.forEach(function(report) {
+                var checkTime = Framework7.prototype.device.ios ? report.checkTime.split('-').join('/') : report.checkTime;
+                var date = new Date(checkTime);
+                results.push({
+                    id: report.id,
+                    type: report.type,
+                    status: report.status === '返回用户' ? '返回用户' : '处理中',
+                    time: checkTime,
+                    reportDate: ThorgeneGlobal.week[date.getDay()] + ',' + dateFormat(date, 'mm') + '月' +
+                    dateFormat(date, 'dd') + '日',
+                    reportTime: dateFormat(date, 'HH') + ':' + dateFormat(date, 'MM'),
+                    normal: isNaN(parseInt(report.normal)) ? '-' : report.normal,
+                    warning: isNaN(parseInt(report.warning)) ? '-' : report.warning,
+                    danger: isNaN(parseInt(report.danger)) ? '-' : report.danger
+                });
+            });
+
+            return {
+                reports: results
+            };
+        },
+        refreshHome: function(pageContainer, aggregation, reports) {
+            var score = aggregation.score;
+            if (score) {
+                pageContainer.find('.score-border > .score').html(score);
+            }
+            var statisticValues = pageContainer
+              .find('.statistic-value-wrapper > .statistic-value');
+            var normal = aggregation.normal;
+            if (normal !== undefined) {
+                $$(statisticValues[0]).html(normal);
+            }
+            var warning = aggregation.warning;
+            if (warning !== undefined) {
+                $$(statisticValues[1]).html(warning);
+            }
+            var danger = aggregation.worst;
+            if (danger !== undefined) {
+                $$(statisticValues[2]).html(danger);
+            }
+
+            pageContainer.find('.detail').children().remove();
+            pageContainer.find('.detail').append(Template7.templates.reportsTpl(ThorgeneGlobal.homePage.reportsAOToVO(reports)));
+            pageContainer.find('.detail').data('report-cnt', reports.length);
+            f7.attachInfiniteScroll(pageContainer.find('.infinite-scroll'));
+        },
+        refreshHomeCbk: function() {
+            $$.ajax({
+                method: 'GET',
+                url: ThorgeneGlobal.apiPrefix + '/report-aggregation',
+                dataType: 'json',
+                success: function(data, status) {
+                    if (status === 200) {
+                        var aggregation = data;
+
+                        $$.ajax({
+                            method: 'GET',
+                            url: ThorgeneGlobal.apiPrefix + '/reports?_limit=' +
+                            ThorgeneGlobal.reportsLimit,
+                            dataType: 'json',
+                            success: function(data, status) {
+                                if (status === 200) {
+                                    ThorgeneGlobal.homePage.refreshHome($$('.page[data-page=home-page]'), aggregation, data);
+                                } else {
+                                    // TODO
+                                }
+                                f7.pullToRefreshDone();
+                            },
+                            error: function() {
+                                f7.pullToRefreshDone();
+                                // TODO
+                            }
+                        });
+                    } else {
+                        // TODO
+                    }
+                },
+                error: function() {
+                    // TODO
+                }
+            });
+        }
+    },
     recordPage: {
         recordsLimits: 5,
         thisUrl: '',
@@ -782,97 +852,24 @@ f7.onPageInit('home-page', function(page) {
         }
     });
 
+    var homePage = $$(page.container);
     $$.ajax({
         method: 'GET',
         url: ThorgeneGlobal.apiPrefix + '/report-aggregation',
         dataType: 'json',
         success: function(data, status) {
-            var tplData = {};
+            var aggregation = data;
             if (status === 200) {
-                tplData.score = data.score;
-                tplData.normal = data.normal;
-                tplData.warning = data.warning;
-                tplData.danger = data.worst;
                 $$.ajax({
                     method: 'GET',
                     url: ThorgeneGlobal.apiPrefix + '/reports?_limit=' + ThorgeneGlobal.reportsLimit,
                     dataType: 'json',
                     success: function(data, status) {
                         if (status === 200) {
-                            tplData.reports = [];
-                            var i;
-                            for (i = 0; i < data.length; ++i) {
-                                tplData.reports.push(ThorgeneGlobal.reportAOToVO(data[i]));
-                            }
-
-                            $$(page.container).html(Template7.templates.homePageTpl(tplData));
-                            $$(page.container).find('.detail').data('report-cnt', tplData.reports.length);
-
-                            var homePage = $$(page.container);
+                            ThorgeneGlobal.homePage.refreshHome($$(page.container), aggregation, data);
 
                             // homepage下拉刷新
-                            f7.initPullToRefresh('.pull-to-refresh-content');
-                            homePage.find('.pull-to-refresh-content').on('refresh', function() {
-                                $$.ajax({
-                                    method: 'GET',
-                                    url: ThorgeneGlobal.apiPrefix + '/report-aggregation',
-                                    dataType: 'json',
-                                    success: function(data, status) {
-                                        if (status === 200) {
-                                            var score = data.score;
-                                            if (score) {
-                                                homePage.find('.score-border > .score').html(score);
-                                            }
-                                            var statisticValues = homePage
-                                                .find('.statistic-value-wrapper > .statistic-value');
-                                            var normal = data.normal;
-                                            if (normal !== undefined) {
-                                                $$(statisticValues[0]).html(normal);
-                                            }
-                                            var warning = data.warning;
-                                            if (warning !== undefined) {
-                                                $$(statisticValues[1]).html(warning);
-                                            }
-                                            var danger = data.worst;
-                                            if (danger !== undefined) {
-                                                $$(statisticValues[2]).html(danger);
-                                            }
-
-                                            $$.ajax({
-                                                method: 'GET',
-                                                url: ThorgeneGlobal.apiPrefix + '/reports?_limit=' +
-                                                    ThorgeneGlobal.reportsLimit,
-                                                dataType: 'json',
-                                                success: function(data, status) {
-                                                    if (status === 200) {
-                                                        homePage.find('.detail').children().remove();
-                                                        var i;
-                                                        for (i = 0; i < data.length; ++i) {
-                                                            homePage.find('.detail').append(Template7.templates
-                                                                .reportTpl(ThorgeneGlobal.reportAOToVO(data[i])));
-                                                        }
-
-                                                        homePage.find('.detail').data('report-cnt', data.length);
-                                                        f7.attachInfiniteScroll(homePage.find('.infinite-scroll'));
-                                                    } else {
-                                                        // TODO
-                                                    }
-                                                    f7.pullToRefreshDone();
-                                                },
-                                                error: function() {
-                                                    f7.pullToRefreshDone();
-                                                    // TODO
-                                                }
-                                            });
-                                        } else {
-                                            // TODO
-                                        }
-                                    },
-                                    error: function() {
-                                        // TODO
-                                    }
-                                });
-                            });
+                            homePage.find('.pull-to-refresh-content').on('refresh', ThorgeneGlobal.homePage.refreshHomeCbk);
 
                             // homepage上拉加载
                             f7.attachInfiniteScroll('.infinite-scroll');
@@ -904,10 +901,8 @@ f7.onPageInit('home-page', function(page) {
                                                 var curCnt = homePage.find('.detail').data('report-cnt');
                                                 homePage.find('.detail').data('report-cnt', parseInt(curCnt) +
                                                     data.length);
-                                                data.forEach(function(report) {
-                                                    homePage.find('.detail').append(Template7.templates
-                                                        .reportTpl(ThorgeneGlobal.reportAOToVO(report)));
-                                                });
+                                                homePage.find('.detail').append(Template7.templates
+                                                  .reportsTpl(ThorgeneGlobal.reportAOToVO(data)));
                                             } else {
                                                 f7.detachInfiniteScroll(homePage.find('.infinite-scroll'));
                                             }
@@ -982,8 +977,7 @@ f7.onPageInit('manual-add', function(page) {
                 f7.hidePreloader();
                 if (status === 200) {
                     f7.mainView.router.back();
-                    f7.pullToRefreshTrigger('.page[data-page=app-home] .pull-to-refresh-content');
-                    f7.attachInfiniteScroll('.page[data-page=app-home] .infinite-scroll');
+                    ThorgeneGlobal.homePage.refreshHomeCbk();
                 } else {
                     // TODO
                 }

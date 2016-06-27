@@ -45,7 +45,45 @@
             <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
             <div class="pages navbar-through">
                 <div data-page="home-page" class="page no-navbar">
-                    <div class="page-content"></div>
+                    <div class="page-content infinite-scroll pull-to-refresh-content">
+                        <div class="pull-to-refresh-layer">
+                            <div class="preloader"></div>
+                            <div class="pull-to-refresh-arrow"></div>
+                        </div>
+                        <div class="summary">
+                            <div class="score-wrapper">
+                                <div class="score-border">
+                                    <div class="score">-</div>
+                                    <div class="score-text">总评</div>
+                                </div>
+                            </div>
+                            <div class="checkitem-statistic">
+                                <div>
+                                    <div class="statistic-title">正常指标</div>
+                                    <div class="statistic-value-wrapper">
+                                        <span class="statistic-value">0</span>
+                                        <span class="statistic-unit">个</span></div>
+                                </div>
+                                <div class="vertical-bar"></div>
+                                <div>
+                                    <div class="statistic-title">预警指标</div>
+                                    <div class="statistic-value-wrapper">
+                                        <span class="statistic-value">0</span>
+                                        <span class="statistic-unit">个</span></div>
+                                </div>
+                                <div class="vertical-bar"></div>
+                                <div>
+                                    <div class="statistic-title">危险指标</div>
+                                    <div class="statistic-value-wrapper">
+                                        <span class="statistic-value">0</span>
+                                        <span class="statistic-unit">个</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="manual-add.html" class="manual-add">+</a>
+                        <a href="photo-uploader.html" class="photo-add"><i class="iconfont">&#xe60c;</i></a>
+                        <div class="detail" ></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,93 +143,15 @@
             </div>
         </div>
     </div>
-
-    <script type="text/template7" id="homePageTpl">
-        <div class="page-content infinite-scroll pull-to-refresh-content">
-            <div class="pull-to-refresh-layer">
-                <div class="preloader"></div>
-                <div class="pull-to-refresh-arrow"></div>
-            </div>
-            <div class="summary">
-                <div class="score-wrapper">
-                    <div class="score-border">
-                        <div class="score">{{score}}</div>
-                        <div class="score-text">总评</div>
-                    </div>
-                </div>
-                <div class="checkitem-statistic">
-                    <div>
-                        <div class="statistic-title">正常指标</div>
-                        <div class="statistic-value-wrapper">
-                            <span class="statistic-value">{{normal}}</span>
-                            <span class="statistic-unit">个</span></div>
-                    </div>
-                    <div class="vertical-bar"></div>
-                    <div>
-                        <div class="statistic-title">预警指标</div>
-                        <div class="statistic-value-wrapper">
-                            <span class="statistic-value">{{warning}}</span>
-                            <span class="statistic-unit">个</span></div>
-                    </div>
-                    <div class="vertical-bar"></div>
-                    <div>
-                        <div class="statistic-title">危险指标</div>
-                        <div class="statistic-value-wrapper">
-                            <span class="statistic-value">{{danger}}</span>
-                            <span class="statistic-unit">个</span></div>
-                    </div>
-                </div>
-            </div>
-            <a href="manual-add.html" class="manual-add">+</a>
-            <a href="photo-uploader.html" class="photo-add"><i class="iconfont">&#xe60c;</i></a>
-            <div class="detail" >
-                {{#each reports}}
-                <div class="content-block-title">{{reportDate}}</div>
-                <div class="list-block media-list inset">
-                    <ul>
-                        <li class="swipeout">
-                            <div class="item-link item-content swipeout-content" report-id="{{id}}"
-                                 check-time="{{time}}" onclick="ThorgeneGlobal.showReportDetail(this, '{{this.status}}')">
-                                <div class="report-left">
-                                    <i class="iconfont report-icon">
-                                        {{#js_compare "this.type === '图片'"}}&#xe618;{{else}}&#xe60b;{{/js_compare}}
-                                    </i>
-                                    {{#js_compare "this.type === '图片' && this.status === '处理中'"}}
-                                    <div class="report-status">{{status}}</div>
-                                    {{else}}
-                                    <div class="report-time">{{reportTime}}</div>
-                                    {{/js_compare}}
-                                </div>
-                                <div class="item-inner">
-                                    <div class="item-title-row report-container">
-                                        <div class="report-content">
-                                            <div class="report-title">正常</div>
-                                            <div class="report-value">{{normal}}</div>
-                                        </div>
-                                        <div class="report-content">
-                                            <div class="report-title">预警</div>
-                                            <div class="report-value">{{warning}}</div>
-                                        </div>
-                                        <div class="report-content">
-                                            <div class="report-title">危险</div>
-                                            <div class="report-value">{{danger}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swipeout-actions-right">
-                                <a href="#" class="delete-report" onclick="ThorgeneGlobal.deleteReport(this)">
-                                    <i class="iconfont">&#xe607;</i>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                {{/each}}
-            </div>
+    <script type="text/template7" id="reportsTpl">
+        {{#js_compare "this.reports.length === 0"}}
+        <div class="report-empty-tooltip">
+            <p class="tooltip-p1">您还没有上传数据~</p>
+            <p class="tooltip-p2">点击上方按钮添加数据</p>
         </div>
-    </script>
-    <script type="text/template7" id="reportTpl">
+        {{/js_compare}}
+        {{#each reports}}
+        {{#each reports}}
         <div class="content-block-title">{{reportDate}}</div>
         <div class="list-block media-list inset">
             <ul>
@@ -234,6 +194,7 @@
                 </li>
             </ul>
         </div>
+        {{/each}}
     </script>
     <script type="text/template7" id="preloaderTpl">
         <div class="infinite-scroll-preloader">
