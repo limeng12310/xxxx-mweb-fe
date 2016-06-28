@@ -690,10 +690,101 @@ ThorgeneGlobal = {
         }
     },
     recordPage: {
+        invalidate: true,
         recordsLimits: 5,
         thisUrl: '',
         imgUrls: {},
         tempUrls: [],
+        init: function() {
+            if (ThorgeneGlobal.recordPage.invalidate) {
+                ThorgeneGlobal.recordPage.invalidate = false;
+                var recordPage = $$('.page[data-page=record]');
+
+                $$.ajax({
+                    url: ThorgeneGlobal.apiPrefix + '/records?_limit=' + ThorgeneGlobal.recordPage.recordsLimits,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data, status) {
+                        if (status === 200) {
+                            recordPage.find('.record-container').append(Template7.templates.recordItemTpl(
+                              ThorgeneGlobal.recordPage.json2Report(data)));
+
+                            recordPage.find('.record-container').data('record-cnt', data.length);
+
+                            f7.initImagesLazyLoad(recordPage);
+                            // 下拉刷新
+                            recordPage.find('.pull-to-refresh-content').on('refresh', function() {
+                                $$.ajax({
+                                    url: ThorgeneGlobal.apiPrefix + '/records',
+                                    method: 'GET',
+                                    dataType: 'json',
+                                    success: function(data) {
+                                        ThorgeneGlobal.recordPage.imgUrls = {};
+                                        var container = recordPage.find('.record-container');
+                                        container.children().remove();
+                                        container.append(Template7.templates.recordItemTpl(
+                                          ThorgeneGlobal.recordPage.json2Report(data)));
+                                        f7.initImagesLazyLoad(recordPage);
+                                        recordPage.find('.record-container').data('record-cnt', data.length);
+                                        f7.attachInfiniteScroll(recordPage.find('.infinite-scroll'));
+                                        f7.pullToRefreshDone();
+                                        // console.log(Template7.templates.recordItemTpl(ThorgeneGlobal.json2Report(data)));
+                                    },
+                                    error: function() {
+                                        // TODO
+                                    }
+                                });
+                            });
+                            // 上滑刷新
+                            var loading = false;
+                            recordPage.find('.infinite-scroll').on('infinite', function() {
+                                if (loading) {
+                                    return;
+                                }
+                                loading = true;
+                                recordPage.children('.page-content').append(Template7.templates.preloaderTpl());
+                                // var recordList = recordPage.find('.record-container').find('[record-id]');
+                                // var lastId = $$(recordList[recordList.length - 1]).attr('record-id');
+                                // if (!lastId) {
+                                //     return;
+                                // }
+                                var offset = recordPage.find('.record-container').data('record-cnt');
+
+                                $$.ajax({
+                                    url: ThorgeneGlobal.apiPrefix + '/records?_offset=' + offset + '&_limit' +
+                                    ThorgeneGlobal.recordPage.recordsLimits,
+                                    method: 'GET',
+                                    dataType: 'json',
+                                    success: function(data) {
+                                        loading = false;
+                                        recordPage.find('.infinite-scroll-preloader').remove();
+                                        if (data.length !== 0) {
+                                            recordPage.find('.record-container').append(Template7.templates.recordItemTpl(
+                                              ThorgeneGlobal.recordPage.json2Report(data)));
+
+                                            recordPage.find('.record-container').data('record-cnt',
+                                              parseInt(recordPage.find('.record-container').data('record-cnt')) + data.length);
+                                        } else {
+                                            f7.detachInfiniteScroll(recordPage.find('.infinite-scroll'));
+                                        }
+                                    },
+                                    error: function() {
+                                        loading = false;
+                                        recordPage.find('.infinite-scroll-preloader').remove();
+                                        // TODO
+                                    }
+                                });
+                            });
+                        } else {
+                            // TODO
+                        }
+                    },
+                    error: function() {
+                        // TODO
+                    }
+                });
+            }
+        },
         json2Report: function(jsondata) {
             var recordJson = {};
             recordJson.records = [];
@@ -1063,94 +1154,6 @@ f7.onPageInit('checkitem-list', function() {
             }
         });
     }
-});
-
-f7.onPageInit('record', function(page) {
-    var recordPage = $$(page.container);
-
-    $$.ajax({
-        url: ThorgeneGlobal.apiPrefix + '/records?_limit=' + ThorgeneGlobal.recordPage.recordsLimits,
-        method: 'GET',
-        dataType: 'json',
-        success: function(data, status) {
-            if (status === 200) {
-                recordPage.find('.record-container').append(Template7.templates.recordItemTpl(
-                    ThorgeneGlobal.recordPage.json2Report(data)));
-
-                recordPage.find('.record-container').data('record-cnt', data.length);
-
-                f7.initImagesLazyLoad(recordPage);
-                // 下拉刷新
-                recordPage.find('.pull-to-refresh-content').on('refresh', function() {
-                    $$.ajax({
-                        url: ThorgeneGlobal.apiPrefix + '/records',
-                        method: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            ThorgeneGlobal.recordPage.imgUrls = {};
-                            var container = recordPage.find('.record-container');
-                            container.children().remove();
-                            container.append(Template7.templates.recordItemTpl(
-                                ThorgeneGlobal.recordPage.json2Report(data)));
-                            f7.initImagesLazyLoad(recordPage);
-                            recordPage.find('.record-container').data('record-cnt', data.length);
-                            f7.attachInfiniteScroll(recordPage.find('.infinite-scroll'));
-                            f7.pullToRefreshDone();
-                            // console.log(Template7.templates.recordItemTpl(ThorgeneGlobal.json2Report(data)));
-                        },
-                        error: function() {
-                            // TODO
-                        }
-                    });
-                });
-                // 上滑刷新
-                var loading = false;
-                recordPage.find('.infinite-scroll').on('infinite', function() {
-                    if (loading) {
-                        return;
-                    }
-                    loading = true;
-                    recordPage.children('.page-content').append(Template7.templates.preloaderTpl());
-                    // var recordList = recordPage.find('.record-container').find('[record-id]');
-                    // var lastId = $$(recordList[recordList.length - 1]).attr('record-id');
-                    // if (!lastId) {
-                    //     return;
-                    // }
-                    var offset = recordPage.find('.record-container').data('record-cnt');
-
-                    $$.ajax({
-                        url: ThorgeneGlobal.apiPrefix + '/records?_offset=' + offset + '&_limit' +
-                            ThorgeneGlobal.recordPage.recordsLimits,
-                        method: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            loading = false;
-                            recordPage.find('.infinite-scroll-preloader').remove();
-                            if (data.length !== 0) {
-                                recordPage.find('.record-container').append(Template7.templates.recordItemTpl(
-                                    ThorgeneGlobal.recordPage.json2Report(data)));
-
-                                recordPage.find('.record-container').data('record-cnt',
-                                    parseInt(recordPage.find('.record-container').data('record-cnt')) + data.length);
-                            } else {
-                                f7.detachInfiniteScroll(recordPage.find('.infinite-scroll'));
-                            }
-                        },
-                        error: function() {
-                            loading = false;
-                            recordPage.find('.infinite-scroll-preloader').remove();
-                            // TODO
-                        }
-                    });
-                });
-            } else {
-                // TODO
-            }
-        },
-        error: function() {
-            // TODO
-        }
-    });
 });
 
 f7.onPageInit('add-record', function(page) {

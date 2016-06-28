@@ -5,9 +5,8 @@ ThorgeneGlobal.trendPage = {
     invalidate: true,
     init: function (){
         if (ThorgeneGlobal.trendPage.invalidate) {
-            console.log('init');
-            ThorgeneGlobal.trendPage.getUserClassifies();
             ThorgeneGlobal.trendPage.invalidate = false;
+            ThorgeneGlobal.trendPage.getUserClassifies();
         }
     },
     pass: function(confont) {
