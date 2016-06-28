@@ -728,7 +728,6 @@ ThorgeneGlobal = {
                                         recordPage.find('.record-container').data('record-cnt', data.length);
                                         f7.attachInfiniteScroll(recordPage.find('.infinite-scroll'));
                                         f7.pullToRefreshDone();
-                                        // console.log(Template7.templates.recordItemTpl(ThorgeneGlobal.json2Report(data)));
                                     },
                                     error: function() {
                                         // TODO
@@ -759,11 +758,12 @@ ThorgeneGlobal = {
                                         loading = false;
                                         recordPage.find('.infinite-scroll-preloader').remove();
                                         if (data.length !== 0) {
-                                            recordPage.find('.record-container').append(Template7.templates.recordItemTpl(
-                                              ThorgeneGlobal.recordPage.json2Report(data)));
+                                            recordPage.find('.record-container').append(Template7.templates
+                                              .recordItemTpl(ThorgeneGlobal.recordPage.json2Report(data)));
 
                                             recordPage.find('.record-container').data('record-cnt',
-                                              parseInt(recordPage.find('.record-container').data('record-cnt')) + data.length);
+                                              parseInt(recordPage.find('.record-container').data('record-cnt')) +
+                                                data.length);
                                         } else {
                                             f7.detachInfiniteScroll(recordPage.find('.infinite-scroll'));
                                         }

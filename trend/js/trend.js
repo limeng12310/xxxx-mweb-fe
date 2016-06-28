@@ -3,7 +3,7 @@ ThorgeneGlobal.trendPage = {
     iconfontcode: [],
     classifyId: [],
     invalidate: true,
-    init: function (){
+    init: function() {
         if (ThorgeneGlobal.trendPage.invalidate) {
             ThorgeneGlobal.trendPage.invalidate = false;
             ThorgeneGlobal.trendPage.getUserClassifies();
@@ -155,7 +155,8 @@ ThorgeneGlobal.trendPage = {
             success: function(data) {
                 var items = '<div class="checkitems">';
                 var width = data.length * 90 + "px";
-                for (var i = 0; i < data.length; i++) {
+                var i;
+                for (i = 0; i < data.length; i++) {
                     items += '<div class="checkitem" id="checkitemId-' + data[i].id + '"><div class="checkitem_h">';
                     items += '<div class="checkitem_change" name="change"><i class="iconfont" value="' + data[i].name;
                     items += ' ' + data[i].unit + '">' + ThorgeneGlobal.trendPage.iconfontcode[n - 1] + '</i></div>';
@@ -165,7 +166,7 @@ ThorgeneGlobal.trendPage = {
                 $$('.view-trend').find('#tab' + n).html(items);
                 $$('.items').find(".active").find(".checkitems").css("width", width);
                 $$('.view-trend').find('.checkitem').on('click', function() {
-                    var i = $$(this).find('i')[0];
+                    i = $$(this).find('i')[0];
                     ThorgeneGlobal.trendPage.pass(i);
                     var id = this.id.substring(12, this.id.length);
                     ThorgeneGlobal.trendPage.getValues(id);
@@ -175,7 +176,7 @@ ThorgeneGlobal.trendPage = {
                 // 初始化
                 if (data.length > 0) {
                     var initItem = $$('.view-trend').find('.tab .active > .checkitems > .checkitem')[0];
-                    var i = $$(initItem).find('i')[0];
+                    i = $$(initItem).find('i')[0];
                     ThorgeneGlobal.trendPage.pass(i);
                     var id = initItem.id.substring(12, initItem.id.length);
                     ThorgeneGlobal.trendPage.getValues(id);
