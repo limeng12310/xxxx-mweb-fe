@@ -25,6 +25,7 @@ test:
   - node_modules/.bin/gulp clean
   - node_modules/.bin/gulp dist
   - rsync -avzP dist/ root@test.thorgene.com:/srv/docker/thorgene-mweb-nginx/html/
+  - ssh root@test.thorgene.com "docker-compose -f /root/thorgene-mweb-fe-docker/docker-compose.yml restart nginx"
   cache:
     key: "$CI_BUILD_REF_NAME"
     paths:
