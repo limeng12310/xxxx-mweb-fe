@@ -234,6 +234,8 @@ ThorgeneGlobal = {
 
                         var reportContainer = $$('.page[data-page=home-page] .detail');
                         reportContainer.data('report-cnt', parseInt(reportContainer.data('report-cnt')) - 1);
+
+                        ThorgeneGlobal.trendPage.invalidate = true;
                     } else {
                         // TODO
                     }
@@ -601,7 +603,8 @@ ThorgeneGlobal = {
         reportsAOToVO: function(reports) {
             var results = [];
             reports.forEach(function(report) {
-                var checkTime = Framework7.prototype.device.ios ? report.checkTime.split('-').join('/') : report.checkTime;
+                var checkTime = Framework7.prototype.device.ios ?
+                  report.checkTime.split('-').join('/') : report.checkTime;
                 var date = new Date(checkTime);
                 results.push({
                     id: report.id,
@@ -642,7 +645,9 @@ ThorgeneGlobal = {
             }
 
             pageContainer.find('.detail').children().remove();
-            pageContainer.find('.detail').append(Template7.templates.reportsTpl(ThorgeneGlobal.homePage.reportsAOToVO(reports)));
+            pageContainer.find('.detail').append(Template7.templates.reportsTpl(
+              ThorgeneGlobal.homePage.reportsAOToVO(reports)
+            ));
             pageContainer.find('.detail').data('report-cnt', reports.length);
             f7.attachInfiniteScroll(pageContainer.find('.infinite-scroll'));
         },
@@ -662,7 +667,8 @@ ThorgeneGlobal = {
                             dataType: 'json',
                             success: function(data, status) {
                                 if (status === 200) {
-                                    ThorgeneGlobal.homePage.refreshHome($$('.page[data-page=home-page]'), aggregation, data);
+                                    ThorgeneGlobal.homePage.refreshHome($$('.page[data-page=home-page]'),
+                                      aggregation, data);
                                 } else {
                                     // TODO
                                 }
@@ -869,7 +875,8 @@ f7.onPageInit('home-page', function(page) {
                             ThorgeneGlobal.homePage.refreshHome($$(page.container), aggregation, data);
 
                             // homepage下拉刷新
-                            homePage.find('.pull-to-refresh-content').on('refresh', ThorgeneGlobal.homePage.refreshHomeCbk);
+                            homePage.find('.pull-to-refresh-content').on('refresh',
+                              ThorgeneGlobal.homePage.refreshHomeCbk);
 
                             // homepage上拉加载
                             f7.attachInfiniteScroll('.infinite-scroll');
@@ -978,6 +985,7 @@ f7.onPageInit('manual-add', function(page) {
                 if (status === 200) {
                     f7.mainView.router.back();
                     ThorgeneGlobal.homePage.refreshHomeCbk();
+                    ThorgeneGlobal.trendPage.invalidate = true;
                 } else {
                     // TODO
                 }

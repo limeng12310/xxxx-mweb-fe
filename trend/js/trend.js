@@ -2,6 +2,14 @@
 ThorgeneGlobal.trendPage = {
     iconfontcode: [],
     classifyId: [],
+    invalidate: true,
+    init: function (){
+        if (ThorgeneGlobal.trendPage.invalidate) {
+            console.log('init');
+            ThorgeneGlobal.trendPage.getUserClassifies();
+            ThorgeneGlobal.trendPage.invalidate = false;
+        }
+    },
     pass: function(confont) {
         var message = confont.getAttribute("value").split(' ');
         $$('.view-trend').find(".navbar-inner .center")[0].innerHTML = message[0];
@@ -47,6 +55,10 @@ ThorgeneGlobal.trendPage = {
                             var n = href.substring(4, href.length);
                             ThorgeneGlobal.trendPage.getItems(n);
                         });
+                        // 初始化
+                        if (data.length > 0) {
+                            ThorgeneGlobal.trendPage.getItems(1);
+                        }
                     } else {
                         // TODO
                     }
@@ -66,7 +78,7 @@ ThorgeneGlobal.trendPage = {
             success: function(data, status) {
                 if (status === 200) {
                     var option = {
-                        backgroundColor: "#fff",
+                        // backgroundColor: "#fff",
                         grid: {
                             right: '5%',
                             bottom: '10%',
@@ -161,6 +173,16 @@ ThorgeneGlobal.trendPage = {
                     $$('.view-trend').find('.word').css('color', '#aaa');
                     $$(this).find('.word').css('color', '#3eb2e1');
                 });
+                // 初始化
+                if (data.length > 0) {
+                    var initItem = $$('.view-trend').find('.tab .active > .checkitems > .checkitem')[0];
+                    var i = $$(initItem).find('i')[0];
+                    ThorgeneGlobal.trendPage.pass(i);
+                    var id = initItem.id.substring(12, initItem.id.length);
+                    ThorgeneGlobal.trendPage.getValues(id);
+                    $$('.view-trend').find('.word').css('color', '#aaa');
+                    $$(initItem).find('.word').css('color', '#3eb2e1');
+                }
             },
             error: function() {
                 // TODO
@@ -168,18 +190,18 @@ ThorgeneGlobal.trendPage = {
         });
     }
 };
-f7.onPageInit('trendPage', function(page) {
-    var text = $$(page.container).find('p');
-    // var text = document.getElementsByTagName("p");
-    for (var i = 0; i < text.length; i++) {
-        var str = text[i].innerHTML;
-        if (str.length > 8) {
-            var strshow = str.substr(0, 7) + "...";
-            text[i].innerHTML = strshow;
-        }
-    }
-    ThorgeneGlobal.trendPage.getUserClassifies();
-    // ThorgeneGlobal.trendPage.getItems(0);
-});
+// f7.onPageInit('trendPage', function(page) {
+//     var text = $$(page.container).find('p');
+//     // var text = document.getElementsByTagName("p");
+//     for (var i = 0; i < text.length; i++) {
+//         var str = text[i].innerHTML;
+//         if (str.length > 8) {
+//             var strshow = str.substr(0, 7) + "...";
+//             text[i].innerHTML = strshow;
+//         }
+//     }
+//     ThorgeneGlobal.trendPage.getUserClassifies();
+//     // ThorgeneGlobal.trendPage.getItems(0);
+// });
 
 f7.init();
