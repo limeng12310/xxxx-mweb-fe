@@ -217,10 +217,10 @@
                 <div class="subnavbar sliding">
                     <!-- Sub navbar content, for example tabs buttons -->
                     <div class="buttons-row">
-                        <div class="button tab-link active">全部</div>
-                        <div class="button tab-link" filter="正常">正常</div>
-                        <div class="button tab-link" filter="预警">预警</div>
-                        <div class="button tab-link" filter="危险">危险</div>
+                        <div class="button tab-link all active">全部</div>
+                        <div class="button tab-link normal" filter="正常">正常</div>
+                        <div class="button tab-link warning" filter="预警">预警</div>
+                        <div class="button tab-link danger" filter="危险">危险</div>
                     </div>
                 </div>
             </div>
@@ -248,7 +248,13 @@
                                     </a>
                                     <div class="accordion-item-content">
                                         <div class="content-block">
-                                            <div class="checkitem-graph">graph</div>
+                                            <div class="checkitem-graph">
+                                                {{#js_compare "this.dataType === '数值'"}}
+                                                参考范围: {{refLow}}-{{refHigh}}
+                                                {{else}}
+                                                参考值: {{ref}}
+                                                {{/js_compare}}
+                                            </div>
                                             <div class="checkitem-desc1">
                                                 <pre>{{intro}}</pre>
                                             </div>
