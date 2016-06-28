@@ -211,7 +211,7 @@
                     </a>
                 </div>
                 <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-                <div class="center sliding">Thorgene</div>
+                <div class="center sliding"></div>
 
                 <!-- Sub navbar -->
                 <div class="subnavbar sliding">
@@ -236,7 +236,15 @@
                                 <li class="accordion-item">
                                     <a href="#" class="item-link item-content">
                                         <div class="checkitem-left">
-                                            <i class="iconfont checkitem-icon">{{iconfontCode}}</i>
+                                            {{#js_compare "this.warning === '正常'"}}
+                                            <i class="iconfont checkitem-icon" style="color:#3EDD1E;">&#xe61a;</i>
+                                            {{/js_compare}}
+                                            {{#js_compare "this.warning === '预警'"}}
+                                            <i class="iconfont checkitem-icon" style="color:#FFA126;">&#xe619;</i>
+                                            {{/js_compare}}
+                                            {{#js_compare "this.warning === '危险'"}}
+                                            <i class="iconfont checkitem-icon" style="color:#FE4E51;">&#xe61b;</i>
+                                            {{/js_compare}}
                                         </div>
                                         <div class="item-inner">
                                             <div class="checkitem-container">
