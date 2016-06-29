@@ -1000,7 +1000,7 @@ f7.onPageInit('home-page', function(page) {
                                                 homePage.find('.detail').data('report-cnt', parseInt(curCnt) +
                                                     data.length);
                                                 homePage.find('.detail').append(Template7.templates
-                                                  .reportsTpl(ThorgeneGlobal.reportAOToVO(data)));
+                                                  .reportsTpl(ThorgeneGlobal.homePage.reportsAOToVO(data)));
                                             } else {
                                                 f7.detachInfiniteScroll(homePage.find('.infinite-scroll'));
                                             }
