@@ -38,7 +38,7 @@ ThorgeneGlobal = {
     },
     checkDate: function() {
         if (ThorgeneGlobal.compareDate()) {
-            f7.alert("生日日期不能超过当前日期");
+            f7.alert("生日日期不能超过当前日期", '');
             $$('#birth').prop("value", ThorgeneGlobal.today());
         }
     }
@@ -87,16 +87,23 @@ f7.onPageInit('init-profile', function() {
     });
 
     function validateDate() {
-        return $$('#birth').prop("value").length === 0 ? 0 : 1;
+        return $$('#birth').val().length === 0 ? 0 : 1;
+    }
+
+    function validateNickName() {
+        var name = $$('#name').val();
+        return name !== '' && name !== null && name !== undefined;
     }
     $$('#save').on('click', function() {
         if (!validateDate()) {
-            f7.alert("生日不能为空");
+            f7.alert("生日不能为空", '');
+        } else if (!validateNickName()) {
+            f7.alert('昵称不能为空', '');
         } else if (!ThorgeneGlobal.compareDate()) {
             f7.showPreloader("保存中");
             var formData = {
-                nickName: $$('#name').prop("value") || '',
-                birthday: $$('#birth').prop("value") || '',
+                nickName: $$('#name').val() || '',
+                birthday: $$('#birth').val() || '',
                 gender: $$('#gender').prop("checked") ? 1 : 0,
                 headImg: $$('#headimg').attr("src") || ''
             };
@@ -117,10 +124,6 @@ f7.onPageInit('init-profile', function() {
                 }
             });
         }
-    });
-
-    $$('#cancel').on('click', function() {
-        f7.alert("请保存资料");
     });
 });
 

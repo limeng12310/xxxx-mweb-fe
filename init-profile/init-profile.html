@@ -23,18 +23,10 @@
     <div class="statusbar-overlay"></div>
     <div class="views">
         <div class="view view-main">
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-                    <i class="iconfont" id="cancel">&#xe603;</i>
-                    <div class="myhead">修改资料</div>
-                    <i class="iconfont" id="save">&#xe604;</i>
-                </div>
-            </div>
             <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
             <div class="pages navbar-through toolbar-through">
                 <!-- Page, "data-page" contains page name -->
-                <div data-page="init-profile" class="page">
+                <div data-page="init-profile" class="page no-navbar">
                     <!-- Scrollable page content -->
                     <div class="page-content">
                         <form action="/users" method="POST" class="ajax-submit"></form>
@@ -46,7 +38,7 @@
 
                         <!--form list-->
                         <div class="content-block-title">个人信息</div>
-                        <div class="list-block">
+                        <div class="list-block inset">
                             <ul>
                                 <!--start name li-->
                                 <li>
@@ -55,7 +47,7 @@
                                         <div class="item-inner">
                                             <div class="item-title label">昵称</div>
                                             <div class="item-input">
-                                                <input id="name" type="text" value="Your Name">
+                                                <input id="name" type="text" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -68,7 +60,7 @@
                                         <div class="item-inner">
                                             <div class="item-title label">生日</div>
                                             <div class="item-input">
-                                                <input id="birth" type="date" value="2016-01-01" required onblur="ThorgeneGlobal.checkDate()">
+                                                <input id="birth" type="date" required onblur="ThorgeneGlobal.checkDate()">
                                             </div>
                                         </div>
                                     </div>
@@ -93,6 +85,10 @@
                                 <!--end of gender li-->
 
                             </ul>
+                        </div>
+
+                        <div class="content-block">
+                            <a href="#" id="save" class="button button-big button-fill color-lightblue">提交</a>
                         </div>
                         <!--end of form list-->
                     </div>
