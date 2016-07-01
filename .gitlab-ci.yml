@@ -42,6 +42,10 @@ prod:
     prod
   script:
   - rsync -avzP . root@thorgene.com:/srv/docker/thorgene-mweb-nginx/mweb-src --exclude=node_modules --exclude=build --exclude=dist --delete
+  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && sed -i 's#http://test.thorgene.com#http://thorgene.com#' app-home/js/app-home.js"
+  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && sed -i 's#http://thorgene-mweb.img-cn-beijing.aliyuncs.com#http://thorgene-mweb-prod.img-cn-beijing.aliyuncs.com#' app-home/js/app-home.js"
+  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && sed -i 's#http://test.thorgene.com#http://thorgene.com#' init-profile/js/init-profile.js"
+  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && sed -i 's#http://thorgene-mweb.oss-cn-beijing.aliyuncs.com#http://thorgene-mweb-prod.oss-cn-beijing.aliyuncs.com#' init-profile/js/init-profile.js"
   - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && npm install && node_modules/.bin/gulp clean && node_modules/.bin/gulp dist"
   only:
   - tags
