@@ -1,6 +1,7 @@
 stages:
   - lint
   - test
+  - prod
 
 eslint:
   stage:
@@ -32,5 +33,16 @@ test:
     - node_modules/
   only:
   - master
+  tags:
+  - shell
+  
+prod:
+  stage:
+    prod
+  script:
+  - rsync -avzP . root@thorgene.com:/srv/docker/thorgene-mweb-nginx/mweb-src --exclude=node_modules --exclude=build --exclude=dist --delete
+  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && npm install && node_modules/.bin/gulp dist"
+  only:
+  - tags
   tags:
   - shell
