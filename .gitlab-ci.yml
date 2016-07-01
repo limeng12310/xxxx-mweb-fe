@@ -15,6 +15,7 @@ eslint:
     - node_modules/
   except:
   - master
+  - tags
   tags:
   - docker
 
