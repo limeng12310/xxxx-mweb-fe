@@ -73,7 +73,7 @@ f7.onPageInit('init-profile', function() {
     '/static/defaultheadimg.jpg');
     var gender = Cookies.get('sex');
 //  default gender is 0, represent male
-    if (gender === 2) {
+    if (gender === '2') {
         $$('#gender').prop("checked", true);
         $$('#gender-label').html("女");
     }
