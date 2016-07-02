@@ -1140,7 +1140,7 @@ f7.onPageInit('photo-uploader', function(page) {
 });
 
 f7.onPageInit('checkitem-list', function() {
-    var apiUrl = ThorgeneGlobal.apiPrefix + '/check-items?type_ne=日常项';
+    var apiUrl = ThorgeneGlobal.apiPrefix + '/check-items?type_ne=日常';
     var data = ThorgeneGlobal.cacheGet(apiUrl);
 
     if (data !== undefined) {
