@@ -306,7 +306,8 @@ ThorgeneGlobal = {
         f7.showIndicator();
         $$.ajax({
             method: 'GET',
-            url: ThorgeneGlobal.apiPrefix + '/reports/' + $$(ele).attr('report-id'),
+            url: ThorgeneGlobal.apiPrefix + ($$(ele).attr('report-id') ?
+                '/reports/' + $$(ele).attr('report-id') : '/aggregation-info'),
             dataType: 'json',
             success: function(data, status) {
                 if (status === 200) {
