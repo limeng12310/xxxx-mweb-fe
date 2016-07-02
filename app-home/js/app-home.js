@@ -296,7 +296,7 @@ ThorgeneGlobal = {
         // 搜索栏
         f7.searchbar('.page[data-page=checkitem-list] .searchbar', {
             searchList: '.list-block.virtual-list'
-        })
+        });
     },
     showReportDetail: function(ele, status) {
         if (status === '处理中') {
