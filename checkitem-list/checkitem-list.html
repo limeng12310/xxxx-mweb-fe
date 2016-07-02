@@ -15,8 +15,19 @@
 </div>
 <div class="pages navbar-through toolbar-through">
     <div data-page="checkitem-list" class="page no-toolbar">
+        <form class="searchbar">
+            <div class="searchbar-input">
+                <input type="search" placeholder="搜索">
+                <a href="#" class="searchbar-clear"></a>
+            </div>
+            <a href="#" class="searchbar-cancel">取消</a>
+        </form>
+        <div class="searchbar-overlay"></div>
         <div class="page-content">
-            <div class="list-block contacts-block virtual-list">
+            <div class="content-block searchbar-not-found" style="text-align: center">
+                未搜索到匹配项
+            </div>
+            <div class="list-block contacts-block virtual-list searchbar-found">
             </div>
         </div>
     </div>

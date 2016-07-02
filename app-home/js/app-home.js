@@ -283,8 +283,20 @@ ThorgeneGlobal = {
                     return 31;
                 }
                 return 44;
+            },
+            searchByItem: function(query, index, item) {
+                if (item.title) {
+                    return false;
+                }
+
+                return item.name.indexOf(query.trim()) >= 0;
             }
         });
+
+        // 搜索栏
+        f7.searchbar('.page[data-page=checkitem-list] .searchbar', {
+            searchList: '.list-block.virtual-list'
+        })
     },
     showReportDetail: function(ele, status) {
         if (status === '处理中') {
