@@ -208,6 +208,7 @@ ThorgeneGlobal = {
                 ThorgeneGlobal.serverIds = [];
                 ThorgeneGlobal.localIds = [];
                 f7.mainView.router.back();
+                ThorgeneGlobal.homePage.refreshHomeCbk();
                 // TODO
             },
             error: function() {
