@@ -236,6 +236,26 @@ ThorgeneGlobal = {
                         reportContainer.data('report-cnt', parseInt(reportContainer.data('report-cnt')) - 1);
 
                         ThorgeneGlobal.trendPage.invalidate = true;
+
+                        if(reportContainer.data('report-cnt') === 0){
+                            ThorgeneGlobal.homePage.refreshHomeCbk();
+                        }else{
+                            $$.ajax({
+                                url: ThorgeneGlobal.apiPrefix + '/report-aggregation',
+                                method: 'GET',
+                                dataType: 'json',
+                                success: function (data, status) {
+                                    if (status === 200) {
+                                        ThorgeneGlobal.homePage.refreHmHead($$('.page[data-page=home-page]'), data);
+                                    }
+                                },
+                                error: function () {
+                                    // TODO
+                                }
+                            });
+                       }
+
+
                     } else {
                         // TODO
                     }
@@ -246,6 +266,7 @@ ThorgeneGlobal = {
                 }
             });
         });
+
     },
     initCheckitemList: function(data) {
         f7.virtualList('.page[data-page=checkitem-list] .list-block.virtual-list', {
@@ -624,25 +645,29 @@ ThorgeneGlobal = {
                 reports: results
             };
         },
+        refreHmHead:function(pageContainer, aggregation){
+                var score = aggregation.score;
+                if (score) {
+                    pageContainer.find('.score-border > .score').html(score);
+                }
+                var statisticValues = pageContainer
+                    .find('.statistic-value-wrapper > .statistic-value');
+                var normal = aggregation.normal;
+                if (normal !== undefined) {
+                    $$(statisticValues[0]).html(normal);
+                }
+                var warning = aggregation.warning;
+                if (warning !== undefined) {
+                    $$(statisticValues[1]).html(warning);
+                }
+                var danger = aggregation.worst;
+                if (danger !== undefined) {
+                    $$(statisticValues[2]).html(danger);
+                }
+        } ,
         refreshHome: function(pageContainer, aggregation, reports) {
-            var score = aggregation.score;
-            if (score) {
-                pageContainer.find('.score-border > .score').html(score);
-            }
-            var statisticValues = pageContainer
-              .find('.statistic-value-wrapper > .statistic-value');
-            var normal = aggregation.normal;
-            if (normal !== undefined) {
-                $$(statisticValues[0]).html(normal);
-            }
-            var warning = aggregation.warning;
-            if (warning !== undefined) {
-                $$(statisticValues[1]).html(warning);
-            }
-            var danger = aggregation.worst;
-            if (danger !== undefined) {
-                $$(statisticValues[2]).html(danger);
-            }
+
+            ThorgeneGlobal.homePage.refreHmHead(pageContainer,aggregation);
 
             pageContainer.find('.detail').children().remove();
             pageContainer.find('.detail').append(Template7.templates.reportsTpl(
@@ -692,6 +717,7 @@ ThorgeneGlobal = {
     recordPage: {
         invalidate: true,
         recordsLimits: 5,
+        emptyInfo:"暂无数据",
         thisUrl: '',
         imgUrls: {},
         tempUrls: [],
@@ -699,12 +725,14 @@ ThorgeneGlobal = {
             if (ThorgeneGlobal.recordPage.invalidate) {
                 ThorgeneGlobal.recordPage.invalidate = false;
                 var recordPage = $$('.page[data-page=record]');
-
                 $$.ajax({
                     url: ThorgeneGlobal.apiPrefix + '/records?_limit=' + ThorgeneGlobal.recordPage.recordsLimits,
                     method: 'GET',
                     dataType: 'json',
-                    success: function(data, status) {
+                        success: function(data, status) {
+                            if(data.length===0){
+                                recordPage.find(".page-content").append("<div class='empty'>" + ThorgeneGlobal.recordPage.emptyInfo + " </div>")
+                            }
                         if (status === 200) {
                             recordPage.find('.record-container').append(Template7.templates.recordItemTpl(
                               ThorgeneGlobal.recordPage.json2Report(data)));
