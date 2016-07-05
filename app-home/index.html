@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+</head>
+<body>
+    <script type="text/javascript" src="js/framework7.min.js"></script>
     <script type="text/javascript">
+        var $$ = Dom7;
         ThorgeneGlobal = {
             apiPrefix: 'http://test.thorgene.com/thorgene-mweb-api'
         };
         $$.ajax({
-            url: apiPrefix + '/isNewUser',
+            url: ThorgeneGlobal.apiPrefix + '/isNewUser',
             method: 'GET',
             dataType: 'json',
             success: function(data, status) {
@@ -27,8 +31,5 @@
             }
         });
     </script>
-</head>
-<body>
-    <script type="text/javascript" src="js/framework7.min.js"></script>
 </body>
 </html>
