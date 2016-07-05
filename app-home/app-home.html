@@ -152,6 +152,7 @@
             </div>
         </div>
     </div>
+    <div class="modal-overlay"></div>
     <script type="text/template7" id="reportsTpl">
         {{#js_compare "this.reports.length === 0"}}
         <div class="report-empty-tooltip">
@@ -290,7 +291,7 @@
             </div>
         </div>
     </script>
-    <script type="text/template7" id="modalPickerTpl">
+    <!--<script type="text/template7" id="modalPickerTpl">
         <div class="picker-modal">
             <div class="toolbar">
                 <div class="toolbar-inner">
@@ -348,6 +349,22 @@
                 </div>
             </div>
         </div>
+    </script>-->
+    <script type="text/template7" id="modalTpl">
+        <div class="modal">
+            <div class="modal-inner">
+                <div class="modal-titlitem-id={{id}}">{{name}}{{#if unit}}({{unit}}){{/if}}</div>
+                <div class="input-field">
+                    <input type="number" placeholder="检测值" class="modal-text-input" id="checkitem-input-val">
+                </div>
+            </div>
+            <div class="modal-buttons">
+                {{# eachbuttons}}
+                <span class="modal-button {{#if bold}}modal-button-bold{{/if}}">{{text}}</span>
+                {{/each}}
+            </div>
+        </div>
+
     </script>
     <script type="text/template7" id="checkitemListTpl">
         <li>
@@ -400,7 +417,7 @@
     </script>
 
     <!-- Path to Framework7 Library JS-->
-    <script type="text/javascript" src="js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/framework7.js"></script>
     <script type="text/javascript" src="js/dateformat.js"></script>
     <script type="text/javascript" src="js/echarts.min.js"></script>
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
