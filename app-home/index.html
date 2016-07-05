@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript">
+        ThorgeneGlobal = {
+            apiPrefix: 'http://test.thorgene.com/thorgene-mweb-api'
+        };
+        $$.ajax({
+            url: apiPrefix + '/isNewUser',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data, status) {
+                if (status === 200) {
+                    if (data.retCode == '0') {
+                        // 老用户
+                        window.location.replace('app-home.html');
+                    } else {
+                        // 新用户
+                        window.location.replace('init-profile.html');
+                    }
+                } else {
+                    // TODO
+                }
+            },
+            error: function() {
+                // TODO
+            }
+        });
+    </script>
+</head>
+<body>
+    <script type="text/javascript" src="js/framework7.min.js"></script>
+</body>
+</html>
