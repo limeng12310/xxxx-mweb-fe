@@ -240,6 +240,7 @@
                 <div class="page-content">
                     <div class="page-scroll">
                         {{#each reportDetails}}
+                        {{#js_compare "this.dataType === '数值'"}}
                         <div class="list-block accordion-list inset" state-level="{{warning}}">
                             <ul>
                                 <li class="accordion-item">
@@ -258,7 +259,7 @@
                                         <div class="item-inner">
                                             <div class="checkitem-container">
                                                 <div class="checkitem-name">{{name}}</div>
-                                                <div class="checkitem-value">{{#if numberResult}}{{numberResult}}{{else}}{{result}}{{/if}}</div>
+                                                <div class="checkitem-value">{{numberResult}}</div>
                                                 <div class="checkitem-unit">{{unit}}</div>
                                             </div>
                                         </div>
@@ -266,23 +267,108 @@
                                     <div class="accordion-item-content">
                                         <div class="content-block">
                                             <div class="checkitem-graph">
-                                                {{#js_compare "this.dataType === '数值'"}}
                                                 参考范围: {{refLow}}-{{refHigh}}
-                                                {{else}}
-                                                参考值: {{ref}}
-                                                {{/js_compare}}
                                             </div>
+                                            {{#if intro}}
                                             <div class="checkitem-desc1">
-                                                <pre>{{intro}}</pre>
+                                                <pre>项目介绍:\n{{intro}}</pre>
                                             </div>
-                                            <div class="checkitem-desc2">
+                                            {{/if}}
+                                            {{#if abnormal}}
+                                            <div class="checkitem-desc1">
                                                 <pre>{{abnormal}}</pre>
                                             </div>
+                                            {{/if}}
                                         </div>
                                     </div>
                                 </li>
                             </ul>
                         </div>
+                        {{/js_compare}}
+                        {{#js_compare "this.dataType === '枚举'"}}
+                        <div class="list-block accordion-list inset" state-level="{{warning}}">
+                            <ul>
+                                <li class="accordion-item">
+                                    <a href="#" class="item-link item-content">
+                                        <div class="checkitem-left">
+                                            {{#js_compare "this.warning === '正常'"}}
+                                            <i class="iconfont checkitem-icon" style="color:#3EDD1E;">&#xe61a;</i>
+                                            {{/js_compare}}
+                                            {{#js_compare "this.warning === '预警'"}}
+                                            <i class="iconfont checkitem-icon" style="color:#FFA126;">&#xe619;</i>
+                                            {{/js_compare}}
+                                            {{#js_compare "this.warning === '危险'"}}
+                                            <i class="iconfont checkitem-icon" style="color:#FE4E51;">&#xe61b;</i>
+                                            {{/js_compare}}
+                                        </div>
+                                        <div class="item-inner">
+                                            <div class="checkitem-container">
+                                                <div class="checkitem-name">{{name}}</div>
+                                                <div class="checkitem-value">{{result}}</div>
+                                                <div class="checkitem-unit">{{unit}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="accordion-item-content">
+                                        <div class="content-block">
+                                            <div class="checkitem-graph">
+                                                参考值: {{ref}}
+                                            </div>
+                                            {{#if intro}}
+                                            <div class="checkitem-desc1">
+                                                <pre>项目介绍:\n{{intro}}</pre>
+                                            </div>
+                                            {{/if}}
+                                            {{#if abnormal}}
+                                            <div class="checkitem-desc1">
+                                                <pre>{{abnormal}}</pre>
+                                            </div>
+                                            {{/if}}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        {{/js_compare}}
+                        {{#js_compare "this.dataType === '描述'"}}
+                        <div class="list-block accordion-list inset">
+                            <ul>
+                                <li class="accordion-item">
+                                    <a href="#" class="item-link item-content">
+                                        <div class="item-inner">
+                                            <div class="checkitem-container">
+                                                <div class="checkitem-name">{{name}}</div>
+                                                <!--<div class="checkitem-value">{{#if numberResult}}{{numberResult}}{{else}}{{result}}{{/if}}</div>-->
+                                                <!--<div class="checkitem-unit">{{unit}}</div>-->
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="accordion-item-content">
+                                        <div class="content-block">
+                                            <div class="checkitem-desc1">
+                                                <pre>{{result}}</pre>
+                                            </div>
+                                            {{#if ref}}
+                                            <div class="checkitem-desc1">
+                                                <pre>{{ref}}</pre>
+                                            </div>
+                                            {{/if}}
+                                            {{#if intro}}
+                                            <div class="checkitem-desc1">
+                                                <pre>项目介绍:\n{{intro}}</pre>
+                                            </div>
+                                            {{/if}}
+                                            {{#if abnormal}}
+                                            <div class="checkitem-desc1">
+                                                <pre>{{abnormal}}</pre>
+                                            </div>
+                                            {{/if}}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        {{/js_compare}}
                         {{/each}}
                         <div class="item-padding"></div>
                     </div>

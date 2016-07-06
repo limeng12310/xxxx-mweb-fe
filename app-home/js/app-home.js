@@ -256,7 +256,7 @@ ThorgeneGlobal = {
                 var i;
                 for (i = 0; i < data.length; ++i) {
                     listItems.push({
-                        title: data[i].headLetter
+                        title: data[i].headLetter === '~' ? '#' : data[i].headLetter
                     });
                     var j;
                     for (j = 0; j < data[i].items.length; ++j) {
