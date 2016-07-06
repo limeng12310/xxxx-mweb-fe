@@ -291,87 +291,13 @@
             </div>
         </div>
     </script>
-    <!--<script type="text/template7" id="modalPickerTpl">
-        <div class="picker-modal">
-            <div class="toolbar">
-                <div class="toolbar-inner">
-                    <div class="left">
-                        <a href="#" class="link close-picker">取消</a>
-                    </div>
-                    <div class="center">{{name}}{{#if unit}}({{unit}}){{/if}}</div>
-                    <div class="right">
-                        <a href="#" class="link close-picker" item-id="{{id}}" item-name="{{name}}"
-                           item-iconfont="{{iconFontCode}}" data-type="{{dataType}}" onclick="ThorgeneGlobal.manualAddOneDone(this)">完成</a>
-                    </div>
-                </div>
-            </div>
 
-            <div class="picker-modal-inner">
-                <div class="list-block">
-                    <ul>
-                        {{#js_compare "this.dataType === '数值'"}}
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-input">
-                                        <input type="number" value="{{default}}">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="range-slider">
-                                        <input type="range" min="{{low}}" max="{{high}}" value="{{default}}"
-                                               step="{{accuracy}}" oninput="ThorgeneGlobal.slideOnChange(this)">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        {{/js_compare}}
-                        {{#js_compare "this.dataType === '枚举'"}}
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-title label">{{#js_compare "this.default === '阳性'"}}阳性{{else}}阴性{{/js_compare}}</div>
-                                    <div class="item-input">
-                                        <label class="label-switch">
-                                            <input type="checkbox" {{#js_compare "this.default === '阳性'"}}checked{{/js_compare}}>
-                                            <div class="checkbox"></div>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        {{/js_compare}}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </script>-->
-    <script type="text/template7" id="modalTpl">
-        <div class="modal">
-            <div class="modal-inner">
-                <div class="modal-titlitem-id={{id}}">{{name}}{{#if unit}}({{unit}}){{/if}}</div>
-                <div class="input-field">
-                    <input type="number" placeholder="检测值" class="modal-text-input" id="checkitem-input-val">
-                </div>
-            </div>
-            <div class="modal-buttons">
-                {{#each buttons}}
-                <span class="modal-button {{#if bold}}modal-button-bold{{/if}}">{{text}}</span>
-                {{/each}}
-            </div>
-        </div>
-
-    </script>
     <script type="text/template7" id="checkitemListTpl">
         <li>
             <div class="item-content" data-collected="{{isCollected}}">
                 <div class="item-media"><i class="iconfont" style="color:{{starColor}}" onclick="ThorgeneGlobal.toggleCollect(this)">&#xe60e;</i></div>
                 <div class="item-inner check-item" onclick="ThorgeneGlobal.popupPicker(this)">
-                    <div class="item-title" item-id={{id}}>
+                    <div class="item-title" item-id="{{id}}">
                         <i class="iconfont">{{iconFontCode}}</i>
                         <span class="item-name">{{name}}</span>
                     </div>

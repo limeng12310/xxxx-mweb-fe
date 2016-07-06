@@ -10,6 +10,8 @@ var f7 = new Framework7({
 
     modalButtonCancel: '取消',
 
+    // modalTemplate:  $$('script#modalTpl').html(),
+
     // page切换时有动画效果
     animatePages: Framework7.prototype.device.ios,
 
@@ -365,154 +367,157 @@ ThorgeneGlobal = {
     },
     slideOnChange: function(ele) {
         var val = $$(ele).val();
-        $$('.picker-modal').find('input[type=number]').val(val);
+        $$('.modal').find('input[type=number]').val(val);
+    },
+    switch:function(){
+        $$('.modal .input-field').html('<label class="label-switch"><input type="checkbox"><div class="checkbox"></div></label><div id="switch">阴性</div>');
+        $$(".label-switch").css({"margin":"10px"});
+
+        $$('.modal .input-field').find('input[type=checkbox]').change(function() {
+            if ($$(this)[0].checked) {
+                $$("#switch").html('阳性');
+            } else {
+                $$("#switch").html('阴性');
+            }
+        });
     },
     popupPicker: function(ele) {
-        if ($$('.picker-modal').length > 0) {
-            f7.closeModal('.picker-modal');
-        } else {
-            var item = $$(ele);
-            var id;
-            var iconFont;
-            var curVal;
-            var apiUrl;
-            var data;
-            if (item.hasClass('collect-checkitem')) {
-                id = item.attr('item-id');
-                iconFont = item.children('i').html();
-                curVal = item.children('p.value').html();
-                apiUrl = ThorgeneGlobal.apiPrefix + '/check-items/' + id;
+        var item = $$(ele);
+        var id;
+        var iconFont;
+        var curVal;
+        var apiUrl;
+        var data;
+        var name;
+        var dataType;
 
-                data = ThorgeneGlobal.cacheGet(apiUrl);
-                if (data !== undefined) {
-                    f7.pickerModal(Template7.templates.modalPickerTpl({
-                        id: id,
-                        name: data.name,
-                        dataType: data.dataType,
-                        iconFontCode: iconFont,
-                        unit: data.unit,
-                        low: data.low,
-                        high: data.high,
-                        default: curVal === '---' ? data.default : curVal,
-                        accuracy: data.accuracy
-                    }));
-                    $$('.picker-modal').find('input[type=checkbox]').change(function() {
-                        if ($$(this)[0].checked) {
-                            $$(this).parents('.item-input').prev().html('阳性');
-                        } else {
-                            $$(this).parents('.item-input').prev().html('阴性');
-                        }
-                    });
-                } else {
-                    $$.ajax({
-                        method: 'GET',
-                        url: apiUrl,
-                        dataType: 'json',
-                        success: function(data, status) {
-                            ThorgeneGlobal.cacheSet(apiUrl, data);
-                            if (status === 200) {
-                                f7.pickerModal(Template7.templates.modalPickerTpl({
-                                    id: id,
-                                    name: data.name,
-                                    dataType: data.dataType,
-                                    iconFontCode: iconFont,
-                                    unit: data.unit,
-                                    low: data.low,
-                                    high: data.high,
-                                    default: curVal === '---' ? data.default : curVal,
-                                    accuracy: data.accuracy
-                                }));
-                                $$('.picker-modal').find('input[type=checkbox]').change(function() {
-                                    if ($$(this)[0].checked) {
-                                        $$(this).parents('.item-input').prev().html('阳性');
-                                    } else {
-                                        $$(this).parents('.item-input').prev().html('阴性');
-                                    }
-                                });
-                            } else {
-                                // TODO
-                            }
-                        },
-                        error: function() {
-                            // TODO
-                        }
-                    });
-                }
-            } else if (item.hasClass('check-item')) {
-                id = item.find('.item-title').attr('item-id');
-                iconFont = item.find('i').html();
-
-                var collectItems = $$('.page[data-page=manual-add]').find('.collect-checkitems').children();
-                var itemInManualAdd;
-                var i;
-                for (i = 0; i < collectItems.length; ++i) {
-                    if ($$(collectItems[i]).attr('item-id') === id) {
-                        itemInManualAdd = $$(collectItems[i]);
-                        break;
+        if (item.hasClass('collect-checkitem')) {
+            id = item.attr('item-id');
+            iconFont = item.children('i').html();
+            curVal = item.children('p.value').html();
+            apiUrl = ThorgeneGlobal.apiPrefix + '/check-items/' + id;
+            data = ThorgeneGlobal.cacheGet(apiUrl);
+            if (data !== undefined) {
+                //创建弹窗
+                f7.prompt("",data.name, function () {
+                    var value;
+                    if(data.dataType === "枚举" ){
+                        value=$$("#switch").html();
+                    }else if(data.dataType === "数值" ){
+                        value=$$(".modal").find('.modal-text-input').val();
                     }
+                    ThorgeneGlobal.manualAddOneDone(data.dataType,value,id,data.name,iconFont);
+                });
+                //更改input type值
+                if(data.dataType==="数值"){
+                    $$('.modal input').attr('type', 'number');
+                } else if (data.dataType==="枚举"){
+                    ThorgeneGlobal.switch();
                 }
 
-                curVal = '---';
-                if (itemInManualAdd) {
-                    curVal = itemInManualAdd.children('p.value').html();
-                }
-
-                apiUrl = ThorgeneGlobal.apiPrefix + '/check-items/' + id;
-                data = ThorgeneGlobal.cacheGet(apiUrl);
-                if (data !== undefined) {
-                    f7.pickerModal(Template7.templates.modalPickerTpl({
-                        id: id,
-                        name: data.name,
-                        dataType: data.dataType,
-                        iconFontCode: iconFont,
-                        unit: data.unit,
-                        low: data.low,
-                        high: data.high,
-                        default: curVal === '---' ? data.default : curVal,
-                        accuracy: data.accuracy
-                    }));
-                    $$('.picker-modal').find('input[type=checkbox]').change(function() {
-                        if ($$(this)[0].checked) {
-                            $$(this).parents('.item-input').prev().html('阳性');
-                        } else {
-                            $$(this).parents('.item-input').prev().html('阴性');
-                        }
-                    });
-                } else {
-                    $$.ajax({
-                        method: 'GET',
-                        url: apiUrl,
-                        dataType: 'json',
-                        success: function(data, status) {
-                            ThorgeneGlobal.cacheSet(apiUrl, data);
-                            if (status === 200) {
-                                f7.pickerModal(Template7.templates.modalPickerTpl({
-                                    id: id,
-                                    name: data.name,
-                                    dataType: data.dataType,
-                                    iconFontCode: iconFont,
-                                    unit: data.unit,
-                                    low: data.low,
-                                    high: data.high,
-                                    default: curVal === '---' ? data.default : curVal,
-                                    accuracy: data.accuracy
-                                }));
-                                $$('.picker-modal').find('input[type=checkbox]').change(function() {
-                                    if ($$(this)[0].checked) {
-                                        $$(this).parents('.item-input').prev().html('阳性');
-                                    } else {
-                                        $$(this).parents('.item-input').prev().html('阴性');
-                                    }
-                                });
-                            } else {
-                                // TODO
+            } else {
+                $$.ajax({
+                    method: 'GET',
+                    url: apiUrl,
+                    dataType: 'json',
+                    success: function(data, status) {
+                        ThorgeneGlobal.cacheSet(apiUrl, data);
+                        if (status === 200) {
+                            //创建弹窗
+                            f7.prompt("",data.name, function () {
+                                var value;
+                                if(data.dataType === "枚举" ){
+                                    value=$$("#switch").html();
+                                }else if(data.dataType === "数值" ){
+                                    value=$$(".modal").find('.modal-text-input').val();
+                                }
+                                ThorgeneGlobal.manualAddOneDone(data.dataType,value,id,data.name,iconFont);
+                            });
+                            //更改input type值
+                            if(data.dataType==="数值"){
+                                $$('.modal input').attr('type', 'number');
+                            } else if (data.dataType==="枚举"){
+                                ThorgeneGlobal.switch();
                             }
-                        },
-                        error: function() {
+                        } else {
                             // TODO
                         }
-                    });
+                    },
+                    error: function() {
+                        // TODO
+                    }
+                });
+            }
+        } else if (item.hasClass('check-item')) {
+            id = item.find('.item-title').attr('item-id');
+            iconFont = item.find('i').html();
+            var collectItems = $$('.page[data-page=manual-add]').find('.collect-checkitems').children();
+            var itemInManualAdd;
+            var i;
+            for (i = 0; i < collectItems.length; ++i) {
+                if ($$(collectItems[i]).attr('item-id') === id) {
+                    itemInManualAdd = $$(collectItems[i]);
+                    break;
                 }
+            }
+
+            curVal = '---';
+            if (itemInManualAdd) {
+                curVal = itemInManualAdd.children('p.value').html();
+            }
+
+            apiUrl = ThorgeneGlobal.apiPrefix + '/check-items/' + id;
+            data = ThorgeneGlobal.cacheGet(apiUrl);
+            if (data !== undefined) {
+                //创建弹窗
+                f7.prompt("",data.name, function () {
+                    var value;
+                    if(data.dataType === "枚举" ){
+                        value=$$("#switch").html();
+                    }else if(data.dataType === "数值" ){
+                        value=$$(".modal").find('.modal-text-input').val();
+                    }
+                    ThorgeneGlobal.manualAddOneDone(data.dataType,value,id,data.name,iconFont);
+                });
+                //更改input type值
+                if(data.dataType==="数值"){
+                    $$('.modal input').attr('type', 'number');
+                } else if (data.dataType==="枚举"){
+                    ThorgeneGlobal.switch();
+                }
+            } else {
+                $$.ajax({
+                    method: 'GET',
+                    url: apiUrl,
+                    dataType: 'json',
+                    success: function(data, status) {
+                        ThorgeneGlobal.cacheSet(apiUrl, data);
+                        if (status === 200) {
+                            //创建弹窗
+                            f7.prompt("",data.name, function () {
+                                var value;
+                                if(data.dataType === "枚举" ){
+                                    value=$$("#switch").html();
+                                }else if(data.dataType === "数值" ){
+                                    value=$$(".modal").find('.modal-text-input').val();
+                                }
+                                ThorgeneGlobal.manualAddOneDone(data.dataType,value,id,data.name,iconFont);
+                            });
+                            //更改input type值
+                            if(data.dataType==="数值"){
+                                $$('.modal input').attr('type', 'number');
+                            } else if (data.dataType==="枚举"){
+                                ThorgeneGlobal.switch();
+                            }
+
+                        } else {
+                            // TODO
+                        }
+                    },
+                    error: function() {
+                        // TODO
+                    }
+                });
             }
         }
     },
@@ -524,33 +529,21 @@ ThorgeneGlobal = {
             value: checkitem.value
         }));
 
-        $$('.page[data-page=manual-add] .collect-checkitems')
-            .append($$('.page[data-page=manual-add] .collect-checkitems > a'));
+        $$('.page[data-page=manual-add] .collect-checkitems').append($$('.page[data-page=manual-add] .collect-checkitems > a'));
     },
-    manualAddOneDone: function(ele) {
-        var dataType = $$(ele).attr('data-type');
-        var val;
-        if (dataType === '数值') {
-            val = $$('.picker-modal').find('input[type=number]').val();
-            if (isNaN(Number(val))) {
-                f7.alert('输入必须为数字', '');
-                return;
-            }
+    manualAddOneDone: function(dataType,val, itemId, itemName, iconFontCode) {
+        if(dataType==="数值"){
             if (val === '') {
                 val = '---';
             }
-        } else {
-            val = $$('.picker-modal').find('.item-title.label').html();
         }
-
-        var itemId = $$(ele).attr('item-id');
 
         var item = $$('.page[data-page=manual-add]').find('.collect-checkitem[item-id=\'' + itemId + '\']');
         if (item.length === 0) {
             ThorgeneGlobal.appendOneItem({
                 id: itemId,
-                iconFontCode: $$(ele).attr('item-iconfont'),
-                name: $$(ele).attr('item-name'),
+                iconFontCode: iconFontCode,
+                name: itemName,
                 value: val
             });
         } else {
@@ -951,7 +944,6 @@ ThorgeneGlobal = {
 };
 
 f7.onPageInit('home-page', function(page) {
-    // init wx jsapi
     $$.ajax({
         url: ThorgeneGlobal.apiPrefix + '/test-signature',
         method: 'GET',
