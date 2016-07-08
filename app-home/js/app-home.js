@@ -239,25 +239,23 @@ ThorgeneGlobal = {
 
                         ThorgeneGlobal.trendPage.invalidate = true;
 
-                        if(reportContainer.data('report-cnt') === 0){
+                        if (reportContainer.data('report-cnt') === 0) {
                             ThorgeneGlobal.homePage.refreshHomeCbk();
-                        }else{
+                        } else {
                             $$.ajax({
                                 url: ThorgeneGlobal.apiPrefix + '/report-aggregation',
                                 method: 'GET',
                                 dataType: 'json',
-                                success: function (data, status) {
+                                success: function(data, status) {
                                     if (status === 200) {
                                         ThorgeneGlobal.homePage.refreHmHead($$('.page[data-page=home-page]'), data);
                                     }
                                 },
-                                error: function () {
+                                error: function() {
                                     // TODO
                                 }
                             });
-                       }
-
-
+                        }
                     } else {
                         // TODO
                     }
@@ -268,7 +266,6 @@ ThorgeneGlobal = {
                 }
             });
         });
-
     },
     initCheckitemList: function(data) {
         f7.virtualList('.page[data-page=checkitem-list] .list-block.virtual-list', {
@@ -369,9 +366,10 @@ ThorgeneGlobal = {
         var val = $$(ele).val();
         $$('.modal').find('input[type=number]').val(val);
     },
-    switch:function(){
-        $$('.modal .input-field').html('<label class="label-switch"><input type="checkbox"><div class="checkbox"></div></label><div id="switch">阴性</div>');
-        $$(".label-switch").css({"margin":"10px"});
+    switch: function() {
+        $$('.modal .input-field').html('<label class="label-switch enum-checkitem-switch">' +
+            '<input type="checkbox"><div class="checkbox"></div></label>' +
+            '<div id="switch">阴性</div>');
 
         $$('.modal .input-field').find('input[type=checkbox]').change(function() {
             if ($$(this)[0].checked) {
@@ -385,36 +383,31 @@ ThorgeneGlobal = {
         var item = $$(ele);
         var id;
         var iconFont;
-        var curVal;
+        // var curVal;
         var apiUrl;
         var data;
-        var name;
-        var dataType;
 
         if (item.hasClass('collect-checkitem')) {
             id = item.attr('item-id');
             iconFont = item.children('i').html();
-            curVal = item.children('p.value').html();
+            // curVal = item.children('p.value').html();
             apiUrl = ThorgeneGlobal.apiPrefix + '/check-items/' + id;
             data = ThorgeneGlobal.cacheGet(apiUrl);
             if (data !== undefined) {
-                //创建弹窗
-                f7.prompt("",data.name, function () {
+                f7.prompt("", data.name, function() {
                     var value;
-                    if(data.dataType === "枚举" ){
-                        value=$$("#switch").html();
-                    }else if(data.dataType === "数值" ){
-                        value=$$(".modal").find('.modal-text-input').val();
+                    if (data.dataType === "枚举") {
+                        value = $$("#switch").html();
+                    } else if (data.dataType === "数值") {
+                        value = $$(".modal").find('.modal-text-input').val();
                     }
-                    ThorgeneGlobal.manualAddOneDone(data.dataType,value,id,data.name,iconFont);
+                    ThorgeneGlobal.manualAddOneDone(data.dataType, value, id, data.name, iconFont);
                 });
-                //更改input type值
-                if(data.dataType==="数值"){
+                if (data.dataType === "数值") {
                     $$('.modal input').attr('type', 'number');
-                } else if (data.dataType==="枚举"){
+                } else if (data.dataType === "枚举") {
                     ThorgeneGlobal.switch();
                 }
-
             } else {
                 $$.ajax({
                     method: 'GET',
@@ -423,20 +416,18 @@ ThorgeneGlobal = {
                     success: function(data, status) {
                         ThorgeneGlobal.cacheSet(apiUrl, data);
                         if (status === 200) {
-                            //创建弹窗
-                            f7.prompt("",data.name, function () {
+                            f7.prompt("", data.name, function() {
                                 var value;
-                                if(data.dataType === "枚举" ){
-                                    value=$$("#switch").html();
-                                }else if(data.dataType === "数值" ){
-                                    value=$$(".modal").find('.modal-text-input').val();
+                                if (data.dataType === "枚举") {
+                                    value = $$("#switch").html();
+                                } else if (data.dataType === "数值") {
+                                    value = $$(".modal").find('.modal-text-input').val();
                                 }
-                                ThorgeneGlobal.manualAddOneDone(data.dataType,value,id,data.name,iconFont);
+                                ThorgeneGlobal.manualAddOneDone(data.dataType, value, id, data.name, iconFont);
                             });
-                            //更改input type值
-                            if(data.dataType==="数值"){
+                            if (data.dataType === "数值") {
                                 $$('.modal input').attr('type', 'number');
-                            } else if (data.dataType==="枚举"){
+                            } else if (data.dataType === "枚举") {
                                 ThorgeneGlobal.switch();
                             }
                         } else {
@@ -452,37 +443,35 @@ ThorgeneGlobal = {
             id = item.find('.item-title').attr('item-id');
             iconFont = item.find('i').html();
             var collectItems = $$('.page[data-page=manual-add]').find('.collect-checkitems').children();
-            var itemInManualAdd;
+            // var itemInManualAdd;
             var i;
             for (i = 0; i < collectItems.length; ++i) {
                 if ($$(collectItems[i]).attr('item-id') === id) {
-                    itemInManualAdd = $$(collectItems[i]);
+                    // itemInManualAdd = $$(collectItems[i]);
                     break;
                 }
             }
 
-            curVal = '---';
+           /* curVal = '---';
             if (itemInManualAdd) {
                 curVal = itemInManualAdd.children('p.value').html();
-            }
+            }*/
 
             apiUrl = ThorgeneGlobal.apiPrefix + '/check-items/' + id;
             data = ThorgeneGlobal.cacheGet(apiUrl);
             if (data !== undefined) {
-                //创建弹窗
-                f7.prompt("",data.name, function () {
+                f7.prompt("", data.name, function() {
                     var value;
-                    if(data.dataType === "枚举" ){
-                        value=$$("#switch").html();
-                    }else if(data.dataType === "数值" ){
-                        value=$$(".modal").find('.modal-text-input').val();
+                    if (data.dataType === "枚举") {
+                        value = $$("#switch").html();
+                    } else if (data.dataType === "数值") {
+                        value = $$(".modal").find('.modal-text-input').val();
                     }
-                    ThorgeneGlobal.manualAddOneDone(data.dataType,value,id,data.name,iconFont);
+                    ThorgeneGlobal.manualAddOneDone(data.dataType, value, id, data.name, iconFont);
                 });
-                //更改input type值
-                if(data.dataType==="数值"){
+                if (data.dataType === "数值") {
                     $$('.modal input').attr('type', 'number');
-                } else if (data.dataType==="枚举"){
+                } else if (data.dataType === "枚举") {
                     ThorgeneGlobal.switch();
                 }
             } else {
@@ -493,23 +482,20 @@ ThorgeneGlobal = {
                     success: function(data, status) {
                         ThorgeneGlobal.cacheSet(apiUrl, data);
                         if (status === 200) {
-                            //创建弹窗
-                            f7.prompt("",data.name, function () {
+                            f7.prompt("", data.name, function() {
                                 var value;
-                                if(data.dataType === "枚举" ){
-                                    value=$$("#switch").html();
-                                }else if(data.dataType === "数值" ){
-                                    value=$$(".modal").find('.modal-text-input').val();
+                                if (data.dataType === "枚举") {
+                                    value = $$("#switch").html();
+                                } else if (data.dataType === "数值") {
+                                    value = $$(".modal").find('.modal-text-input').val();
                                 }
-                                ThorgeneGlobal.manualAddOneDone(data.dataType,value,id,data.name,iconFont);
+                                ThorgeneGlobal.manualAddOneDone(data.dataType, value, id, data.name, iconFont);
                             });
-                            //更改input type值
-                            if(data.dataType==="数值"){
+                            if (data.dataType === "数值") {
                                 $$('.modal input').attr('type', 'number');
-                            } else if (data.dataType==="枚举"){
+                            } else if (data.dataType === "枚举") {
                                 ThorgeneGlobal.switch();
                             }
-
                         } else {
                             // TODO
                         }
@@ -522,17 +508,17 @@ ThorgeneGlobal = {
         }
     },
     appendOneItem: function(checkitem) {
-        $$('.page[data-page=manual-add] .collect-checkitems').append(Template7.templates.itemToAddTpl({
+        var collectCheckitems = $$('.page[data-page=manual-add] .collect-checkitems');
+        collectCheckitems.append(Template7.templates.itemToAddTpl({
             id: checkitem.id,
             iconFontCode: checkitem.iconFontCode,
             name: checkitem.name,
             value: checkitem.value
         }));
-
-        $$('.page[data-page=manual-add] .collect-checkitems').append($$('.page[data-page=manual-add] .collect-checkitems > a'));
+        collectCheckitems.append($$('.page[data-page=manual-add] .collect-checkitems > a'));
     },
-    manualAddOneDone: function(dataType,val, itemId, itemName, iconFontCode) {
-        if(dataType==="数值"){
+    manualAddOneDone: function(dataType, val, itemId, itemName, iconFontCode) {
+        if (dataType === "数值") {
             if (val === '') {
                 val = '---';
             }
@@ -638,30 +624,27 @@ ThorgeneGlobal = {
                 reports: results
             };
         },
-        refreHmHead:function(pageContainer, aggregation){
-                var score = aggregation.score;
-                if (score) {
-                    pageContainer.find('.score-border > .score').html(score);
-                }
-                var statisticValues = pageContainer
-                    .find('.statistic-value-wrapper > .statistic-value');
-                var normal = aggregation.normal;
-                if (normal !== undefined) {
-                    $$(statisticValues[0]).html(normal);
-                }
-                var warning = aggregation.warning;
-                if (warning !== undefined) {
-                    $$(statisticValues[1]).html(warning);
-                }
-                var danger = aggregation.worst;
-                if (danger !== undefined) {
-                    $$(statisticValues[2]).html(danger);
-                }
-        } ,
+        refreHmHead: function(pageContainer, aggregation) {
+            var score = aggregation.score;
+            if (score) {
+                pageContainer.find('.score-border > .score').html(score);
+            }
+            var statisticValues = pageContainer.find('.statistic-value-wrapper > .statistic-value');
+            var normal = aggregation.normal;
+            if (normal !== undefined) {
+                $$(statisticValues[0]).html(normal);
+            }
+            var warning = aggregation.warning;
+            if (warning !== undefined) {
+                $$(statisticValues[1]).html(warning);
+            }
+            var danger = aggregation.worst;
+            if (danger !== undefined) {
+                $$(statisticValues[2]).html(danger);
+            }
+        },
         refreshHome: function(pageContainer, aggregation, reports) {
-
-            ThorgeneGlobal.homePage.refreHmHead(pageContainer,aggregation);
-
+            ThorgeneGlobal.homePage.refreHmHead(pageContainer, aggregation);
             pageContainer.find('.detail').children().remove();
             pageContainer.find('.detail').append(Template7.templates.reportsTpl(
               ThorgeneGlobal.homePage.reportsAOToVO(reports)
@@ -710,7 +693,7 @@ ThorgeneGlobal = {
     recordPage: {
         invalidate: true,
         recordsLimits: 5,
-        emptyInfo:"暂无数据",
+        emptyInfo: "暂无数据",
         thisUrl: '',
         imgUrls: {},
         tempUrls: [],
@@ -722,10 +705,11 @@ ThorgeneGlobal = {
                     url: ThorgeneGlobal.apiPrefix + '/records?_limit=' + ThorgeneGlobal.recordPage.recordsLimits,
                     method: 'GET',
                     dataType: 'json',
-                        success: function(data, status) {
-                            if(data.length===0){
-                                recordPage.find(".page-content").append("<div class='empty'>" + ThorgeneGlobal.recordPage.emptyInfo + " </div>")
-                            }
+                    success: function(data, status) {
+                        if (data.length === 0) {
+                            recordPage.find(".page-content").append("<div class='empty'>" +
+                                ThorgeneGlobal.recordPage.emptyInfo + " </div>");
+                        }
                         if (status === 200) {
                             recordPage.find('.record-container').append(Template7.templates.recordItemTpl(
                               ThorgeneGlobal.recordPage.json2Report(data)));
@@ -1159,7 +1143,7 @@ f7.onPageInit('photo-uploader', function(page) {
 });
 
 f7.onPageInit('checkitem-list', function() {
-    var apiUrl = ThorgeneGlobal.apiPrefix + '/check-items?type_ne=日常项';
+    var apiUrl = ThorgeneGlobal.apiPrefix + '/check-items?type_ne=日常';
     var data = ThorgeneGlobal.cacheGet(apiUrl);
 
     if (data !== undefined) {

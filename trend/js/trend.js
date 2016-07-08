@@ -2,7 +2,7 @@
 ThorgeneGlobal.trendPage = {
     iconfontcode: [],
     classifyId: [],
-    emptyInfo:"暂无数据",
+    emptyInfo: "暂无数据",
     invalidate: true,
     init: function() {
         if (ThorgeneGlobal.trendPage.invalidate) {
@@ -56,12 +56,13 @@ ThorgeneGlobal.trendPage = {
                             ThorgeneGlobal.trendPage.getItems(n);
                         });
                         // 初始化
-                        var trendPgCont=$$('.page[data-page=trendPage] .page-content');
+                        var trendPgCont = $$('.page[data-page=trendPage] .page-content');
                         if (data.length > 0) {
                             trendPgCont.find(".empty").hide();
                             ThorgeneGlobal.trendPage.getItems(1);
                         } else {
-                            trendPgCont.prepend("<div class='empty'>" + ThorgeneGlobal.trendPage.emptyInfo + "</div>")
+                            trendPgCont.prepend("<div class='empty'>" + ThorgeneGlobal.trendPage.emptyInfo +
+                                "</div>");
                         }
                     } else {
                         // TODO
