@@ -1110,7 +1110,7 @@ f7.onPageInit('photo-uploader', function(page) {
     $$(page.container).find(".addImgButton").click(function() {
         wx.chooseImage({
             count: 9,
-            sizeType: ['original', 'compressed'],
+            sizeType: ['compressed'],
             sourceType: ['album', 'camera'],
             success: function(res) {
                 var tmpLocalIds = res.localIds;
@@ -1180,7 +1180,7 @@ f7.onPageInit('add-record', function(page) {
     pageContainer.find(".addImgButton").click(function() {
         wx.chooseImage({
             count: 9,
-            sizeType: ['original', 'compressed'],
+            sizeType: ['compressed'],
             sourceType: ['album', 'camera'],
             success: function(res) {
                 var tmpLocalIds = res.localIds;
