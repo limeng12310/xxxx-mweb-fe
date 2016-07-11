@@ -383,14 +383,12 @@ ThorgeneGlobal = {
         var item = $$(ele);
         var id;
         var iconFont;
-        // var curVal;
         var apiUrl;
         var data;
 
         if (item.hasClass('collect-checkitem')) {
             id = item.attr('item-id');
             iconFont = item.children('i').html();
-            // curVal = item.children('p.value').html();
             apiUrl = ThorgeneGlobal.apiPrefix + '/check-items/' + id;
             data = ThorgeneGlobal.cacheGet(apiUrl);
             if (data !== undefined) {
@@ -405,6 +403,12 @@ ThorgeneGlobal = {
                 });
                 if (data.dataType === "数值") {
                     $$('.modal input').attr('type', 'number');
+                    var curVal = item.find('p.value').html();
+                    if (curVal === "---") {
+                        $$('.modal input').val("");
+                    } else {
+                        $$('.modal input').val(curVal);
+                    }
                 } else if (data.dataType === "枚举") {
                     ThorgeneGlobal.switch();
                 }
@@ -427,6 +431,12 @@ ThorgeneGlobal = {
                             });
                             if (data.dataType === "数值") {
                                 $$('.modal input').attr('type', 'number');
+                                var curVal = item.find('p.value').html();
+                                if (curVal === "---") {
+                                    $$('.modal input').val("");
+                                } else {
+                                    $$('.modal input').val(curVal);
+                                }
                             } else if (data.dataType === "枚举") {
                                 ThorgeneGlobal.switch();
                             }
@@ -442,24 +452,13 @@ ThorgeneGlobal = {
         } else if (item.hasClass('check-item')) {
             id = item.find('.item-title').attr('item-id');
             iconFont = item.find('i').html();
-            var collectItems = $$('.page[data-page=manual-add]').find('.collect-checkitems').children();
-            // var itemInManualAdd;
-            var i;
-            for (i = 0; i < collectItems.length; ++i) {
-                if ($$(collectItems[i]).attr('item-id') === id) {
-                    // itemInManualAdd = $$(collectItems[i]);
-                    break;
-                }
-            }
-
-           /* curVal = '---';
-            if (itemInManualAdd) {
-                curVal = itemInManualAdd.children('p.value').html();
-            }*/
-
             apiUrl = ThorgeneGlobal.apiPrefix + '/check-items/' + id;
             data = ThorgeneGlobal.cacheGet(apiUrl);
             if (data !== undefined) {
+                // 1. 点击的项在前一页不存在
+                // 2. 点击的项在前一页存在，但值为---
+                // 3. 点击的项在前一页存在，但有值
+
                 f7.prompt("", data.name, function() {
                     var value;
                     if (data.dataType === "枚举") {
@@ -471,6 +470,19 @@ ThorgeneGlobal = {
                 });
                 if (data.dataType === "数值") {
                     $$('.modal input').attr('type', 'number');
+                    var collectItems = $$('.page[data-page=manual-add]').find('.collect-checkitems').children();
+                    var i;
+                    var detectionValue;
+                    for (i = 0; i < collectItems.length; ++i) {
+                        if ($$(collectItems[i]).attr('item-id') === id) {
+                            detectionValue = $$(collectItems[i]).find("p.value").html();
+                            if (detectionValue === "---") {
+                                $$('.modal input').val("");
+                            } else {
+                                $$('.modal input').val(detectionValue);
+                            }
+                        }
+                    }
                 } else if (data.dataType === "枚举") {
                     ThorgeneGlobal.switch();
                 }
@@ -493,6 +505,20 @@ ThorgeneGlobal = {
                             });
                             if (data.dataType === "数值") {
                                 $$('.modal input').attr('type', 'number');
+                                var collectItems = $$('.page[data-page=manual-add]')
+                                    .find('.collect-checkitems').children();
+                                var i;
+                                var detectionValue;
+                                for (i = 0; i < collectItems.length; ++i) {
+                                    if ($$(collectItems[i]).attr('item-id') === id) {
+                                        detectionValue = $$(collectItems[i]).find("p.value").html();
+                                        if (detectionValue === "---") {
+                                            $$('.modal input').val("");
+                                        } else {
+                                            $$('.modal input').val(detectionValue);
+                                        }
+                                    }
+                                }
                             } else if (data.dataType === "枚举") {
                                 ThorgeneGlobal.switch();
                             }
