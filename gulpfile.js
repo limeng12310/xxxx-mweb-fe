@@ -40,7 +40,7 @@
                     // 'node_modules/framework7/dist/css/framework7.material.min.css'
                 ],
                 js: [
-                    'node_modules/framework7/dist/js/framework7.js'
+                    'node_modules/framework7/dist/js/framework7.min.js'
                     // 'node_modules/framework7/dist/js/framework7.min.js.map'
                 ]
 
