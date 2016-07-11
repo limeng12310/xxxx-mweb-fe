@@ -6,7 +6,12 @@
 	margin-left:auto; 
 	margin-right:auto;
 }
-
+.view-trend .page-content .empty {
+	text-align:center;
+	line-height:200px;
+	line-height:200px;
+	color: #888;
+}
 .view-trend .buttons-row {
 	width: 100%;
 	height:65%;
@@ -23,9 +28,7 @@
 
 .view-trend .items {
 	position:relative;
-	//background-color:#FFF;
 	overflow-x:scroll;
-	// background:#f7f7f8;
 	width: 100%;
 	height:100px;
 }
@@ -37,6 +40,7 @@
 .view-trend .checkitems {
 	display: flex;
 	flex-flow: row wrap;
+	overflow-x: auto;
 }
 
 .view-trend .checkitem {
@@ -99,7 +103,7 @@
 }
 .view-trend .buttons-row .button:first-child{
 	border-radius:5px;
-	border-left-width: 0px;
+	border-left-width: 0;
 }
 .view-trend .buttons-row .button:last-child{
 	border-radius:5px;
