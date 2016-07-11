@@ -455,10 +455,6 @@ ThorgeneGlobal = {
             apiUrl = ThorgeneGlobal.apiPrefix + '/check-items/' + id;
             data = ThorgeneGlobal.cacheGet(apiUrl);
             if (data !== undefined) {
-                // 1. 点击的项在前一页不存在
-                // 2. 点击的项在前一页存在，但值为---
-                // 3. 点击的项在前一页存在，但有值
-
                 f7.prompt("", data.name, function() {
                     var value;
                     if (data.dataType === "枚举") {
