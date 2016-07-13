@@ -323,6 +323,10 @@ ThorgeneGlobal = {
             f7.alert('该报告还在处理中,请稍后', '');
             return;
         }
+        var reportCnt = $$('.detail').data('report-cnt');
+        if (reportCnt == 0) {
+            return;
+        }
         f7.showIndicator();
         $$.ajax({
             method: 'GET',
@@ -367,6 +371,7 @@ ThorgeneGlobal = {
                     }
                 } else {
                     // TODO
+                    f7.hideIndicator();
                 }
             },
             error: function() {
@@ -1141,20 +1146,22 @@ f7.onPageInit('photo-uploader', function(page) {
             success: function(res) {
                 var tmpLocalIds = res.localIds;
                 ThorgeneGlobal.localIds = ThorgeneGlobal.localIds.concat(tmpLocalIds);
-                var images = $$('.imgs');
-                var addImgButton = $$('.addImgButton');
-                $$('#hidden').append(addImgButton);
-                for (var i = 0; i < tmpLocalIds.length; i++) {
-                    var img = document.createElement("img");
-                    img.src = tmpLocalIds[i];
-                    img.className = "part-img";
-                    img.tempUrl = tmpLocalIds[i];
-                    images.append(img);
+                if (ThorgeneGlobal.localIds.length <= 15) {
+                   var images = $$('.imgs');
+                   var addImgButton = $$('.addImgButton');
+                   $$('#hidden').append(addImgButton);
+                   for (var i = 0; i < tmpLocalIds.length; i++) {
+                       var img = document.createElement("img");
+                       img.src = tmpLocalIds[i];
+                       img.className = "part-img";
+                       img.tempUrl = tmpLocalIds[i];
+                       images.append(img);
+                   }
+                   images.append(addImgButton);
+                   $$('img').click(function() {
+                       ThorgeneGlobal.previewImg();
+                   });
                 }
-                images.append(addImgButton);
-                $$('img').click(function() {
-                    ThorgeneGlobal.previewImg();
-                });
             },
             error: function() {
                 // TODO
@@ -1211,20 +1218,22 @@ f7.onPageInit('add-record', function(page) {
             success: function(res) {
                 var tmpLocalIds = res.localIds;
                 ThorgeneGlobal.addRecord.localIds = ThorgeneGlobal.addRecord.localIds.concat(tmpLocalIds);
-                var images = $$('.imgs');
-                var addImgButton = $$('.addImgButton');
-                $$('#hidden').append(addImgButton);
-                for (var i = 0; i < tmpLocalIds.length; i++) {
-                    var img = document.createElement("img");
-                    img.src = tmpLocalIds[i];
-                    img.className = "part-img";
-                    img.tempUrl = tmpLocalIds[i];
-                    images.append(img);
+                if (ThorgeneGlobal.addRecord.localIds.length <= 9) {
+                    var images = $$('.imgs');
+                    var addImgButton = $$('.addImgButton');
+                    $$('#hidden').append(addImgButton);
+                    for (var i = 0; i < tmpLocalIds.length; i++) {
+                        var img = document.createElement("img");
+                        img.src = tmpLocalIds[i];
+                        img.className = "part-img";
+                        img.tempUrl = tmpLocalIds[i];
+                        images.append(img);
+                    }
+                    images.append(addImgButton);
+                    $$('img').click(function () {
+                        ThorgeneGlobal.addRecord.previewImg();
+                    });
                 }
-                images.append(addImgButton);
-                $$('img').click(function() {
-                    ThorgeneGlobal.addRecord.previewImg();
-                });
             },
             error: function() {
                 // TODO
