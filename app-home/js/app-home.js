@@ -324,7 +324,7 @@ ThorgeneGlobal = {
             return;
         }
         var reportCnt = $$('.detail').data('report-cnt');
-        if (reportCnt == 0) {
+        if (reportCnt === 0) {
             return;
         }
         f7.showIndicator();
@@ -1147,20 +1147,20 @@ f7.onPageInit('photo-uploader', function(page) {
                 var tmpLocalIds = res.localIds;
                 ThorgeneGlobal.localIds = ThorgeneGlobal.localIds.concat(tmpLocalIds);
                 if (ThorgeneGlobal.localIds.length <= 15) {
-                   var images = $$('.imgs');
-                   var addImgButton = $$('.addImgButton');
-                   $$('#hidden').append(addImgButton);
-                   for (var i = 0; i < tmpLocalIds.length; i++) {
-                       var img = document.createElement("img");
-                       img.src = tmpLocalIds[i];
-                       img.className = "part-img";
-                       img.tempUrl = tmpLocalIds[i];
-                       images.append(img);
-                   }
-                   images.append(addImgButton);
-                   $$('img').click(function() {
-                       ThorgeneGlobal.previewImg();
-                   });
+                    var images = $$('.imgs');
+                    var addImgButton = $$('.addImgButton');
+                    $$('#hidden').append(addImgButton);
+                    for (var i = 0; i < tmpLocalIds.length; i++) {
+                        var img = document.createElement("img");
+                        img.src = tmpLocalIds[i];
+                        img.className = "part-img";
+                        img.tempUrl = tmpLocalIds[i];
+                        images.append(img);
+                    }
+                    images.append(addImgButton);
+                    $$('img').click(function() {
+                        ThorgeneGlobal.previewImg();
+                    });
                 }
             },
             error: function() {
@@ -1230,7 +1230,7 @@ f7.onPageInit('add-record', function(page) {
                         images.append(img);
                     }
                     images.append(addImgButton);
-                    $$('img').click(function () {
+                    $$('img').click(function() {
                         ThorgeneGlobal.addRecord.previewImg();
                     });
                 }
