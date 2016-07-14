@@ -323,8 +323,8 @@ ThorgeneGlobal = {
             f7.alert('该报告还在处理中,请稍后', '');
             return;
         }
-        var reportCnt = $$('.detail').data('report-cnt');
-        if (reportCnt === 0) {
+        var Score = $$(ele).find(".score").html();
+        if (Score === "-") {
             return;
         }
         f7.showIndicator();
@@ -774,6 +774,8 @@ ThorgeneGlobal = {
                         if (data.length === 0) {
                             recordPage.find(".page-content").append("<div class='empty'>" +
                                 ThorgeneGlobal.recordPage.emptyInfo + " </div>");
+                        } else {
+                            recordPage.find(".page-content .empty").remove();
                         }
                         if (status === 200) {
                             recordPage.find('.record-container').append(Template7.templates.recordItemTpl(
@@ -812,11 +814,6 @@ ThorgeneGlobal = {
                                 }
                                 loading = true;
                                 recordPage.children('.page-content').append(Template7.templates.preloaderTpl());
-                                // var recordList = recordPage.find('.record-container').find('[record-id]');
-                                // var lastId = $$(recordList[recordList.length - 1]).attr('record-id');
-                                // if (!lastId) {
-                                //     return;
-                                // }
                                 var offset = recordPage.find('.record-container').data('record-cnt');
 
                                 $$.ajax({
