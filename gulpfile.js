@@ -277,8 +277,8 @@
                 }
             });
 
-        // html
-        gulp.src(paths.build.root + '*.html')
+        // html and others
+        gulp.src(paths.build.root + '*.*')
             .pipe(gulp.dest(paths.dist.root))
             .on('end', function() {
                 if (++cbs === totalCbs) {
