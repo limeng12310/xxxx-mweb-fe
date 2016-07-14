@@ -411,6 +411,9 @@ ThorgeneGlobal = {
             apiUrl = ThorgeneGlobal.apiPrefix + '/check-items/' + id;
             data = ThorgeneGlobal.cacheGet(apiUrl);
             if (data !== undefined) {
+                if (data.unit !== "") {
+                    data.name = data.name + "&nbsp(" + data.unit + ")";
+                }
                 f7.prompt("", data.name, function() {
                     var value;
                     if (data.dataType === "枚举") {
@@ -421,7 +424,10 @@ ThorgeneGlobal = {
                     ThorgeneGlobal.manualAddOneDone(data.dataType, value, id, data.name, iconFont);
                 });
                 if (data.dataType === "数值") {
-                    $$('.modal input').attr('type', 'number');
+                    $$('.modal input').attr({
+                        type: 'number',
+                        placeholder: '请输入检测值'
+                    });
                     var curVal = item.find('p.value').html();
                     if (curVal === "---") {
                         $$('.modal input').val("");
@@ -439,6 +445,9 @@ ThorgeneGlobal = {
                     success: function(data, status) {
                         ThorgeneGlobal.cacheSet(apiUrl, data);
                         if (status === 200) {
+                            if (data.unit !== "") {
+                                data.name = data.name + "&nbsp(" + data.unit + ")";
+                            }
                             f7.prompt("", data.name, function() {
                                 var value;
                                 if (data.dataType === "枚举") {
@@ -449,7 +458,10 @@ ThorgeneGlobal = {
                                 ThorgeneGlobal.manualAddOneDone(data.dataType, value, id, data.name, iconFont);
                             });
                             if (data.dataType === "数值") {
-                                $$('.modal input').attr('type', 'number');
+                                $$('.modal input').attr({
+                                    type: 'number',
+                                    placeholder: '请输入检测值'
+                                });
                                 var curVal = item.find('p.value').html();
                                 if (curVal === "---") {
                                     $$('.modal input').val("");
@@ -474,6 +486,9 @@ ThorgeneGlobal = {
             apiUrl = ThorgeneGlobal.apiPrefix + '/check-items/' + id;
             data = ThorgeneGlobal.cacheGet(apiUrl);
             if (data !== undefined) {
+                if (data.unit !== "") {
+                    data.name = data.name + "&nbsp(" + data.unit + ")";
+                }
                 f7.prompt("", data.name, function() {
                     var value;
                     if (data.dataType === "枚举") {
@@ -484,7 +499,10 @@ ThorgeneGlobal = {
                     ThorgeneGlobal.manualAddOneDone(data.dataType, value, id, data.name, iconFont);
                 });
                 if (data.dataType === "数值") {
-                    $$('.modal input').attr('type', 'number');
+                    $$('.modal input').attr({
+                        type: 'number',
+                        placeholder: '请输入检测值'
+                    });
                     var collectItems = $$('.page[data-page=manual-add]').find('.collect-checkitems').children();
                     var i;
                     var detectionValue;
@@ -509,6 +527,9 @@ ThorgeneGlobal = {
                     success: function(data, status) {
                         ThorgeneGlobal.cacheSet(apiUrl, data);
                         if (status === 200) {
+                            if (data.unit !== "") {
+                                data.name = data.name + "&nbsp(" + data.unit + ")";
+                            }
                             f7.prompt("", data.name, function() {
                                 var value;
                                 if (data.dataType === "枚举") {
@@ -519,7 +540,10 @@ ThorgeneGlobal = {
                                 ThorgeneGlobal.manualAddOneDone(data.dataType, value, id, data.name, iconFont);
                             });
                             if (data.dataType === "数值") {
-                                $$('.modal input').attr('type', 'number');
+                                $$('.modal input').attr({
+                                    type: 'number',
+                                    placeholder: '请输入检测值'
+                                });
                                 var collectItems = $$('.page[data-page=manual-add]')
                                     .find('.collect-checkitems').children();
                                 var i;
