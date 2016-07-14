@@ -1136,7 +1136,7 @@ f7.onPageInit('photo-uploader', function(page) {
     $$(page.container).find(".addImgButton").click(function() {
         wx.chooseImage({
             count: 9,
-            sizeType: ['compressed'],
+            sizeType: ['original'],
             sourceType: ['album', 'camera'],
             success: function(res) {
                 var tmpLocalIds = res.localIds;
