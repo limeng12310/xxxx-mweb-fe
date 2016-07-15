@@ -267,9 +267,21 @@
                                     </a>
                                     <div class="accordion-item-content">
                                         <div class="content-block">
+                                            {{#js_compare "this.refLow && this.refHigh"}}
                                             <div class="checkitem-graph">
                                                 参考范围: {{refLow}}-{{refHigh}}
                                             </div>
+                                            {{/js_compare}}
+                                            {{#js_compare "this.refLow && !this.refHigh"}}
+                                            <div class="checkitem-graph">
+                                                参考范围: >{{refLow}}
+                                            </div>
+                                            {{/js_compare}}
+                                            {{#js_compare "!this.refLow && this.refHigh"}}
+                                            <div class="checkitem-graph">
+                                                参考范围: <{{refHigh}}
+                                            </div>
+                                            {{/js_compare}}
                                             {{#if intro}}
                                             <div class="checkitem-desc1">
                                                 <pre>项目介绍:\n{{intro}}</pre>
