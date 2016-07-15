@@ -323,6 +323,10 @@ ThorgeneGlobal = {
             f7.alert('该报告还在处理中,请稍后', '');
             return;
         }
+        var Score = $$(ele).find(".score").html();
+        if (Score === "-") {
+            return;
+        }
         f7.showIndicator();
         $$.ajax({
             method: 'GET',
@@ -367,6 +371,7 @@ ThorgeneGlobal = {
                     }
                 } else {
                     // TODO
+                    f7.hideIndicator();
                 }
             },
             error: function() {
@@ -406,6 +411,9 @@ ThorgeneGlobal = {
             apiUrl = ThorgeneGlobal.apiPrefix + '/check-items/' + id;
             data = ThorgeneGlobal.cacheGet(apiUrl);
             if (data !== undefined) {
+                if (data.unit !== "") {
+                    data.name = data.name + "&nbsp(" + data.unit + ")";
+                }
                 f7.prompt("", data.name, function() {
                     var value;
                     if (data.dataType === "枚举") {
@@ -416,7 +424,10 @@ ThorgeneGlobal = {
                     ThorgeneGlobal.manualAddOneDone(data.dataType, value, id, data.name, iconFont);
                 });
                 if (data.dataType === "数值") {
-                    $$('.modal input').attr('type', 'number');
+                    $$('.modal input').attr({
+                        type: 'number',
+                        placeholder: '请输入检测值'
+                    });
                     var curVal = item.find('p.value').html();
                     if (curVal === "---") {
                         $$('.modal input').val("");
@@ -434,6 +445,9 @@ ThorgeneGlobal = {
                     success: function(data, status) {
                         ThorgeneGlobal.cacheSet(apiUrl, data);
                         if (status === 200) {
+                            if (data.unit !== "") {
+                                data.name = data.name + "&nbsp(" + data.unit + ")";
+                            }
                             f7.prompt("", data.name, function() {
                                 var value;
                                 if (data.dataType === "枚举") {
@@ -444,7 +458,10 @@ ThorgeneGlobal = {
                                 ThorgeneGlobal.manualAddOneDone(data.dataType, value, id, data.name, iconFont);
                             });
                             if (data.dataType === "数值") {
-                                $$('.modal input').attr('type', 'number');
+                                $$('.modal input').attr({
+                                    type: 'number',
+                                    placeholder: '请输入检测值'
+                                });
                                 var curVal = item.find('p.value').html();
                                 if (curVal === "---") {
                                     $$('.modal input').val("");
@@ -469,6 +486,9 @@ ThorgeneGlobal = {
             apiUrl = ThorgeneGlobal.apiPrefix + '/check-items/' + id;
             data = ThorgeneGlobal.cacheGet(apiUrl);
             if (data !== undefined) {
+                if (data.unit !== "") {
+                    data.name = data.name + "&nbsp(" + data.unit + ")";
+                }
                 f7.prompt("", data.name, function() {
                     var value;
                     if (data.dataType === "枚举") {
@@ -479,7 +499,10 @@ ThorgeneGlobal = {
                     ThorgeneGlobal.manualAddOneDone(data.dataType, value, id, data.name, iconFont);
                 });
                 if (data.dataType === "数值") {
-                    $$('.modal input').attr('type', 'number');
+                    $$('.modal input').attr({
+                        type: 'number',
+                        placeholder: '请输入检测值'
+                    });
                     var collectItems = $$('.page[data-page=manual-add]').find('.collect-checkitems').children();
                     var i;
                     var detectionValue;
@@ -504,6 +527,9 @@ ThorgeneGlobal = {
                     success: function(data, status) {
                         ThorgeneGlobal.cacheSet(apiUrl, data);
                         if (status === 200) {
+                            if (data.unit !== "") {
+                                data.name = data.name + "&nbsp(" + data.unit + ")";
+                            }
                             f7.prompt("", data.name, function() {
                                 var value;
                                 if (data.dataType === "枚举") {
@@ -514,7 +540,10 @@ ThorgeneGlobal = {
                                 ThorgeneGlobal.manualAddOneDone(data.dataType, value, id, data.name, iconFont);
                             });
                             if (data.dataType === "数值") {
-                                $$('.modal input').attr('type', 'number');
+                                $$('.modal input').attr({
+                                    type: 'number',
+                                    placeholder: '请输入检测值'
+                                });
                                 var collectItems = $$('.page[data-page=manual-add]')
                                     .find('.collect-checkitems').children();
                                 var i;
@@ -745,6 +774,8 @@ ThorgeneGlobal = {
                         if (data.length === 0) {
                             recordPage.find(".page-content").append("<div class='empty'>" +
                                 ThorgeneGlobal.recordPage.emptyInfo + " </div>");
+                        } else {
+                            recordPage.find(".page-content .empty").remove();
                         }
                         if (status === 200) {
                             recordPage.find('.record-container').append(Template7.templates.recordItemTpl(
@@ -783,11 +814,6 @@ ThorgeneGlobal = {
                                 }
                                 loading = true;
                                 recordPage.children('.page-content').append(Template7.templates.preloaderTpl());
-                                // var recordList = recordPage.find('.record-container').find('[record-id]');
-                                // var lastId = $$(recordList[recordList.length - 1]).attr('record-id');
-                                // if (!lastId) {
-                                //     return;
-                                // }
                                 var offset = recordPage.find('.record-container').data('record-cnt');
 
                                 $$.ajax({
@@ -1141,20 +1167,22 @@ f7.onPageInit('photo-uploader', function(page) {
             success: function(res) {
                 var tmpLocalIds = res.localIds;
                 ThorgeneGlobal.localIds = ThorgeneGlobal.localIds.concat(tmpLocalIds);
-                var images = $$('.imgs');
-                var addImgButton = $$('.addImgButton');
-                $$('#hidden').append(addImgButton);
-                for (var i = 0; i < tmpLocalIds.length; i++) {
-                    var img = document.createElement("img");
-                    img.src = tmpLocalIds[i];
-                    img.className = "part-img";
-                    img.tempUrl = tmpLocalIds[i];
-                    images.append(img);
+                if (ThorgeneGlobal.localIds.length <= 15) {
+                    var images = $$('.imgs');
+                    var addImgButton = $$('.addImgButton');
+                    $$('#hidden').append(addImgButton);
+                    for (var i = 0; i < tmpLocalIds.length; i++) {
+                        var img = document.createElement("img");
+                        img.src = tmpLocalIds[i];
+                        img.className = "part-img";
+                        img.tempUrl = tmpLocalIds[i];
+                        images.append(img);
+                    }
+                    images.append(addImgButton);
+                    $$('img').click(function() {
+                        ThorgeneGlobal.previewImg();
+                    });
                 }
-                images.append(addImgButton);
-                $$('img').click(function() {
-                    ThorgeneGlobal.previewImg();
-                });
             },
             error: function() {
                 // TODO
@@ -1211,20 +1239,22 @@ f7.onPageInit('add-record', function(page) {
             success: function(res) {
                 var tmpLocalIds = res.localIds;
                 ThorgeneGlobal.addRecord.localIds = ThorgeneGlobal.addRecord.localIds.concat(tmpLocalIds);
-                var images = $$('.imgs');
-                var addImgButton = $$('.addImgButton');
-                $$('#hidden').append(addImgButton);
-                for (var i = 0; i < tmpLocalIds.length; i++) {
-                    var img = document.createElement("img");
-                    img.src = tmpLocalIds[i];
-                    img.className = "part-img";
-                    img.tempUrl = tmpLocalIds[i];
-                    images.append(img);
+                if (ThorgeneGlobal.addRecord.localIds.length <= 9) {
+                    var images = $$('.imgs');
+                    var addImgButton = $$('.addImgButton');
+                    $$('#hidden').append(addImgButton);
+                    for (var i = 0; i < tmpLocalIds.length; i++) {
+                        var img = document.createElement("img");
+                        img.src = tmpLocalIds[i];
+                        img.className = "part-img";
+                        img.tempUrl = tmpLocalIds[i];
+                        images.append(img);
+                    }
+                    images.append(addImgButton);
+                    $$('img').click(function() {
+                        ThorgeneGlobal.addRecord.previewImg();
+                    });
                 }
-                images.append(addImgButton);
-                $$('img').click(function() {
-                    ThorgeneGlobal.addRecord.previewImg();
-                });
             },
             error: function() {
                 // TODO
