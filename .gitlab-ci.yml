@@ -15,6 +15,7 @@ eslint:
     - node_modules/
   except:
   - master
+  - test
   - tags
   tags:
   - docker
@@ -33,7 +34,7 @@ test:
     paths:
     - node_modules/
   only:
-  - master
+  - test
   tags:
   - shell
   
