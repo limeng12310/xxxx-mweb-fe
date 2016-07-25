@@ -16,7 +16,7 @@ eslint:
   except:
   - master
   - test
-  - 2.0
+  - "2.0"
   - tags
   tags:
   - docker
