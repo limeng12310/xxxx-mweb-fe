@@ -8,14 +8,15 @@ eslint:
     lint
   script:
   - npm install
-  - npm run eslint
+  - node_modules/.bin/gulp lint
   cache:
-    key: "$CI_BUILD_REF_NAME"
+    key: "node_modules_cache"
     paths:
     - node_modules/
   except:
   - master
   - test
+  - 2.0
   - tags
   tags:
   - docker
