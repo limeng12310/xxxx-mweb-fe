@@ -13,7 +13,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, '../dist'),
     filename: '[name].[hash:8].js',
-    publicPath: '/static/'
+    publicPath: '/'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -36,8 +36,7 @@ module.exports = {
       },
       {
         test: /\.css?$/,
-        loaders: ['style', 'css'],
-        include: __dirname
+        loaders: ['style', 'css']
       },
       {test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff'},
       {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},

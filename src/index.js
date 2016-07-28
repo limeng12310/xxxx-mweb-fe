@@ -1,8 +1,10 @@
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import HomeContainer from './components/home/HomeContainer';
+
+import './common.css';
 
 ReactDOM.render(
-  <App />,
+  <HomeContainer />,
   document.getElementById('approot')
 );
 
