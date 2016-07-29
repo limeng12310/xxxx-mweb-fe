@@ -6,19 +6,21 @@ class PhotosToUpload extends React.Component {
     super(props);
     this.clickAlert = this.clickAlert.bind(this);
     this.clickChange = this.clickChange.bind(this);
+    this.wxChooseImgSuccess = this.wxChooseImgSuccess.bind(this);
   }
   clickChange() {
     wx.chooseImage({
       count: 9,
       sizeType: ['original'],
       sourceType: ['album', 'camera'],
-      success(res) {
-        this.props.onUserImageInput(res.localIds);
-      },
+      success: this.wxChooseImgSuccess,
       error() {
         alert('图片选择失败');
       }
     });
+  }
+  wxChooseImgSuccess(res) {
+    this.props.onUserImageInput(res.localIds);
   }
   clickAlert() {
     alert('最多只能添加九张图片！');
