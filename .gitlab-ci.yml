@@ -21,7 +21,7 @@ eslint:
   tags:
   - docker
   
-2.0:
+test2:
   stage:
     test
   script:
@@ -33,7 +33,7 @@ eslint:
     paths:
     - node_modules/
   only:
-  - 2.0
+  - "2.0"
   tags:
   - shell
 
