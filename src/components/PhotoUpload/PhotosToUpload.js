@@ -80,12 +80,12 @@ class PhotosToUpload extends React.Component {
     return (
       <div style={styles.layOut}>
         {
-          this.props.items.map((imgId) => {
+          this.props.items.map((imgId, i) => {
             const background = {
               backgroundImage: `url(${imgId})`
             };
             return (
-              <div style={[styles.img, background]}></div>
+              <div key={i} style={[styles.img, background]}></div>
             );
           })
         }
