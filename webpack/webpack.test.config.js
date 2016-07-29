@@ -15,7 +15,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Thorgene',
-      template: 'src/index.ejs'
+      template: 'src/index.ejs',
+      filename: 'app-home.html'
     }),
     new webpack.ProvidePlugin({
       React: 'react'
