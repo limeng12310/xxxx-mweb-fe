@@ -85,7 +85,7 @@ class PhotosToUpload extends React.Component {
               backgroundImage: `url(${imgId})`
             };
             return (
-              <div key={i} style={[styles.img, background]}></div>
+              <div key={i} style={Object.assign({}, styles.img, background)}></div>
             );
           })
         }
