@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import PhotoUploadContainer from './components/PhotoUpload/PhotoUploadContainer';
 
 ReactDOM.render(
-  <App />,
+  <PhotoUploadContainer />,
   document.getElementById('approot')
 );
 
