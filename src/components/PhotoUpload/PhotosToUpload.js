@@ -8,7 +8,17 @@ class PhotosToUpload extends React.Component {
     this.clickChange = this.clickChange.bind(this);
   }
   clickChange() {
-    this.props.onUserImageInput();
+    wx.chooseImage({
+      count: 9,
+      sizeType: ['original'],
+      sourceType: ['album', 'camera'],
+      success(res) {
+        this.props.onUserImageInput(res.localIds);
+      },
+      error() {
+        alert('图片选择失败');
+      }
+    });
   }
   clickAlert() {
     alert('最多只能添加九张图片！');
@@ -68,9 +78,12 @@ class PhotosToUpload extends React.Component {
     return (
       <div style={styles.layOut}>
         {
-          this.props.items.map(() => (
-            <div style={styles.img}></div>
-          ))
+          this.props.items.map((imgId) => {
+            styles.img.backgroundImage = `url(${imgId})`;
+            return (
+              <div style={styles.img}></div>
+            );
+          })
         }
         {add}
       </div>
