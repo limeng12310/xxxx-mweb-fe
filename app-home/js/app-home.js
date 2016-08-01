@@ -47,8 +47,9 @@ var f7 = new Framework7({
                 method: 'GET',
                 url: apiUrl,
                 dataType: 'json',
-                success: function(data, status) {
-                    if (status === 200) {
+                success: function(json, status) {
+                    var data = json.data;
+                    if (status === 200 && json.retCode === 0) {
                         ThorgeneGlobal.cacheSet(apiUrl, data);
 
                         next(Template7.compile(content)({
@@ -247,8 +248,9 @@ ThorgeneGlobal = {
                                 url: ThorgeneGlobal.apiPrefix + '/report-aggregation',
                                 method: 'GET',
                                 dataType: 'json',
-                                success: function(data, status) {
-                                    if (status === 200) {
+                                success: function(json, status) {
+                                    var data = json.data;
+                                    if (status === 200 && json.retCode === 0) {
                                         ThorgeneGlobal.homePage.refreHmHead($$('.page[data-page=home-page]'), data);
                                     }
                                 },
@@ -333,8 +335,9 @@ ThorgeneGlobal = {
             url: ThorgeneGlobal.apiPrefix + ($$(ele).attr('report-id') ?
                 '/reports/' + $$(ele).attr('report-id') : '/aggregation-info'),
             dataType: 'json',
-            success: function(data, status) {
-                if (status === 200) {
+            success: function(json, status) {
+                var data = json.data;
+                if (status === 200 && json.retCode === 0) {
                     f7.hideIndicator();
                     f7.mainView.router.load({
                         content: Template7.templates.reportDetailTpl({
@@ -442,9 +445,10 @@ ThorgeneGlobal = {
                     method: 'GET',
                     url: apiUrl,
                     dataType: 'json',
-                    success: function(data, status) {
+                    success: function(json, status) {
+                        var data = json.data;
                         ThorgeneGlobal.cacheSet(apiUrl, data);
-                        if (status === 200) {
+                        if (status === 200 && json.retCode === 0) {
                             if (data.unit !== "") {
                                 data.name = data.name + "&nbsp(" + data.unit + ")";
                             }
@@ -524,9 +528,10 @@ ThorgeneGlobal = {
                     method: 'GET',
                     url: apiUrl,
                     dataType: 'json',
-                    success: function(data, status) {
+                    success: function(json, status) {
+                        var data = json.data;
                         ThorgeneGlobal.cacheSet(apiUrl, data);
-                        if (status === 200) {
+                        if (status === 200 && json.retCode === 0) {
                             if (data.unit !== "") {
                                 data.name = data.name + "&nbsp(" + data.unit + ")";
                             }
@@ -722,8 +727,9 @@ ThorgeneGlobal = {
                 method: 'GET',
                 url: ThorgeneGlobal.apiPrefix + '/report-aggregation',
                 dataType: 'json',
-                success: function(data, status) {
-                    if (status === 200) {
+                success: function(json, status) {
+                    var data = json.data;
+                    if (status === 200 && json.retCode ===0) {
                         var aggregation = data;
 
                         $$.ajax({
@@ -731,8 +737,9 @@ ThorgeneGlobal = {
                             url: ThorgeneGlobal.apiPrefix + '/reports?_limit=' +
                             ThorgeneGlobal.reportsLimit,
                             dataType: 'json',
-                            success: function(data, status) {
-                                if (status === 200) {
+                            success: function(json, status) {
+                                var data = json.data;
+                                if (status === 200 && json.retCode === 0) {
                                     ThorgeneGlobal.homePage.refreshHome($$('.page[data-page=home-page]'),
                                       aggregation, data);
                                 } else {
@@ -770,8 +777,9 @@ ThorgeneGlobal = {
                     url: ThorgeneGlobal.apiPrefix + '/records?_limit=' + ThorgeneGlobal.recordPage.recordsLimits,
                     method: 'GET',
                     dataType: 'json',
-                    success: function(data, status) {
-                        if (status === 200) {
+                    success: function(json, status) {
+                        var data = json.data;
+                        if (status === 200 && json.retCode === 0) {
                             if (data.length === 0) {
                                 recordPage.find(".page-content").append("<div class='empty'>" +
                                     ThorgeneGlobal.recordPage.emptyInfo + " </div>");
@@ -1021,20 +1029,35 @@ f7.onPageInit('home-page', function(page) {
         }
     });
 
+    $$(page.container).find('.manual-add').on('click', function () {
+       $$.ajax({
+           method: 'GET',
+           url: ThorgeneGlobal.apiPrefix + '/set-session?userId=128',
+           success: function (data, status) {
+               console.log(status);
+           },
+           error: function () {
+               console.log('error!');
+           }
+       })
+    });
+
     var homePage = $$(page.container);
     $$.ajax({
         method: 'GET',
         url: ThorgeneGlobal.apiPrefix + '/report-aggregation',
         dataType: 'json',
-        success: function(data, status) {
+        success: function(json, status) {
+            var data = json.data;
             var aggregation = data;
-            if (status === 200) {
+            if (status === 200 && json.retCode === 0) {
                 $$.ajax({
                     method: 'GET',
                     url: ThorgeneGlobal.apiPrefix + '/reports?_limit=' + ThorgeneGlobal.reportsLimit,
                     dataType: 'json',
-                    success: function(data, status) {
-                        if (status === 200) {
+                    success: function(json, status) {
+                        var data = json.data;
+                        if (status === 200 && json.retCode === 0) {
                             ThorgeneGlobal.homePage.refreshHome($$(page.container), aggregation, data);
 
                             // homepage下拉刷新
@@ -1063,9 +1086,10 @@ f7.onPageInit('home-page', function(page) {
                                     url: ThorgeneGlobal.apiPrefix + '/reports?_offset=' + homePage.find('.detail')
                                         .data('report-cnt') + '&_limit=' + ThorgeneGlobal.reportsLimit,
                                     dataType: 'json',
-                                    success: function(data, status) {
+                                    success: function(json, status) {
+                                        var data = json.data;
                                         loading = false;
-                                        if (status === 200) {
+                                        if (status === 200 && json.retCode === 0) {
                                             homePage.find('.infinite-scroll-preloader').remove();
                                             if (data.length !== 0) {
                                                 var curCnt = homePage.find('.detail').data('report-cnt');
@@ -1219,8 +1243,9 @@ f7.onPageInit('checkitem-list', function() {
     if (data !== undefined) {
         ThorgeneGlobal.initCheckitemList(data);
     } else {
-        $$.getJSON(apiUrl, function(data, status) {
-            if (status === 200) {
+        $$.getJSON(apiUrl, function(json, status) {
+            var data = json.data;
+            if (status === 200 && json.retCode === 0) {
                 ThorgeneGlobal.cacheSet(apiUrl, data);
                 ThorgeneGlobal.initCheckitemList(data);
             } else {
