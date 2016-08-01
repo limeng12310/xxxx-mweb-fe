@@ -771,13 +771,13 @@ ThorgeneGlobal = {
                     method: 'GET',
                     dataType: 'json',
                     success: function(data, status) {
-                        if (data.length === 0) {
-                            recordPage.find(".page-content").append("<div class='empty'>" +
-                                ThorgeneGlobal.recordPage.emptyInfo + " </div>");
-                        } else {
-                            recordPage.find(".page-content .empty").remove();
-                        }
                         if (status === 200) {
+                            if (data.length === 0) {
+                                recordPage.find(".page-content").append("<div class='empty'>" +
+                                    ThorgeneGlobal.recordPage.emptyInfo + " </div>");
+                            } else {
+                                recordPage.find(".page-content .empty").remove();
+                            }
                             recordPage.find('.record-container').append(Template7.templates.recordItemTpl(
                               ThorgeneGlobal.recordPage.json2Report(data)));
 
@@ -891,17 +891,22 @@ ThorgeneGlobal = {
             f7.confirm('确定删除该记录?', '', function() {
                 f7.showPreloader('删除中...');
                 var recordDiv = $$(ele).parents('.record-div[record-id]');
+                var recordPage = $$('.page[data-page=record]');
                 $$.ajax({
                     url: ThorgeneGlobal.apiPrefix + '/records/' + recordDiv.attr('record-id'),
                     method: 'DELETE',
                     success: function(data, status) {
                         if (status === 200) {
                             recordDiv.remove();
-
                             var curCnt = recordDiv.parent('.record-container').data('record-cnt');
                             recordDiv.parent('.record-container').data('record-cnt', parseInt(curCnt) - 1);
-
                             ThorgeneGlobal.recordPage.imgUrls[recordDiv.attr('record-id')] = undefined;
+                            if ($$('.record-container').data('record-cnt') === 0) {
+                                recordPage.find(".page-content").append("<div class='empty'>" +
+                                    ThorgeneGlobal.recordPage.emptyInfo + " </div>");
+                            } else {
+                                recordPage.find(".page-content .empty").remove();
+                            }
                         } else {
                             // TODO
                         }
@@ -975,6 +980,7 @@ ThorgeneGlobal = {
                 },
                 success: function() {
                     f7.hidePreloader();
+                    $$(".page-content .empty").remove();
                     ThorgeneGlobal.addRecord.localIds = [];
                     ThorgeneGlobal.addRecord.serverIds = [];
                     f7.recordView.router.back();
