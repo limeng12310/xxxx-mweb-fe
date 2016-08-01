@@ -729,7 +729,7 @@ ThorgeneGlobal = {
                 dataType: 'json',
                 success: function(json, status) {
                     var data = json.data;
-                    if (status === 200 && json.retCode ===0) {
+                    if (status === 200 && json.retCode === 0) {
                         var aggregation = data;
 
                         $$.ajax({
@@ -1029,18 +1029,18 @@ f7.onPageInit('home-page', function(page) {
         }
     });
 
-    $$(page.container).find('.manual-add').on('click', function () {
-       $$.ajax({
-           method: 'GET',
-           url: ThorgeneGlobal.apiPrefix + '/set-session?userId=128',
-           success: function (data, status) {
-               console.log(status);
-           },
-           error: function () {
-               console.log('error!');
-           }
-       })
-    });
+    // $$(page.container).find('.manual-add').on('click', function () {
+    //    $$.ajax({
+    //        method: 'GET',
+    //        url: ThorgeneGlobal.apiPrefix + '/set-session?userId=128',
+    //        success: function (data, status) {
+    //            console.log(status);
+    //        },
+    //        error: function () {
+    //            console.log('error!');
+    //        }
+    //    })
+    // });
 
     var homePage = $$(page.container);
     $$.ajax({
