@@ -1,6 +1,7 @@
 import CheckTimeInput from './CheckTimeInput';
 import CheckLocationInput from './CheckLocationInput';
 import PhotosToUpload from './PhotosToUpload';
+import boxBackground from './img/background.jpg';
 
 class PhotoUploadContainer extends React.Component {
   constructor(props) {
@@ -32,6 +33,14 @@ class PhotoUploadContainer extends React.Component {
   }
   render() {
     const styles = {
+      box: {
+        position: 'absolute',
+        height: '100%',
+        width: '100%',
+        backgroundImage: `url(${boxBackground})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover'
+      },
       container: {
         paddingTop: 50,
         textAlign: 'center'
@@ -41,7 +50,6 @@ class PhotoUploadContainer extends React.Component {
         paddingTop: 30,
         fontSize: 50,
         color: '#5BA8FC',
-        backgroundColor: '#F7F7F7',
         borderBottomWidth: 2,
         borderBottomStyle: 'solid',
         borderBottomColor: '#D7D7D7'
@@ -70,7 +78,7 @@ class PhotoUploadContainer extends React.Component {
       }
     };
     return (
-      <div>
+      <div style={styles.box}>
         <div style={styles.nav}>
           <div><a style={styles.back}><span>&lt;</span>返回</a></div>
           <div><input style={styles.ok} value="完成" type="submit" /></div>
