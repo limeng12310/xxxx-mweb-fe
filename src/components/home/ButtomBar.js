@@ -1,6 +1,10 @@
 /**
  * Created by zc on 2016/7/26.
  */
+import State from './img/state.png';
+import history from './img/history.png';
+import user from './img/user.png';
+
 const ButtomBarStyle = {
   bottomBar: {
     width: '100%',
@@ -10,8 +14,7 @@ const ButtomBarStyle = {
     justifyContent: 'space-around',
     position: 'absolute',
     bottom: '0',
-    left: '0',
-    border: '1px solid red'
+    left: '0'
 
   },
   barItem: {
@@ -19,9 +22,12 @@ const ButtomBarStyle = {
   },
   icon: {
     display: 'block',
-    width: '40px',
-    height: '40px',
-    border: '1px solid #f00'
+    width: '36px'
+  },
+  iconFont: {
+    color: '#fff',
+    fontSize: '14px',
+    textDecoration: 'none'
   }
 };
 class ButtomBar extends React.Component {
@@ -29,16 +35,16 @@ class ButtomBar extends React.Component {
     return (
       <div style={ButtomBarStyle.bottomBar}>
         <div style={ButtomBarStyle.barItem}>
-          <span className="icon" style={ButtomBarStyle.icon}></span>
-          <a href="#">主页</a>
+          <img src={State} alt="" style={ButtomBarStyle.icon} />
+          <a href="#" style={ButtomBarStyle.iconFont}>动态</a>
         </div>
         <div style={ButtomBarStyle.barItem}>
-          <span className="icon" style={ButtomBarStyle.icon}></span>
-          <a href="#">趋势</a>
+          <img src={history} alt="" style={ButtomBarStyle.icon} />
+          <a href="#" style={ButtomBarStyle.iconFont}>历史</a>
         </div>
         <div style={ButtomBarStyle.barItem}>
-          <span className="icon" style={ButtomBarStyle.icon}></span>
-          <a href="#">我的</a>
+          <img src={user} alt="" style={ButtomBarStyle.icon} />
+          <a href="#" style={ButtomBarStyle.iconFont}>用户</a>
         </div>
       </div>
     );

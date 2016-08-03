@@ -5,17 +5,27 @@ import ButtomBar from './ButtomBar';
 import Upload from './Upload';
 import ReportList from './ReportList';
 import Summary from './Summary';
-const HomeContainerStyle = {
+import Header from './Header';
+import homeBG from './img/homeBG.png';
 
+const HomeContainerStyle = {
   ReportListBox: {
     width: '100%',
-    display: 'flex',
+    display: 'flex'
+  },
+  HomeBox: {
+    width: '100%',
+    height: '100%',
+    background: `url(${homeBG}) no-repeat`,
+    backgroundSize: 'cover',
+    position: 'absolute'
+  },
+  Report: {
+    width: '100%',
     position: 'absolute',
     left: 0,
-    bottom: '98px'
-
+    bottom: '100px'
   }
-
 };
 class HomeContainer extends React.Component {
   render() {
@@ -27,34 +37,43 @@ class HomeContainer extends React.Component {
     };
     const data = [
       {
-        date: '星期一,7月21日',
-        icon: '',
-        time: '10:30',
-        okCut: 3,
-        warningCnt: 5,
-        errorCut: 9
+        year: 16,
+        month: 2,
+        day: 14,
+        content: '北京大学第一医院'
       }, {
-        date: '星期二,7月22日',
-        icon: '',
-        time: '10:30',
-        okCut: 4,
-        warningCnt: 5,
-        errorCut: 6
+        year: 15,
+        month: 3,
+        day: 14,
+        content: '山西大学第一医院'
       }, {
-        date: '星期二,7月22日',
-        icon: '',
-        time: '10:30',
-        okCut: 4,
-        warningCnt: 5,
-        errorCut: 6
+        year: 14,
+        month: 4,
+        day: 14,
+        content: '东北大学第一医院'
+      }, {
+        year: 15,
+        month: 3,
+        day: 14,
+        content: '山西大学第一医院'
+      }, {
+        year: 14,
+        month: 4,
+        day: 14,
+        content: '东北大学第一医院'
       }
     ];
     return (
-      <div>
+      <div style={HomeContainerStyle.HomeBox}>
+        <Header />
         <Summary cnt={cnt} />
-        <div style={HomeContainerStyle.ReportListBox}>
-          <ReportList data={data} />
-          <Upload />
+        <div style={HomeContainerStyle.Report}>
+          <div className="weightLine"></div>
+          <div style={HomeContainerStyle.ReportListBox}>
+            <ReportList data={data} />
+            <Upload />
+          </div>
+          <div className="weightLine"></div>
         </div>
         <ButtomBar />
       </div>
