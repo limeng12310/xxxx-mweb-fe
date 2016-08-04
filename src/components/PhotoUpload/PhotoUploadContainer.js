@@ -9,10 +9,10 @@ class PhotoUploadContainer extends React.Component {
   constructor(props) {
     super(props);
     this.ossClient = new Wrapper({
-      "region": "oss-cn-beijing",
-      "accessKeyId": "2pSR2UNkcliLiZJH",
-      "accessKeySecret": "APhROJpzai4PxKnchcbHl3byuVBlBx",
-      "bucket": "thorgene-mweb"
+      region: 'oss-cn-beijing',
+      accessKeyId: '2pSR2UNkcliLiZJH',
+      accessKeySecret: 'APhROJpzai4PxKnchcbHl3byuVBlBx',
+      bucket: 'thorgene-mweb'
     });
 
     this.handleUserDateInput = this.handleUserDateInput.bind(this);
@@ -32,6 +32,8 @@ class PhotoUploadContainer extends React.Component {
     this.setState({ location });
   }
   handleUserImageInput(imgIds) {
+    const timestamp = new Date().getTime();
+
     this.setState({
       items: [
         ...this.state.items,
@@ -40,17 +42,15 @@ class PhotoUploadContainer extends React.Component {
       count: this.state.count + imgIds.length
     });
 
-    var timestamp = new Date().getTime();
-    for (var i = 0; i < imgId; ++i) {
+    for (let i = 0; i < imgIds.length; ++i) {
       this.ossClient.put(`/tmp/${timestamp}_${i}`, imgIds[i])
-        .then(function (val) {
+        .then((val) => {
           alert(val);
         })
-        .catch(function (err) {
+        .catch(() => {
           alert('上传图片失败');
         });
     }
-
   }
   render() {
     const styles = {
