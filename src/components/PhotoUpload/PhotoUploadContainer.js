@@ -3,9 +3,18 @@ import CheckLocationInput from './CheckLocationInput';
 import PhotosToUpload from './PhotosToUpload';
 import boxBackground from './img/background.jpg';
 
+import { Wrapper } from 'ali-oss';
+
 class PhotoUploadContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.ossClient = new Wrapper({
+      "region": "oss-cn-beijing",
+      "accessKeyId": "2pSR2UNkcliLiZJH",
+      "accessKeySecret": "APhROJpzai4PxKnchcbHl3byuVBlBx",
+      "bucket": "thorgene-mweb"
+    });
+
     this.handleUserDateInput = this.handleUserDateInput.bind(this);
     this.handleUserLocationInput = this.handleUserLocationInput.bind(this);
     this.handleUserImageInput = this.handleUserImageInput.bind(this);
@@ -30,6 +39,18 @@ class PhotoUploadContainer extends React.Component {
       ],
       count: this.state.count + imgIds.length
     });
+
+    var timestamp = new Date().getTime();
+    for (var i = 0; i < imgId; ++i) {
+      this.ossClient.put(`/tmp/${timestamp}_${i}`, imgIds[i])
+        .then(function (val) {
+          alert(val);
+        })
+        .catch(function (err) {
+          alert('上传图片失败');
+        });
+    }
+
   }
   render() {
     const styles = {
