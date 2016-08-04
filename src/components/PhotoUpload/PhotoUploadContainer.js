@@ -9,17 +9,11 @@ import fetch from 'isomorphic-fetch';
 class PhotoUploadContainer extends React.Component {
   constructor(props) {
     super(props);
-    // this.ossClient = new Wrapper({
-    //   region: 'oss-cn-beijing',
-    //   accessKeyId: '2pSR2UNkcliLiZJH',
-    //   accessKeySecret: 'APhROJpzai4PxKnchcbHl3byuVBlBx',
-    //   bucket: 'thorgene-mweb'
-    // });
 
-    this.oss = new ALY.OSS({
-      accessKeyId: "2pSR2UNkcliLiZJH",
-      secretAccessKey: "APhROJpzai4PxKnchcbHl3byuVBlBx",
-      securityToken: "",
+    this.oss = new ALY.OSS({                  // eslint-disable-line
+      accessKeyId: '2pSR2UNkcliLiZJH',
+      secretAccessKey: 'APhROJpzai4PxKnchcbHl3byuVBlBx',
+      securityToken: '',
       endpoint: 'http://oss-cn-beijing',
       apiVersion: '2013-10-15'
     });
@@ -66,11 +60,11 @@ class PhotoUploadContainer extends React.Component {
             ContentEncoding: 'utf-8',         // 参考: http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.11
             ServerSideEncryption: 'AES256',
             Expires: null                     // 参考: http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.21
-          }, function (err, data) {
+          }, (err, res) => {
             if (err) {
               console.log(`error: ${err}`);
             } else {
-              console.log(`success: ${data}`);
+              console.log(`success: ${res}`);
             }
           });
         });
