@@ -1,10 +1,20 @@
 import CheckTimeInput from './CheckTimeInput';
 import CheckLocationInput from './CheckLocationInput';
 import PhotosToUpload from './PhotosToUpload';
+import boxBackground from './img/background.jpg';
+
+import { Wrapper } from 'ali-oss';
 
 class PhotoUploadContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.ossClient = new Wrapper({
+      region: 'oss-cn-beijing',
+      accessKeyId: '2pSR2UNkcliLiZJH',
+      accessKeySecret: 'APhROJpzai4PxKnchcbHl3byuVBlBx',
+      bucket: 'thorgene-mweb'
+    });
+
     this.handleUserDateInput = this.handleUserDateInput.bind(this);
     this.handleUserLocationInput = this.handleUserLocationInput.bind(this);
     this.handleUserImageInput = this.handleUserImageInput.bind(this);
@@ -22,6 +32,8 @@ class PhotoUploadContainer extends React.Component {
     this.setState({ location });
   }
   handleUserImageInput(imgIds) {
+    const timestamp = new Date().getTime();
+
     this.setState({
       items: [
         ...this.state.items,
@@ -29,9 +41,27 @@ class PhotoUploadContainer extends React.Component {
       ],
       count: this.state.count + imgIds.length
     });
+
+    for (let i = 0; i < imgIds.length; ++i) {
+      this.ossClient.put(`/tmp/${timestamp}_${i}`, imgIds[i])
+        .then((val) => {
+          alert(val);
+        })
+        .catch(() => {
+          alert('上传图片失败');
+        });
+    }
   }
   render() {
     const styles = {
+      box: {
+        position: 'absolute',
+        height: '100%',
+        width: '100%',
+        backgroundImage: `url(${boxBackground})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover'
+      },
       container: {
         paddingTop: 50,
         textAlign: 'center'
@@ -41,7 +71,6 @@ class PhotoUploadContainer extends React.Component {
         paddingTop: 30,
         fontSize: 50,
         color: '#5BA8FC',
-        backgroundColor: '#F7F7F7',
         borderBottomWidth: 2,
         borderBottomStyle: 'solid',
         borderBottomColor: '#D7D7D7'
@@ -70,7 +99,7 @@ class PhotoUploadContainer extends React.Component {
       }
     };
     return (
-      <div>
+      <div style={styles.box}>
         <div style={styles.nav}>
           <div><a style={styles.back}><span>&lt;</span>返回</a></div>
           <div><input style={styles.ok} value="完成" type="submit" /></div>
