@@ -3,16 +3,19 @@ import CheckLocationInput from './CheckLocationInput';
 import PhotosToUpload from './PhotosToUpload';
 import boxBackground from './img/background.jpg';
 
-import { Wrapper } from 'ali-oss';
+import './aliyun-sdk.min';
+import fetch from 'isomorphic-fetch';
 
 class PhotoUploadContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.ossClient = new Wrapper({
-      region: 'oss-cn-beijing',
+
+    this.oss = new ALY.OSS({                  // eslint-disable-line
       accessKeyId: '2pSR2UNkcliLiZJH',
-      accessKeySecret: 'APhROJpzai4PxKnchcbHl3byuVBlBx',
-      bucket: 'thorgene-mweb'
+      secretAccessKey: 'APhROJpzai4PxKnchcbHl3byuVBlBx',
+      securityToken: '',
+      endpoint: 'http://oss-cn-beijing',
+      apiVersion: '2013-10-15'
     });
 
     this.handleUserDateInput = this.handleUserDateInput.bind(this);
@@ -43,12 +46,27 @@ class PhotoUploadContainer extends React.Component {
     });
 
     for (let i = 0; i < imgIds.length; ++i) {
-      this.ossClient.put(`/tmp/${timestamp}_${i}`, imgIds[i])
-        .then((val) => {
-          alert(val);
-        })
-        .catch(() => {
-          alert('上传图片失败');
+      fetch(imgIds[i])
+        .then(response => response.json())
+        .then(data => {
+          this.oss.putObject({
+            Bucket: 'thorgene-mweb',
+            Key: `tmp/${timestamp}_${i}`,                 // 注意, Key 的值不能以 / 开头, 否则会返回错误.
+            Body: data,
+            AccessControlAllowOrigin: '',
+            // ContentType: 'image/jpeg',
+            CacheControl: 'no-cache',         // 参考: http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9
+            ContentDisposition: '',           // 参考: http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html#sec19.5.1
+            ContentEncoding: 'utf-8',         // 参考: http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.11
+            ServerSideEncryption: 'AES256',
+            Expires: null                     // 参考: http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.21
+          }, (err, res) => {
+            if (err) {
+              console.log(`error: ${err}`);
+            } else {
+              console.log(`success: ${res}`);
+            }
+          });
         });
     }
   }
