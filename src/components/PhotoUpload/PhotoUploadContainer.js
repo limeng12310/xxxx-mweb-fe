@@ -1,7 +1,9 @@
 import CheckTimeInput from './CheckTimeInput';
 import CheckLocationInput from './CheckLocationInput';
 import PhotosToUpload from './PhotosToUpload';
-import boxBackground from './img/background.jpg';
+import boxBackground from './img/background.png';
+import back from './img/back.png';
+import ok from './img/ok.png';
 
 class PhotoUploadContainer extends React.Component {
   constructor(props) {
@@ -22,81 +24,96 @@ class PhotoUploadContainer extends React.Component {
   handleUserLocationInput(location) {
     this.setState({ location });
   }
-  handleUserImageInput(imgIds) {
+  handleUserImageInput(imgId) {
     this.setState({
       items: [
         ...this.state.items,
-        ...imgIds
+        ...imgId
       ],
-      count: this.state.count + imgIds.length
+      count: this.state.items.length
     });
   }
   render() {
     const styles = {
-      box: {
-        position: 'absolute',
+      bg: {
+        position: 'fixed',
         height: '100%',
         width: '100%',
         backgroundImage: `url(${boxBackground})`,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover'
+        backgroundSize: 'cover',
+        zIndex: -1
       },
-      container: {
-        paddingTop: 50,
-        textAlign: 'center'
+      box: {
+        position: 'absolute',
+        height: '100%',
+        width: '100%'
       },
       nav: {
-        height: 90,
-        paddingTop: 30,
-        fontSize: 50,
-        color: '#5BA8FC',
-        borderBottomWidth: 2,
-        borderBottomStyle: 'solid',
-        borderBottomColor: '#D7D7D7'
+        height: '5.5%',
+        paddingTop: '0.203125rem',
+        paddingBottom: '0.203125rem'
+      },
+      line: {
+        marginTop: '1.03275rem',
+        height: '0.078125rem',
+        background: 'linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.8),rgba(255,255,255,0.1))',
+        borderTopColor: '#fff'
       },
       back: {
-        fontSize: 50,
-        color: '#5BA8FC',
+        width: '1.0625rem',
+        height: '0.890625rem',
+        backgroundImage: `url(${back})`,
+        backgroundSize: 'cover',
         textDecoration: 'none',
-        position: 'fixed',
-        left: 55,
+        position: 'absolute',
+        left: '0.546875rem',
         border: 'none',
-        background: 'none',
         cursor: 'pointer',
         display: 'flex'
       },
       ok: {
-        fontSize: 50,
-        color: '#5BA8FC',
+        width: '1.03125rem',
+        height: '0.90625rem',
+        backgroundSize: 'cover',
+        backgroundImage: `url(${ok})`,
         textDecoration: 'none',
-        position: 'fixed',
-        right: 40,
+        position: 'absolute',
+        right: '0.4375rem',
         border: 'none',
-        background: 'none',
         cursor: 'pointer',
         display: 'flex'
+      },
+      container: {
+        height: '84.5%',
+        paddingTop: '1.25rem',
+        textAlign: 'center',
+        overflowY: 'scroll'
       }
     };
     return (
-      <div style={styles.box}>
-        <div style={styles.nav}>
-          <div><a style={styles.back}><span>&lt;</span>返回</a></div>
-          <div><input style={styles.ok} value="完成" type="submit" /></div>
-        </div>
-        <div style={styles.container}>
-          <CheckTimeInput
-            date={this.state.date}
-            onUserDateInput={this.handleUserDateInput}
-          />
-          <CheckLocationInput
-            location={this.state.location}
-            onUserLocationInput={this.handleUserLocationInput}
-          />
-          <PhotosToUpload
-            items={this.state.items}
-            onUserImageInput={this.handleUserImageInput}
-            imgCount={this.state.count}
-          />
+      <div>
+        <div style={styles.bg}></div>
+        <div style={styles.box}>
+          <div style={styles.nav}>
+            <div><a style={styles.back}></a></div>
+            <div style={styles.ok}></div>
+            <div style={styles.line}></div>
+          </div>
+          <div style={styles.container}>
+            <CheckTimeInput
+              date={this.state.date}
+              onUserDateInput={this.handleUserDateInput}
+            />
+            <CheckLocationInput
+              location={this.state.location}
+              onUserLocationInput={this.handleUserLocationInput}
+            />
+            <PhotosToUpload
+              items={this.state.items}
+              onUserImageInput={this.handleUserImageInput}
+              imgCount={this.state.count}
+            />
+          </div>
         </div>
       </div>
     );
