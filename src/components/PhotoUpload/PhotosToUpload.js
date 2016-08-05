@@ -83,24 +83,20 @@ class PhotosToUpload extends React.Component {
       );
     } else {
       photo = (
-        <div style={styles.allImage}>
-          {
-            this.props.items.map((imgId, i) => {
-              const background = {
-                backgroundImage: `url(${imgId})`
-              };
-              return (
-                <div
-                  data-url={imgId}
-                  key={i}
-                  style={Object.assign({}, styles.img, background)}
-                  onClick={this.clickPreview}
-                >
-                </div>
-              );
-            })
-          }
-        </div>
+        this.props.items.map((imgId, i) => {
+          const background = {
+            backgroundImage: `url(${imgId})`
+          };
+          return (
+            <div
+              data-url={imgId}
+              key={i}
+              style={Object.assign({}, styles.img, background)}
+              onClick={this.clickPreview}
+            >
+            </div>
+          );
+        })
       );
       add = (
         <div onClick={this.clickChange} style={styles.add}></div>
@@ -108,7 +104,9 @@ class PhotosToUpload extends React.Component {
     }
     return (
       <div style={styles.layOut}>
-        {photo}
+        <div style={styles.allImage}>
+          {photo}
+        </div>
         {add}
       </div>
     );
