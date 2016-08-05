@@ -21,7 +21,11 @@ class PhotosToUpload extends React.Component {
     });
   }
   wxChooseImgSuccess(res) {
-    this.props.onUserImageInput(res.localIds);
+    if ((this.props.imgCount + res.localIds.length) >= 9) {
+      alert('最多只能添加九张图片！');
+    } else {
+      this.props.onUserImageInput(res.localIds);
+    }
   }
   clickPreview(e) {
     wx.previewImage({
@@ -73,31 +77,11 @@ class PhotosToUpload extends React.Component {
       }
     };
     let add;
-    let photo;
     if (this.props.imgCount >= 9) {
-      photo = (
-        alert('最多只能添加九张图片！')
-      );
       add = (
         <div onClick={this.clickAlert} style={styles.add}></div>
       );
     } else {
-      photo = (
-        this.props.items.map((imgId, i) => {
-          const background = {
-            backgroundImage: `url(${imgId})`
-          };
-          return (
-            <div
-              data-url={imgId}
-              key={i}
-              style={Object.assign({}, styles.img, background)}
-              onClick={this.clickPreview}
-            >
-            </div>
-          );
-        })
-      );
       add = (
         <div onClick={this.clickChange} style={styles.add}></div>
       );
@@ -105,7 +89,22 @@ class PhotosToUpload extends React.Component {
     return (
       <div style={styles.layOut}>
         <div style={styles.allImage}>
-          {photo}
+          {
+            this.props.items.map((imgId, i) => {
+              const background = {
+                backgroundImage: `url(${imgId})`
+              };
+              return (
+                <div
+                  data-url={imgId}
+                  key={i}
+                  style={Object.assign({}, styles.img, background)}
+                  onClick={this.clickPreview}
+                >
+                </div>
+              );
+            })
+          }
         </div>
         {add}
       </div>
