@@ -1,5 +1,5 @@
 import backImg from './example.jpg';
-import addImg from './add.jpg';
+import addImg from './img/add.png';
 
 class PhotosToUpload extends React.Component {
   constructor(props) {
@@ -28,40 +28,38 @@ class PhotosToUpload extends React.Component {
   render() {
     const styles = {
       layOut: {
-        marginLeft: 102,
-        marginRight: 102,
-        paddingRight: 10,
-        paddingLeft: 10,
-        marginTop: 40,
-        height: 1000,
-        fontSize: 40,
+        marginLeft: '1.1rem',
+        marginRight: '1.1rem',
+        marginTop: '0.78125rem'
+      },
+      allImage: {
+        minHeight: '6.40625rem',
+        // height: '6.40625rem',
+        // overflowY: 'scroll',
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'between',
-        alignContent: 'flex-start',
-        borderWidth: 2,
-        borderStyle: 'solid',
-        borderColor: '#D7D7D7'
+        alignContent: 'flex-start'
       },
       img: {
-        margin: 20,
-        width: 200,
-        height: 200,
-        borderWidth: 2,
+        margin: '0.3125rem',
+        width: '1.875rem',
+        height: '1.875rem',
+        borderWidth: '0.03125rem',
         borderStyle: 'solid',
         borderColor: '#D7D7D7',
+        borderRadius: '0.178125rem',
         backgroundImage: `url(${backImg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover'
       },
       add: {
-        margin: 20,
-        width: 200,
-        height: 200,
-        borderWidth: 2,
-        borderStyle: 'solid',
-        borderColor: '#D7D7D7',
+        margin: '0.3125rem',
+        width: '2.65625rem',
+        height: '2.66625rem',
+        marginLeft: 'auto',
+        marginRight: 'auto',
         backgroundImage: `url(${addImg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover'
@@ -79,16 +77,18 @@ class PhotosToUpload extends React.Component {
     }
     return (
       <div style={styles.layOut}>
-        {
-          this.props.items.map((imgId, i) => {
-            const background = {
-              backgroundImage: `url(${imgId})`
-            };
-            return (
-              <div key={i} style={Object.assign({}, styles.img, background)}></div>
-            );
-          })
-        }
+        <div style={styles.allImage}>
+          {
+            this.props.items.map((imgId, i) => {
+              const background = {
+                backgroundImage: `url(${imgId})`
+              };
+              return (
+                <div key={i} style={Object.assign({}, styles.img, background)}></div>
+              );
+            })
+          }
+        </div>
         {add}
       </div>
     );

@@ -10,33 +10,44 @@ class CheckLocationInput extends React.Component {
     );
   }
   render() {
-    const style = {
+    const styles = {
       location: {
-        fontSize: 40,
-        paddingBottom: 10,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+        paddingBottom: '0.15625rem'
       },
       locationInput: {
-        fontSize: 40,
-        height: 64
+        fontSize: '0.625rem',
+        color: '#fff',
+        height: '1.0rem',
+        textAlign: 'center',
+        background: 'none',
+        border: 'none',
+        outline: 'none',
+        mozAppearance: 'none',
+        msProgressAppearance: 'none',
+        webkitAppearance: 'none'
         // paddingTop: 8,
         // paddingBottom: 7,
         // paddingLeft: 1
+      },
+      line: {
+        height: '0.03125rem',
+        background: 'linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.6),rgba(255,255,255,0.1))',
+        borderTopColor: '#fff',
+        marginLeft: 'auto',
+        marginRight: 'auto'
       }
     };
     return (
-      <div style={style.location}>
-        <div>地点：</div>
+      <div style={styles.location}>
         <input
-          style={style.locationInput}
+          style={styles.locationInput}
           type="text"
-          placeholder="请选择检查地点"
+          placeholder="请输入检查地点"
           value={this.props.location}
           ref="locationInput"
           onChange={this.handleChange}
         />
+        <div style={styles.line}></div>
       </div>
     );
   }

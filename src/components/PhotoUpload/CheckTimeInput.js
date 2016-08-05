@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import './myinput.css';
 
 class CheckTimeInput extends React.Component {
   constructor() {
@@ -29,21 +30,31 @@ class CheckTimeInput extends React.Component {
     });
   }
   render() {
-    const style = {
+    const styles = {
       time: {
-        fontSize: 40,
-        paddingBottom: 10,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+        paddingBottom: '0.15625rem'
       },
       timeInput1: {
-        fontSize: 40,
-        width: 487,
-        height: 64
+        fontSize: '0.625rem',
+        color: '#fff',
+        height: '1.0rem',
+        textAlign: 'center',
+        background: 'none',
+        border: 'none',
+        outline: 'none',
+        mozAppearance: 'none',
+        msProgressAppearance: 'none',
+        webkitAppearance: 'none'
         // paddingTop: 8,
         // paddingBottom: 7,
         // paddingLeft: 1
+      },
+      line: {
+        height: '0.03125rem',
+        background: 'linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.6),rgba(255,255,255,0.1))',
+        borderTopColor: '#fff',
+        marginLeft: 'auto',
+        marginRight: 'auto'
       }
     };
 
@@ -51,7 +62,7 @@ class CheckTimeInput extends React.Component {
     if (this.state.timeClicked) {
       input = (
         <input
-          style={style.timeInput1}
+          style={styles.timeInput1}
           type="datetime-local"
           ref={this.updateRef}
           onChange={this.handleChange}
@@ -60,7 +71,7 @@ class CheckTimeInput extends React.Component {
     } else {
       input = (
         <input
-          style={style.timeInput1}
+          style={styles.timeInput1}
           type="text"
           placeholder="请选择检查时间"
           onClick={this.clickChange}
@@ -69,9 +80,9 @@ class CheckTimeInput extends React.Component {
     }
 
     return (
-      <div style={style.time}>
-        <div>时间：</div>
+      <div style={styles.time}>
         {input}
+        <div style={styles.line}></div>
       </div>
     );
   }
