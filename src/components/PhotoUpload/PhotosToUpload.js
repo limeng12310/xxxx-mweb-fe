@@ -73,17 +73,16 @@ class PhotosToUpload extends React.Component {
       }
     };
     let add;
+    let photo;
     if (this.props.imgCount >= 9) {
+      photo = (
+        alert('最多只能添加九张图片！')
+      );
       add = (
         <div onClick={this.clickAlert} style={styles.add}></div>
       );
     } else {
-      add = (
-        <div onClick={this.clickChange} style={styles.add}></div>
-      );
-    }
-    return (
-      <div style={styles.layOut}>
+      photo = (
         <div style={styles.allImage}>
           {
             this.props.items.map((imgId, i) => {
@@ -102,6 +101,14 @@ class PhotosToUpload extends React.Component {
             })
           }
         </div>
+      );
+      add = (
+        <div onClick={this.clickChange} style={styles.add}></div>
+      );
+    }
+    return (
+      <div style={styles.layOut}>
+        {photo}
         {add}
       </div>
     );
