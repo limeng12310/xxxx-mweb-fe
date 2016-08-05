@@ -7,6 +7,7 @@ class PhotosToUpload extends React.Component {
     this.clickAlert = this.clickAlert.bind(this);
     this.clickChange = this.clickChange.bind(this);
     this.wxChooseImgSuccess = this.wxChooseImgSuccess.bind(this);
+    this.clickPreview = this.clickPreview.bind(this);
   }
   clickChange() {
     wx.chooseImage({
@@ -21,6 +22,12 @@ class PhotosToUpload extends React.Component {
   }
   wxChooseImgSuccess(res) {
     this.props.onUserImageInput(res.localIds);
+  }
+  clickPreview(e) {
+    wx.previewImage({
+      current: e.target.getAttribute('data-url'), // 当前显示图片的http链接
+      urls: this.props.items // 需要预览的图片http链接列表
+    });
   }
   clickAlert() {
     alert('最多只能添加九张图片！');
@@ -84,7 +91,13 @@ class PhotosToUpload extends React.Component {
                 backgroundImage: `url(${imgId})`
               };
               return (
-                <div key={i} style={Object.assign({}, styles.img, background)}></div>
+                <div
+                  data-url={imgId}
+                  key={i}
+                  style={Object.assign({}, styles.img, background)}
+                  onClick={this.clickPreview}
+                >
+                </div>
               );
             })
           }
