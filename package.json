@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ali-oss": "^4.4.4",
     "babel-core": "^6.9.1",
     "babel-loader": "^6.2.4",
     "babel-plugin-react-transform": "^2.0.2",

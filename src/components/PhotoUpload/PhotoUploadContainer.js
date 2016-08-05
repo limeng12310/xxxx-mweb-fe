@@ -24,13 +24,13 @@ class PhotoUploadContainer extends React.Component {
   handleUserLocationInput(location) {
     this.setState({ location });
   }
-  handleUserImageInput(imgId) {
+  handleUserImageInput(imgIds) {
     this.setState({
       items: [
         ...this.state.items,
-        ...imgId
+        ...imgIds
       ],
-      count: this.state.items.length
+      count: this.state.count + imgIds.length
     });
   }
   render() {
