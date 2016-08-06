@@ -45,9 +45,7 @@ class PhotosToUpload extends React.Component {
   clickAlert() {
     alert('最多只能添加九张图片！');
   }
-  clickDelete() {
-    
-  }
+  clickDelete() {}
   render() {
     const styles = {
       layOut: {
@@ -99,7 +97,8 @@ class PhotosToUpload extends React.Component {
         backgroundSize: 'cover'
       }
     };
-    let add, del;
+    let add;
+    let del;
     if (this.props.imgCount >= 9) {
       add = (
         <div onClick={this.clickAlert} style={styles.add}></div>
@@ -147,6 +146,7 @@ class PhotosToUpload extends React.Component {
 
 PhotosToUpload.propTypes = {
   onUserImageInput: React.PropTypes.function,
+  onUserImageUpload: React.PropTypes.function,
   imgCount: React.PropTypes.string,
   items: React.PropTypes.string
 };
