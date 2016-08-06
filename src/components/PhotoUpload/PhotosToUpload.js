@@ -1,5 +1,6 @@
 import backImg from './example.jpg';
 import addImg from './img/add.png';
+import delImg from './img/del.png';
 
 class PhotosToUpload extends React.Component {
   constructor(props) {
@@ -21,11 +22,19 @@ class PhotosToUpload extends React.Component {
     });
   }
   wxChooseImgSuccess(res) {
-    if ((this.props.imgCount + res.localIds.length) >= 9) {
+    if ((this.props.imgCount + res.localIds.length) > 9) {
       alert('最多只能添加九张图片！');
     } else {
       this.props.onUserImageInput(res.localIds);
+      wx.uploadImage({
+        localId: res.localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
+        isShowProgressTips: 1, // 默认为1，显示进度提示
+        success: this.wxUploadImageSuccess
+      });
     }
+  }
+  wxUploadImageSuccess(res) {
+    this.props.onUserImageUpload(res.serverId); // 返回图片的服务器端ID
   }
   clickPreview(e) {
     wx.previewImage({
@@ -35,6 +44,9 @@ class PhotosToUpload extends React.Component {
   }
   clickAlert() {
     alert('最多只能添加九张图片！');
+  }
+  clickDelete() {
+    
   }
   render() {
     const styles = {
@@ -66,7 +78,7 @@ class PhotosToUpload extends React.Component {
         backgroundSize: 'cover'
       },
       add: {
-        margin: '0.3125rem',
+        margin: '0.1875rem',
         width: '2.65625rem',
         height: '2.66625rem',
         marginLeft: 'auto',
@@ -74,9 +86,20 @@ class PhotosToUpload extends React.Component {
         backgroundImage: `url(${addImg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover'
+      },
+      del: {
+        marginTop: '0.3125rem',
+        marginBottom: '0.1875rem',
+        width: '0.890625rem',
+        height: '0.890625rem',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        backgroundImage: `url(${delImg})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover'
       }
     };
-    let add;
+    let add, del;
     if (this.props.imgCount >= 9) {
       add = (
         <div onClick={this.clickAlert} style={styles.add}></div>
@@ -84,6 +107,15 @@ class PhotosToUpload extends React.Component {
     } else {
       add = (
         <div onClick={this.clickChange} style={styles.add}></div>
+      );
+    }
+    if (this.props.imgCount >= 1) {
+      del = (
+        <div onClick={this.clickDelete} style={styles.del}></div>
+      );
+    } else {
+      del = (
+        <div style={styles.del}></div>
       );
     }
     return (
@@ -106,6 +138,7 @@ class PhotosToUpload extends React.Component {
             })
           }
         </div>
+        {del}
         {add}
       </div>
     );

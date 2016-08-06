@@ -15,7 +15,8 @@ class PhotoUploadContainer extends React.Component {
       date: '',
       location: '',
       count: 0,
-      items: []
+      items: [],
+      server: []
     };
   }
   handleUserDateInput(date) {
@@ -31,6 +32,14 @@ class PhotoUploadContainer extends React.Component {
         ...imgIds
       ],
       count: this.state.count + imgIds.length
+    });
+  }
+  handleUserImageUpload(serverId) {
+    this.setState({
+      server: [
+        ...this.state.server,
+        ...serverId
+      ]
     });
   }
   render() {
@@ -111,6 +120,7 @@ class PhotoUploadContainer extends React.Component {
             <PhotosToUpload
               items={this.state.items}
               onUserImageInput={this.handleUserImageInput}
+              onUserImageUpload={this.handleUserImageUpload}
               imgCount={this.state.count}
             />
           </div>
