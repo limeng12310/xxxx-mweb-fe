@@ -1,5 +1,6 @@
 import backImg from './example.jpg';
 import addImg from './img/add.png';
+import delImg from './img/del.png';
 
 class PhotosToUpload extends React.Component {
   constructor(props) {
@@ -7,6 +8,7 @@ class PhotosToUpload extends React.Component {
     this.clickAlert = this.clickAlert.bind(this);
     this.clickChange = this.clickChange.bind(this);
     this.wxChooseImgSuccess = this.wxChooseImgSuccess.bind(this);
+    this.clickPreview = this.clickPreview.bind(this);
   }
   clickChange() {
     wx.chooseImage({
@@ -20,11 +22,30 @@ class PhotosToUpload extends React.Component {
     });
   }
   wxChooseImgSuccess(res) {
-    this.props.onUserImageInput(res.localIds);
+    if ((this.props.imgCount + res.localIds.length) > 9) {
+      alert('最多只能添加九张图片！');
+    } else {
+      this.props.onUserImageInput(res.localIds);
+      wx.uploadImage({
+        localId: res.localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
+        isShowProgressTips: 1, // 默认为1，显示进度提示
+        success: this.wxUploadImageSuccess
+      });
+    }
+  }
+  wxUploadImageSuccess(res) {
+    this.props.onUserImageUpload(res.serverId); // 返回图片的服务器端ID
+  }
+  clickPreview(e) {
+    wx.previewImage({
+      current: e.target.getAttribute('data-url'), // 当前显示图片的http链接
+      urls: this.props.items // 需要预览的图片http链接列表
+    });
   }
   clickAlert() {
     alert('最多只能添加九张图片！');
   }
+  clickDelete() {}
   render() {
     const styles = {
       layOut: {
@@ -55,7 +76,7 @@ class PhotosToUpload extends React.Component {
         backgroundSize: 'cover'
       },
       add: {
-        margin: '0.3125rem',
+        margin: '0.1875rem',
         width: '2.65625rem',
         height: '2.66625rem',
         marginLeft: 'auto',
@@ -63,9 +84,21 @@ class PhotosToUpload extends React.Component {
         backgroundImage: `url(${addImg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover'
+      },
+      del: {
+        marginTop: '0.3125rem',
+        marginBottom: '0.1875rem',
+        width: '0.890625rem',
+        height: '0.890625rem',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        backgroundImage: `url(${delImg})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover'
       }
     };
     let add;
+    let del;
     if (this.props.imgCount >= 9) {
       add = (
         <div onClick={this.clickAlert} style={styles.add}></div>
@@ -73,6 +106,15 @@ class PhotosToUpload extends React.Component {
     } else {
       add = (
         <div onClick={this.clickChange} style={styles.add}></div>
+      );
+    }
+    if (this.props.imgCount >= 1) {
+      del = (
+        <div onClick={this.clickDelete} style={styles.del}></div>
+      );
+    } else {
+      del = (
+        <div style={styles.del}></div>
       );
     }
     return (
@@ -84,11 +126,18 @@ class PhotosToUpload extends React.Component {
                 backgroundImage: `url(${imgId})`
               };
               return (
-                <div key={i} style={Object.assign({}, styles.img, background)}></div>
+                <div
+                  data-url={imgId}
+                  key={i}
+                  style={Object.assign({}, styles.img, background)}
+                  onClick={this.clickPreview}
+                >
+                </div>
               );
             })
           }
         </div>
+        {del}
         {add}
       </div>
     );
@@ -97,6 +146,7 @@ class PhotosToUpload extends React.Component {
 
 PhotosToUpload.propTypes = {
   onUserImageInput: React.PropTypes.function,
+  onUserImageUpload: React.PropTypes.function,
   imgCount: React.PropTypes.string,
   items: React.PropTypes.string
 };
