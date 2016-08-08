@@ -34,7 +34,7 @@ class PhotosToUpload extends React.Component {
     });
   }
   wxChooseImgSuccess(res) {
-    if ((this.props.items.length + res.localIds.length) > 9) {
+    if ((this.props.imgCount + res.localIds.length) > 9) {
       alert('最多只能添加九张图片！');
     } else {
       this.setState({
@@ -133,7 +133,9 @@ class PhotosToUpload extends React.Component {
         height: '0.890625rem',
         marginLeft: 'auto',
         marginRight: 'auto',
-        backgroundImage: 'none'
+        backgroundImage: 'none',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover'
       },
       del: {
         marginTop: '0.3125rem',
@@ -142,12 +144,14 @@ class PhotosToUpload extends React.Component {
         height: '0.890625rem',
         marginLeft: 'auto',
         marginRight: 'auto',
-        backgroundImage: `url(${backgroudDelImg})`
+        backgroundImage: `url(${backgroudDelImg})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover'
       }
     };
     let add;
     let del;
-    if (this.props.items.length >= 9) {
+    if (this.props.imgCount >= 9) {
       add = (
         <div onClick={this.clickAlert} style={styles.add}></div>
       );
@@ -156,7 +160,7 @@ class PhotosToUpload extends React.Component {
         <div onClick={this.clickChange} style={styles.add}></div>
       );
     }
-    if (this.props.items.length >= 1) {
+    if (this.props.imgCount >= 1) {
       del = (
         <div onClick={this.clickDelete} style={styles.del}></div>
       );
