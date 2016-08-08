@@ -38,11 +38,13 @@ class PhotosToUpload extends React.Component {
       alert('最多只能添加九张图片！');
     } else {
       this.props.onUserImageInput(res.localIds);
-      wx.uploadImage({
-        localId: res.localIds, // 需要上传的图片的本地ID，由chooseImage接口获得                   // 数组改为字符串
-        isShowProgressTips: 1, // 默认为1，显示进度提示
-        success: this.wxUploadImageSuccess
-      });
+      for (let i = 0; i < res.localIds.length; i ++) {
+        wx.uploadImage({
+          localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
+          isShowProgressTips: 1, // 默认为1，显示进度提示
+          success: this.wxUploadImageSuccess
+        });
+      }
     }
   }
   wxUploadImageSuccess(res) {                                    // 使用闭包，实现服务器端ID和图片的本地ID一一对应起来
