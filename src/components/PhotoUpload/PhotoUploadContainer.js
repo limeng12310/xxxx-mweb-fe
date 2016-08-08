@@ -53,12 +53,13 @@ class PhotoUploadContainer extends React.Component {
   }
   handleUserImageDelete(index) {
     this.setState({
-      items: this.state.items.map((imgId, i) => {
-        if (i !== index) {
-          return imgId;
-        }
-        return -1;
-      }),
+      items: this.state.items.splice(index, 1),
+    // items: this.state.items.map((imgId, i) => {
+      //   if (i !== index) {
+      //     return imgId;
+      //   }
+      //   return null;
+      // }),
       count: this.state.count - 1
     });
   }
