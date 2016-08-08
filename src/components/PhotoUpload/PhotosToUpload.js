@@ -17,10 +17,10 @@ class PhotosToUpload extends React.Component {
     };
   }
   clickChange() {
-  //   this.setState({
-  //     isDelete: false,
-  //     i: true
-  //   });
+    this.setState({
+      isDelete: false,
+      i: true
+    });
   //   this.props.onUserImageInput();
   // }
     wx.chooseImage({
@@ -37,10 +37,6 @@ class PhotosToUpload extends React.Component {
     if ((this.props.imgCount + res.localIds.length) > 9) {
       alert('最多只能添加九张图片！');
     } else {
-      this.setState({
-        isDelete: false,
-        i: true
-      });
       this.props.onUserImageInput(res.localIds);
       wx.uploadImage({
         localId: res.localIds, // 需要上传的图片的本地ID，由chooseImage接口获得                   // 数组改为字符串
