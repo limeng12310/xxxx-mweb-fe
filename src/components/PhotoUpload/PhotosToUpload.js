@@ -112,7 +112,7 @@ class PhotosToUpload extends React.Component {
         marginLeft: '-0.3125rem',
         marginRight: 'auto',
         marginBottom: 'auto',
-        width: '0.910625rem',
+        width: '0.930625rem',
         height: '0.890625rem',
         backgroundImage: `url(${backgroudDelImg})`,
         backgroundPosition: 'center',
@@ -142,7 +142,7 @@ class PhotosToUpload extends React.Component {
       del: {
         marginTop: '0.3125rem',
         marginBottom: '0.1875rem',
-        width: '0.910625rem',
+        width: '0.930625rem',
         height: '0.890625rem',
         marginLeft: 'auto',
         marginRight: 'auto',
