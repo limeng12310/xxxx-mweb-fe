@@ -16,6 +16,7 @@ class PhotoUploadContainer extends React.Component {
       date: '',
       location: '',
       items: [],
+      count: 0,
       server: []
     };
   }
@@ -57,7 +58,8 @@ class PhotoUploadContainer extends React.Component {
           return null;
         }
         return imgId;
-      })
+      }),
+      count: this.state.items.length - 1
     });
   }
   render() {
@@ -137,6 +139,7 @@ class PhotoUploadContainer extends React.Component {
             />
             <PhotosToUpload
               items={this.state.items}
+              imgCount={this.state.count}
               onUserImageInput={this.handleUserImageInput}
               onUserImageUpload={this.handleUserImageUpload}
               onUserImageDelete={this.handleUserImageDelete}
