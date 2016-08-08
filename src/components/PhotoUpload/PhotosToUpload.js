@@ -1,16 +1,28 @@
 import backImg from './example.jpg';
 import addImg from './img/add.png';
-import delImg from './img/del.png';
+import backgroudDelImg from './img/del.png';
 
 class PhotosToUpload extends React.Component {
   constructor(props) {
     super(props);
     this.clickAlert = this.clickAlert.bind(this);
     this.clickChange = this.clickChange.bind(this);
+    this.clickDelete = this.clickDelete.bind(this);
+    this.clickDeleteImage = this.clickDeleteImage.bind(this);
     this.wxChooseImgSuccess = this.wxChooseImgSuccess.bind(this);
     this.clickPreview = this.clickPreview.bind(this);
+    this.state = {
+      isDelete: false,
+      i: true
+    };
   }
   clickChange() {
+  //   this.setState({
+  //     isDelete: false,
+  //     i: true
+  //   });
+  //   this.props.onUserImageInput();
+  // }
     wx.chooseImage({
       count: 9,
       sizeType: ['original'],
@@ -22,18 +34,22 @@ class PhotosToUpload extends React.Component {
     });
   }
   wxChooseImgSuccess(res) {
-    if ((this.props.imgCount + res.localIds.length) > 9) {
+    if ((this.props.items.length + res.localIds.length) > 9) {
       alert('最多只能添加九张图片！');
     } else {
+      this.setState({
+        isDelete: false,
+        i: true
+      });
       this.props.onUserImageInput(res.localIds);
       wx.uploadImage({
-        localId: res.localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
+        localId: res.localIds, // 需要上传的图片的本地ID，由chooseImage接口获得                   // 数组改为字符串
         isShowProgressTips: 1, // 默认为1，显示进度提示
         success: this.wxUploadImageSuccess
       });
     }
   }
-  wxUploadImageSuccess(res) {
+  wxUploadImageSuccess(res) {                                    // 使用闭包，实现服务器端ID和图片的本地ID一一对应起来
     this.props.onUserImageUpload(res.serverId); // 返回图片的服务器端ID
   }
   clickPreview(e) {
@@ -45,7 +61,23 @@ class PhotosToUpload extends React.Component {
   clickAlert() {
     alert('最多只能添加九张图片！');
   }
-  clickDelete() {}
+  clickDelete() {
+    if (this.state.i) {
+      this.setState({
+        isDelete: true,
+        i: false
+      });
+    } else {
+      this.setState({
+        isDelete: false,
+        i: true
+      });
+    }
+  }
+  clickDeleteImage(e) {
+    const index = parseInt(e.target.getAttribute('data-index'), 10);
+    this.props.onUserImageDelete(index);
+  }
   render() {
     const styles = {
       layOut: {
@@ -75,6 +107,15 @@ class PhotosToUpload extends React.Component {
         backgroundPosition: 'center',
         backgroundSize: 'cover'
       },
+      imgDel: {
+        marginTop: '-0.3125rem',
+        marginLeft: '-0.3125rem',
+        marginRight: 'auto',
+        marginBottom: 'auto',
+        width: '0.910625rem',
+        height: '0.890625rem',
+        backgroundImage: `url(${backgroudDelImg})`
+      },
       add: {
         margin: '0.1875rem',
         width: '2.65625rem',
@@ -85,21 +126,28 @@ class PhotosToUpload extends React.Component {
         backgroundPosition: 'center',
         backgroundSize: 'cover'
       },
-      del: {
+      delNone: {
         marginTop: '0.3125rem',
         marginBottom: '0.1875rem',
-        width: '0.890625rem',
+        width: '0.910625rem',
         height: '0.890625rem',
         marginLeft: 'auto',
         marginRight: 'auto',
-        backgroundImage: `url(${delImg})`,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover'
+        backgroundImage: 'none'
+      },
+      del: {
+        marginTop: '0.3125rem',
+        marginBottom: '0.1875rem',
+        width: '0.910625rem',
+        height: '0.890625rem',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        backgroundImage: `url(${backgroudDelImg})`
       }
     };
     let add;
     let del;
-    if (this.props.imgCount >= 9) {
+    if (this.props.items.length >= 9) {
       add = (
         <div onClick={this.clickAlert} style={styles.add}></div>
       );
@@ -108,13 +156,13 @@ class PhotosToUpload extends React.Component {
         <div onClick={this.clickChange} style={styles.add}></div>
       );
     }
-    if (this.props.imgCount >= 1) {
+    if (this.props.items.length >= 1) {
       del = (
         <div onClick={this.clickDelete} style={styles.del}></div>
       );
     } else {
       del = (
-        <div style={styles.del}></div>
+        <div style={styles.delNone}></div>
       );
     }
     return (
@@ -123,7 +171,12 @@ class PhotosToUpload extends React.Component {
           {
             this.props.items.map((imgId, i) => {
               const background = {
-                backgroundImage: `url(${imgId})`
+                backgroundImage: `url(${imgId})`,
+                // backgroundImage: `url(${backImg})`,
+                display: imgId != null ? 'block' : 'none'
+              };
+              const displayDel = {
+                display: this.state.isDelete ? 'block' : 'none'
               };
               return (
                 <div
@@ -132,6 +185,12 @@ class PhotosToUpload extends React.Component {
                   style={Object.assign({}, styles.img, background)}
                   onClick={this.clickPreview}
                 >
+                  <div
+                    data-index={i}
+                    style={Object.assign({}, styles.imgDel, displayDel)}
+                    onClick={this.clickDeleteImage}
+                  >
+                  </div>
                 </div>
               );
             })
@@ -147,6 +206,7 @@ class PhotosToUpload extends React.Component {
 PhotosToUpload.propTypes = {
   onUserImageInput: React.PropTypes.function,
   onUserImageUpload: React.PropTypes.function,
+  onUserImageDelete: React.PropTypes.function,
   imgCount: React.PropTypes.string,
   items: React.PropTypes.string
 };

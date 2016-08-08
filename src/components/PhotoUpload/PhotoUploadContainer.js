@@ -11,10 +11,10 @@ class PhotoUploadContainer extends React.Component {
     this.handleUserDateInput = this.handleUserDateInput.bind(this);
     this.handleUserLocationInput = this.handleUserLocationInput.bind(this);
     this.handleUserImageInput = this.handleUserImageInput.bind(this);
+    this.handleUserImageDelete = this.handleUserImageDelete.bind(this);
     this.state = {
       date: '',
       location: '',
-      count: 0,
       items: [],
       server: []
     };
@@ -30,16 +30,34 @@ class PhotoUploadContainer extends React.Component {
       items: [
         ...this.state.items,
         ...imgIds
-      ],
-      count: this.state.count + imgIds.length
+      ]
+      // count: this.state.count + imgIds.length
     });
   }
+  // handleUserImageInput() {
+  //   this.setState({
+  //     items: [
+  //       ...this.state.items,
+  //       ''
+  //     ]
+  //   });
+  // }
   handleUserImageUpload(serverId) {
     this.setState({
       server: [
         ...this.state.server,
         ...serverId
       ]
+    });
+  }
+  handleUserImageDelete(index) {
+    this.setState({
+      items: this.state.items.map((imgId, i) => {
+        if (i === index) {
+          return null;
+        }
+        return imgId;
+      })
     });
   }
   render() {
@@ -121,7 +139,7 @@ class PhotoUploadContainer extends React.Component {
               items={this.state.items}
               onUserImageInput={this.handleUserImageInput}
               onUserImageUpload={this.handleUserImageUpload}
-              imgCount={this.state.count}
+              onUserImageDelete={this.handleUserImageDelete}
             />
           </div>
         </div>
