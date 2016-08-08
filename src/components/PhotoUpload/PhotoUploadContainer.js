@@ -31,8 +31,8 @@ class PhotoUploadContainer extends React.Component {
       items: [
         ...this.state.items,
         ...imgIds
-      ]
-      // count: this.state.count + imgIds.length
+      ],
+      count: this.state.count + imgIds.length
     });
   }
   // handleUserImageInput() {
@@ -59,7 +59,7 @@ class PhotoUploadContainer extends React.Component {
         }
         return imgId;
       }),
-      count: this.state.items.length - 1
+      count: this.state.count - 1
     });
   }
   render() {
