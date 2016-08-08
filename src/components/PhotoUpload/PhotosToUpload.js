@@ -131,7 +131,7 @@ class PhotosToUpload extends React.Component {
       delNone: {
         marginTop: '0.3125rem',
         marginBottom: '0.1875rem',
-        width: '0.910625rem',
+        width: '0.920625rem',
         height: '0.890625rem',
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -142,7 +142,7 @@ class PhotosToUpload extends React.Component {
       del: {
         marginTop: '0.3125rem',
         marginBottom: '0.1875rem',
-        width: '0.930625rem',
+        width: '0.920625rem',
         height: '0.890625rem',
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -177,9 +177,9 @@ class PhotosToUpload extends React.Component {
           {
             this.props.items.map((imgId, i) => {
               const background = {
-                backgroundImage: `url(${imgId})`,
+                backgroundImage: `url(${imgId})`
                 // backgroundImage: `url(${backImg})`,
-                display: imgId != null ? 'block' : 'none'
+                // display: imgId != null ? 'block' : 'none'
               };
               const displayDel = {
                 display: this.state.isDelete ? 'block' : 'none'
