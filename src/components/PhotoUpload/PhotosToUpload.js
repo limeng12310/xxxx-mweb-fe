@@ -9,7 +9,7 @@ class PhotosToUpload extends React.Component {
     this.clickChange = this.clickChange.bind(this);
     this.clickDelete = this.clickDelete.bind(this);
     this.clickDeleteImage = this.clickDeleteImage.bind(this);
-    this.wxChooseImgSuccess = this.wxChooseImgSuccess.bind(this);
+    // this.wxChooseImgSuccess = this.wxChooseImgSuccess.bind(this);
     this.clickPreview = this.clickPreview.bind(this);
     this.state = {
       isDelete: false,
@@ -21,35 +21,35 @@ class PhotosToUpload extends React.Component {
       isDelete: false,
       i: true
     });
-  //   this.props.onUserImageInput();
+    this.props.onUserImageInput();
+  }
+  //   wx.chooseImage({
+  //     count: 9,
+  //     sizeType: ['original'],
+  //     sourceType: ['album', 'camera'],
+  //     success: this.wxChooseImgSuccess,
+  //     error() {
+  //       alert('图片选择失败');
+  //     }
+  //   });
   // }
-    wx.chooseImage({
-      count: 9,
-      sizeType: ['original'],
-      sourceType: ['album', 'camera'],
-      success: this.wxChooseImgSuccess,
-      error() {
-        alert('图片选择失败');
-      }
-    });
-  }
-  wxChooseImgSuccess(res) {
-    if ((this.props.imgCount + res.localIds.length) > 9) {
-      alert('最多只能添加九张图片！');
-    } else {
-      this.props.onUserImageInput(res.localIds);
-      for (let i = 0; i < res.localIds.length; i ++) {
-        wx.uploadImage({
-          localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
-          isShowProgressTips: 1, // 默认为1，显示进度提示
-          success: this.wxUploadImageSuccess
-        });
-      }
-    }
-  }
-  wxUploadImageSuccess(res) {                                    // 使用闭包，实现服务器端ID和图片的本地ID一一对应起来
-    this.props.onUserImageUpload(res.serverId); // 返回图片的服务器端ID
-  }
+  // wxChooseImgSuccess(res) {
+  //   if ((this.props.imgCount + res.localIds.length) > 9) {
+  //     alert('最多只能添加九张图片！');
+  //   } else {
+  //     this.props.onUserImageInput(res.localIds);
+  //     for (let i = 0; i < res.localIds.length; i ++) {
+  //       wx.uploadImage({
+  //         localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
+  //         isShowProgressTips: 1, // 默认为1，显示进度提示
+  //         success: this.wxUploadImageSuccess
+  //       });
+  //     }
+  //   }
+  // }
+  // wxUploadImageSuccess(res) {                                    // 使用闭包，实现服务器端ID和图片的本地ID一一对应起来
+  //   this.props.onUserImageUpload(res.serverId); // 返回图片的服务器端ID
+  // }
   clickPreview(e) {
     wx.previewImage({
       current: e.target.getAttribute('data-url'), // 当前显示图片的http链接
@@ -118,7 +118,7 @@ class PhotosToUpload extends React.Component {
         marginRight: 'auto',
         marginBottom: 'auto',
         width: '0.930625rem',
-        height: '0.890625rem',
+        height: '0.930625rem',
         backgroundImage: `url(${backgroudDelImg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover'
@@ -136,8 +136,8 @@ class PhotosToUpload extends React.Component {
       delNone: {
         marginTop: '0.3125rem',
         marginBottom: '0.1875rem',
-        width: '0.915625rem',
-        height: '0.890625rem',
+        width: '0.930625rem',
+        height: '0.930625rem',
         marginLeft: 'auto',
         marginRight: 'auto',
         backgroundImage: 'none',
@@ -147,8 +147,8 @@ class PhotosToUpload extends React.Component {
       del: {
         marginTop: '0.3125rem',
         marginBottom: '0.1875rem',
-        width: '0.913625rem',
-        height: '0.890625rem',
+        width: '0.930625rem',
+        height: '0.930625rem',
         marginLeft: 'auto',
         marginRight: 'auto',
         backgroundImage: `url(${backgroudDelImg})`,
@@ -182,8 +182,8 @@ class PhotosToUpload extends React.Component {
           {
             this.props.items.map((imgId, i) => {
               const background = {
-                backgroundImage: `url(${imgId})`
-                // backgroundImage: `url(${backImg})`
+                // backgroundImage: `url(${imgId})`
+                backgroundImage: `url(${backImg})`
                 // display: imgId != null ? 'block' : 'none'
               };
               const displayDel = {
