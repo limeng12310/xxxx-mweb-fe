@@ -11,7 +11,7 @@ fetch(`${config.apiPrefix}/test-signature`)
   .then(json => {
     // 初始化微信jssdk配置
     wx.config({
-      debug: true,
+      debug: false,
       appId: json.appId,
       timestamp: json.timestamp,
       nonceStr: json.noncestr,
