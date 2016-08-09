@@ -106,7 +106,7 @@ class PhotosToUpload extends React.Component {
         backgroundSize: 'cover'
       },
       imgDel: {
-        position: 'absolute',
+        position: 'relative',
         marginTop: '-2.5rem',
         marginLeft: '-0.078125rem',
         marginRight: 'auto',
@@ -141,7 +141,7 @@ class PhotosToUpload extends React.Component {
       del: {
         marginTop: '0.3125rem',
         marginBottom: '0.1875rem',
-        width: '0.910625rem',
+        width: '0.912625rem',
         height: '0.890625rem',
         marginLeft: 'auto',
         marginRight: 'auto',
