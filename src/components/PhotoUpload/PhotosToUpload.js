@@ -41,7 +41,7 @@ class PhotosToUpload extends React.Component {
       for (let i = 0; i < res.localIds.length; i ++) {
         wx.uploadImage({
           localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
-          isShowProgressTips: 0, // 默认为1，显示进度提示
+          isShowProgressTips: 1, // 默认为1，显示进度提示
           success: this.wxUploadImageSuccess
         });
       }
@@ -93,7 +93,13 @@ class PhotosToUpload extends React.Component {
         justifyContent: 'between',
         alignContent: 'flex-start'
       },
+      imgDelBox: {
+        margin: '0.109375rem',
+        width: '2.275rem',
+        height: '2.275rem'
+      },
       img: {
+        position: 'relative',
         margin: '0.3125rem',
         width: '1.875rem',
         height: '1.875rem',
@@ -106,7 +112,7 @@ class PhotosToUpload extends React.Component {
         backgroundSize: 'cover'
       },
       imgDel: {
-        position: 'absolute',
+        position: 'relative',
         marginTop: '-2.5rem',
         marginLeft: '-0.078125rem',
         marginRight: 'auto',
@@ -141,7 +147,7 @@ class PhotosToUpload extends React.Component {
       del: {
         marginTop: '0.3125rem',
         marginBottom: '0.1875rem',
-        width: '0.910625rem',
+        width: '0.913625rem',
         height: '0.890625rem',
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -184,7 +190,7 @@ class PhotosToUpload extends React.Component {
                 display: this.state.isDelete ? 'block' : 'none'
               };
               return (
-                <div>
+                <div style={styles.imgDelBox}>
                   <div
                     data-url={imgId}
                     key={i}
