@@ -41,7 +41,7 @@ class PhotosToUpload extends React.Component {
       for (let i = 0; i < res.localIds.length; i ++) {
         wx.uploadImage({
           localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
-          isShowProgressTips: 1, // 默认为1，显示进度提示
+          isShowProgressTips: 0, // 默认为1，显示进度提示
           success: this.wxUploadImageSuccess
         });
       }
