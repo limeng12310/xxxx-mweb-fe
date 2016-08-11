@@ -1,52 +1,50 @@
 /**
  * Created by zc on 2016/7/27.
  */
-import tree from './img/tree2.png';
+import tree from './img/tree1.svg';
 const SummaryStyle = {
   SummaryBox: {
     width: '100%',
-    height: '230px',
-    position: 'absolute',
-    left: 0,
-    top: '50px',
-    display: 'flex',
-    alignItems: 'center'
+    height: '96%',
+    display: 'flex'
   },
   SummaryIcon: {
-    flex: 1,
-    height: '200px',
-    textAlign: 'center'
+    width: '60%',
+    height: '5rem',
+    textAlign: 'center',
+    paddingTop: '0.4rem'
   },
   SummaryIconImg: {
-    width: '160px',
-    marginTop: '20px'
+    width: '100%'
   },
   SummaryKpi: {
-    flex: 1,
-    height: '200px',
-    lineHeight: '50px'
+    paddingTop: '1.6rem',
+    width: '40%'
   },
   SummaryKpiItem: {
+    height: '1.4rem',
     textAlign: 'center',
-    marginBottom: '20px'
+    lineHeight: '1.4rem',
+    marginBottom: '1rem'
   },
   SummaryKpiItemCut: {
     border: '2px solid #75e6dc',
     borderRadius: '50%',
-    width: '50px',
-    height: '50px',
+    width: '1.4rem',
+    height: '1.4rem',
     display: 'inline-block',
-    marginRight: '10px',
-    fontSize: '20px',
+    marginRight: '0.3rem',
+    fontSize: '0.6rem',
     color: '#f6f6ff'
   },
   SummaryKpiItemZi: {
-    color: '#fcfcfc'
+    color: '#fcfcfc',
+    fontSize: '0.4rem'
   }
 };
 class Summary extends React.Component {
   render() {
-    const { normalCnt, warningCnt, dangerCnt } = this.props.cnt;
+    const { normalCnt, warningCnt } = this.props.cnt;
     return (
       <dl style={SummaryStyle.SummaryBox}>
         <dt style={SummaryStyle.SummaryIcon}>
@@ -60,10 +58,6 @@ class Summary extends React.Component {
           <p style={SummaryStyle.SummaryKpiItem}>
             <b style={SummaryStyle.SummaryKpiItemCut}>{warningCnt}</b>
             <span style={SummaryStyle.SummaryKpiItemZi}>观察指标</span>
-          </p>
-          <p style={SummaryStyle.SummaryKpiItem}>
-            <b style={SummaryStyle.SummaryKpiItemCut}>{dangerCnt}</b>
-            <span style={SummaryStyle.SummaryKpiItemZi}>预警指标</span>
           </p>
         </dd>
       </dl>

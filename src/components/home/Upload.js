@@ -7,7 +7,7 @@ import imgUpload from './img/imgUpload.png';
 const UploadStyle = {
   right: {
     width: '20%',
-    height: '240px',
+    height: '4.8rem',
     display: 'flex',
     flexDirection: 'column'
   },
@@ -20,7 +20,7 @@ const UploadStyle = {
 
   },
   icon: {
-    width: '42px'
+    width: '1rem'
   }
 };
 

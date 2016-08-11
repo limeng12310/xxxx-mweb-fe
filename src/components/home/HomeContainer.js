@@ -1,11 +1,11 @@
 /**
  * Created by zc on 2016/7/26.
  */
-import ButtomBar from './ButtomBar';
+import ButtomBar from './../common/ButtomBar';
 import Upload from './Upload';
 import ReportList from './ReportList';
 import Summary from './Summary';
-import Header from './Header';
+import Header from './../common/Header';
 import homeBG from './img/homeBG.png';
 
 const HomeContainerStyle = {
@@ -17,17 +17,41 @@ const HomeContainerStyle = {
     width: '100%',
     height: '100%',
     background: `url(${homeBG}) no-repeat`,
-    backgroundSize: 'cover',
-    position: 'absolute'
+    backgroundSize: '100% 100%',
+    position: 'absolute',
+    overflow: 'hidden'
   },
   Report: {
     width: '100%',
     position: 'absolute',
     left: 0,
-    bottom: '100px'
+    bottom: '1.42rem'
+  },
+  Center: {
+    width: '100%',
+    position: 'absolute',
+    top: '1.2rem',
+    left: '0',
+    height: '45%'
+  },
+  Filter: {
+    width: '100%',
+    height: '1rem',
+    display: 'flex',
+    lineHeight: '1rem',
+    textAlign: 'center'
+  },
+  Button: {
+    flex: '1',
+    fontSize: '0.48rem',
+    color: '#fff',
+    textDecoration: 'none'
   }
 };
 class HomeContainer extends React.Component {
+  aa = () => {
+    alert(222);
+  };
   render() {
     const cnt = {
       normalCnt: 9,
@@ -65,15 +89,20 @@ class HomeContainer extends React.Component {
     ];
     return (
       <div style={HomeContainerStyle.HomeBox}>
-        <Header />
-        <Summary cnt={cnt} />
+        <Header headerType="0" />
+        <div style={HomeContainerStyle.Center}>
+          <Summary cnt={cnt} />
+        </div>
         <div style={HomeContainerStyle.Report}>
+          <div style={HomeContainerStyle.Filter}>
+            <a href="###" style={HomeContainerStyle.Button}>报告时间</a>
+            <a href="###" style={HomeContainerStyle.Button}>上传时间</a>
+          </div>
           <div className="weightLine"></div>
           <div style={HomeContainerStyle.ReportListBox}>
             <ReportList data={data} />
             <Upload />
           </div>
-          <div className="weightLine"></div>
         </div>
         <ButtomBar />
       </div>
