@@ -25,7 +25,7 @@ ThorgeneGlobal.trendPage = {
         ThorgeneGlobal.trendPage.classifyId = [];
         $$.ajax(
             {method: 'GET',
-                url: ThorgeneGlobal.apiPrefix + "/user-inspect-classifies",
+                url: ThorgeneGlobal.apiPrefix + "/user-check-classifies",
                 dataType: 'json',
                 success: function(json, status) {
                     var data = json.data;
@@ -157,7 +157,7 @@ ThorgeneGlobal.trendPage = {
     getItems: function(n) {
         $$.ajax(
             {method: 'GET',
-            url: ThorgeneGlobal.apiPrefix + "/user-inspect-classifies/" + ThorgeneGlobal.trendPage.classifyId[n - 1] +
+            url: ThorgeneGlobal.apiPrefix + "/user-check-classifies/" + ThorgeneGlobal.trendPage.classifyId[n - 1] +
                 "/check-items",
             dataType: 'json',
             success: function(json) {
