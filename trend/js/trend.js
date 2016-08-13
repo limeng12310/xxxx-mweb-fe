@@ -75,11 +75,11 @@ ThorgeneGlobal.trendPage = {
             }
         );
     },
-    getValues: function(i) {
+    getValues: function(i, unit) {
         var mychart = echarts.init($$('.view-trend').find("#chart")[0]);
         $$.ajax(
             {method: 'GET',
-            url: ThorgeneGlobal.apiPrefix + "/user-check-items/" + i,
+            url: `${ThorgeneGlobal.apiPrefix}/user-check-items/${i}?unit=${unit}`,
             dataType: 'json',
             success: function(json, status) {
                 var data = json.data;
@@ -166,7 +166,7 @@ ThorgeneGlobal.trendPage = {
                 var width = data.length * 90 + "px";
                 var i;
                 for (i = 0; i < data.length; i++) {
-                    items += '<div class="checkitem" id="checkitemId-' + data[i].id + '"><div class="checkitem_h">';
+                    items += '<div class="checkitem" id="checkitemId-' + data[i].id + '" unit="data[i].unit"><div class="checkitem_h">';
                     items += '<div class="checkitem_change" name="change"><i class="iconfont" value="' + data[i].name;
                     items += ' ' + data[i].unit + '">' + ThorgeneGlobal.trendPage.iconfontcode[n - 1] + '</i></div>';
                     items += '</div><div class="word"><p>' + data[i].name + ' ' + data[i].unit + '</p></div></div>';
@@ -178,7 +178,7 @@ ThorgeneGlobal.trendPage = {
                     i = $$(this).find('i')[0];
                     ThorgeneGlobal.trendPage.pass(i);
                     var id = this.id.substring(12, this.id.length);
-                    ThorgeneGlobal.trendPage.getValues(id);
+                    ThorgeneGlobal.trendPage.getValues(id, this.unit);
                     $$('.view-trend').find('.word').css('color', '#aaa');
                     $$(this).find('.word').css('color', '#3eb2e1');
                 });
@@ -188,7 +188,7 @@ ThorgeneGlobal.trendPage = {
                     i = $$(initItem).find('i')[0];
                     ThorgeneGlobal.trendPage.pass(i);
                     var id = initItem.id.substring(12, initItem.id.length);
-                    ThorgeneGlobal.trendPage.getValues(id);
+                    ThorgeneGlobal.trendPage.getValues(id, this.unit);
                     $$('.view-trend').find('.word').css('color', '#aaa');
                     $$(initItem).find('.word').css('color', '#3eb2e1');
                 }
