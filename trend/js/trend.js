@@ -79,7 +79,7 @@ ThorgeneGlobal.trendPage = {
         var mychart = echarts.init($$('.view-trend').find("#chart")[0]);
         $$.ajax(
             {method: 'GET',
-            url: `${ThorgeneGlobal.apiPrefix}/user-check-items/${i}?unit=${unit}`,
+            url: ThorgeneGlobal.apiPrefix + '/user-check-items/' + i + '?unit=' + unit,
             dataType: 'json',
             success: function(json, status) {
                 var data = json.data;
