@@ -166,7 +166,8 @@ ThorgeneGlobal.trendPage = {
                 var width = data.length * 90 + "px";
                 var i;
                 for (i = 0; i < data.length; i++) {
-                    items += '<div class="checkitem" id="checkitemId-' + data[i].id + '" unit="data[i].unit"><div class="checkitem_h">';
+                    items += '<div class="checkitem" id="checkitemId-' + data[i].id + '" unit="data[i].unit">';
+                    items += '<div class="checkitem_h">';
                     items += '<div class="checkitem_change" name="change"><i class="iconfont" value="' + data[i].name;
                     items += ' ' + data[i].unit + '">' + ThorgeneGlobal.trendPage.iconfontcode[n - 1] + '</i></div>';
                     items += '</div><div class="word"><p>' + data[i].name + ' ' + data[i].unit + '</p></div></div>';
