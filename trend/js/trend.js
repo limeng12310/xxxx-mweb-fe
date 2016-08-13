@@ -27,8 +27,9 @@ ThorgeneGlobal.trendPage = {
             {method: 'GET',
                 url: ThorgeneGlobal.apiPrefix + "/user-inspect-classifies",
                 dataType: 'json',
-                success: function(data, status) {
-                    if (status === 200) {
+                success: function(json, status) {
+                    var data = json.data;
+                    if (status === 200 && json.retCode === 0) {
                         /*  myApp.templates.userInspectTpl({
                             id : data.id,
                             title : data.title
@@ -80,8 +81,9 @@ ThorgeneGlobal.trendPage = {
             {method: 'GET',
             url: ThorgeneGlobal.apiPrefix + "/user-check-items/" + i,
             dataType: 'json',
-            success: function(data, status) {
-                if (status === 200) {
+            success: function(json, status) {
+                var data = json.data;
+                if (status === 200 && json.retCode === 0) {
                     var option = {
                         // backgroundColor: "#fff",
                         grid: {
@@ -158,7 +160,8 @@ ThorgeneGlobal.trendPage = {
             url: ThorgeneGlobal.apiPrefix + "/user-inspect-classifies/" + ThorgeneGlobal.trendPage.classifyId[n - 1] +
                 "/check-items",
             dataType: 'json',
-            success: function(data) {
+            success: function(json) {
+                var data = json.data;
                 var items = '<div class="checkitems">';
                 var width = data.length * 90 + "px";
                 var i;
