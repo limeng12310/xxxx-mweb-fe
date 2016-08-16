@@ -43,7 +43,7 @@ const HeaderStyle = {
 class Header extends React.Component {
 
   EmptyOnClick = () => {
-    alert(111);
+    alert('callback()函数 没有传');
   };
   render() {
     // 0表示一级页面header

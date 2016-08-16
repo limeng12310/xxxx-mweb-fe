@@ -50,7 +50,7 @@ const HomeContainerStyle = {
 };
 class HomeContainer extends React.Component {
   aa = () => {
-    alert(222);
+    alert('点击确认按钮的callback()');
   };
   render() {
     const cnt = {
