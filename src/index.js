@@ -6,6 +6,8 @@ import PhotoUploadContainer from './components/PhotoUpload/PhotoUploadContainer'
 import fetch from 'isomorphic-fetch';
 import config from './config/default';
 
+import './common.css';
+
 fetch(`${config.apiPrefix}/test-signature`)
   .then(response => response.json())
   .then(json => {

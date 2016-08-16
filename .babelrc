@@ -1,5 +1,5 @@
 {
-  "presets": ["es2015", "react"],
+  "presets": ["es2015", "stage-0", "react"],
   "env": {
     // this plugin will be included only in development mode, e.g.
     // if NODE_ENV (or BABEL_ENV) environment variable is not set
