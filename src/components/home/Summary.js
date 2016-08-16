@@ -2,6 +2,7 @@
  * Created by zc on 2016/7/27.
  */
 import tree from './img/tree1.svg';
+import CircleProgress from '../common/CircleProgress';
 const SummaryStyle = {
   SummaryBox: {
     width: '100%',
@@ -22,24 +23,34 @@ const SummaryStyle = {
     width: '40%'
   },
   SummaryKpiItem: {
-    height: '1.4rem',
+    height: '2rem',
     textAlign: 'center',
-    lineHeight: '1.4rem',
-    marginBottom: '1rem'
+    marginBottom: '1rem',
+    position: 'relative'
   },
   SummaryKpiItemCut: {
-    border: '2px solid #75e6dc',
-    borderRadius: '50%',
-    width: '1.4rem',
-    height: '1.4rem',
-    display: 'inline-block',
-    marginRight: '0.3rem',
     fontSize: '0.6rem',
-    color: '#f6f6ff'
+    color: '#f6f6ff',
+    width: '1rem',
+    height: '1rem',
+    position: 'absolute',
+    left: '0.45rem',
+    top: '0.2rem',
+    textAlign: 'center',
+    lineHeight: '1rem'
   },
   SummaryKpiItemZi: {
     color: '#fcfcfc',
-    fontSize: '0.4rem'
+    fontSize: '0.4rem',
+    display: 'inline-block',
+    float: 'right',
+    marginRight: '0.4rem',
+    marginTop: '0.5rem'
+  },
+  SummeryKpiCircle: {
+    width: '1.4rem',
+    height: '1.4rem',
+    display: 'inline-block'
   }
 };
 class Summary extends React.Component {
@@ -52,11 +63,17 @@ class Summary extends React.Component {
         </dt>
         <dd style={SummaryStyle.SummaryKpi}>
           <p style={SummaryStyle.SummaryKpiItem}>
-            <b style={SummaryStyle.SummaryKpiItemCut}>{normalCnt}</b>
+            <div style={SummaryStyle.SummaryKpiItemCut}>{normalCnt}</div>
+            <div style={SummaryStyle.SummeryKpiCircle}>
+              <CircleProgress per="0.5" x="50" />
+            </div>
             <span style={SummaryStyle.SummaryKpiItemZi}>正常指标</span>
           </p>
           <p style={SummaryStyle.SummaryKpiItem}>
-            <b style={SummaryStyle.SummaryKpiItemCut}>{warningCnt}</b>
+            <div style={SummaryStyle.SummaryKpiItemCut}>{warningCnt}</div>
+            <div style={SummaryStyle.SummeryKpiCircle}>
+              <CircleProgress per="0.5" x="50" />
+            </div>
             <span style={SummaryStyle.SummaryKpiItemZi}>观察指标</span>
           </p>
         </dd>
