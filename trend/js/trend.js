@@ -25,10 +25,11 @@ ThorgeneGlobal.trendPage = {
         ThorgeneGlobal.trendPage.classifyId = [];
         $$.ajax(
             {method: 'GET',
-                url: ThorgeneGlobal.apiPrefix + "/user-inspect-classifies",
+                url: ThorgeneGlobal.apiPrefix + "/user-check-classifies",
                 dataType: 'json',
-                success: function(data, status) {
-                    if (status === 200) {
+                success: function(json, status) {
+                    var data = json.data;
+                    if (status === 200 && json.retCode === 0) {
                         /*  myApp.templates.userInspectTpl({
                             id : data.id,
                             title : data.title
@@ -74,14 +75,15 @@ ThorgeneGlobal.trendPage = {
             }
         );
     },
-    getValues: function(i) {
+    getValues: function(i, unit) {
         var mychart = echarts.init($$('.view-trend').find("#chart")[0]);
         $$.ajax(
             {method: 'GET',
-            url: ThorgeneGlobal.apiPrefix + "/user-check-items/" + i,
+            url: ThorgeneGlobal.apiPrefix + '/user-check-items/' + i + '?unit=' + unit,
             dataType: 'json',
-            success: function(data, status) {
-                if (status === 200) {
+            success: function(json, status) {
+                var data = json.data;
+                if (status === 200 && json.retCode === 0) {
                     var option = {
                         // backgroundColor: "#fff",
                         grid: {
@@ -155,15 +157,17 @@ ThorgeneGlobal.trendPage = {
     getItems: function(n) {
         $$.ajax(
             {method: 'GET',
-            url: ThorgeneGlobal.apiPrefix + "/user-inspect-classifies/" + ThorgeneGlobal.trendPage.classifyId[n - 1] +
+            url: ThorgeneGlobal.apiPrefix + "/user-check-classifies/" + ThorgeneGlobal.trendPage.classifyId[n - 1] +
                 "/check-items",
             dataType: 'json',
-            success: function(data) {
+            success: function(json) {
+                var data = json.data;
                 var items = '<div class="checkitems">';
                 var width = data.length * 90 + "px";
                 var i;
                 for (i = 0; i < data.length; i++) {
-                    items += '<div class="checkitem" id="checkitemId-' + data[i].id + '"><div class="checkitem_h">';
+                    items += '<div class="checkitem" id="checkitemId-' + data[i].id + '" unit="' + data[i].unit + '">';
+                    items += '<div class="checkitem_h">';
                     items += '<div class="checkitem_change" name="change"><i class="iconfont" value="' + data[i].name;
                     items += ' ' + data[i].unit + '">' + ThorgeneGlobal.trendPage.iconfontcode[n - 1] + '</i></div>';
                     items += '</div><div class="word"><p>' + data[i].name + ' ' + data[i].unit + '</p></div></div>';
@@ -175,7 +179,8 @@ ThorgeneGlobal.trendPage = {
                     i = $$(this).find('i')[0];
                     ThorgeneGlobal.trendPage.pass(i);
                     var id = this.id.substring(12, this.id.length);
-                    ThorgeneGlobal.trendPage.getValues(id);
+                    var unit = $$(this).attr('unit');
+                    ThorgeneGlobal.trendPage.getValues(id, unit);
                     $$('.view-trend').find('.word').css('color', '#aaa');
                     $$(this).find('.word').css('color', '#3eb2e1');
                 });
@@ -185,7 +190,8 @@ ThorgeneGlobal.trendPage = {
                     i = $$(initItem).find('i')[0];
                     ThorgeneGlobal.trendPage.pass(i);
                     var id = initItem.id.substring(12, initItem.id.length);
-                    ThorgeneGlobal.trendPage.getValues(id);
+                    var unit = $$(this).attr('unit');
+                    ThorgeneGlobal.trendPage.getValues(id, unit);
                     $$('.view-trend').find('.word').css('color', '#aaa');
                     $$(initItem).find('.word').css('color', '#3eb2e1');
                 }

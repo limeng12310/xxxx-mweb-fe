@@ -80,7 +80,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="manual-add.html" class="manual-add">+</a>
+                        <div href="manual-add.html" class="manual-add">+</div>
                         <a href="photo-uploader.html" class="photo-add"><i class="iconfont">&#xe60c;</i></a>
                         <div class="detail" ></div>
                     </div>
@@ -259,8 +259,8 @@
                                         </div>
                                         <div class="item-inner">
                                             <div class="checkitem-container">
-                                                <div class="checkitem-name">{{name}}</div>
-                                                <div class="checkitem-value">{{numberResult}}</div>
+                                                <div class="checkitem-name">{{nameInReport}}</div>
+                                                <div class="checkitem-value">{{result}}</div>
                                                 <div class="checkitem-unit">{{unit}}</div>
                                             </div>
                                         </div>
@@ -280,6 +280,11 @@
                                             {{#js_compare "!this.refLow && this.refHigh"}}
                                             <div class="checkitem-graph">
                                                 参考范围: <{{refHigh}}
+                                            </div>
+                                            {{/js_compare}}
+                                            {{#js_compare "!this.refLow && !this.refHigh"}}
+                                            <div class="checkitem-graph">
+                                                参考范围: 无
                                             </div>
                                             {{/js_compare}}
                                             {{#if intro}}
@@ -316,7 +321,7 @@
                                         </div>
                                         <div class="item-inner">
                                             <div class="checkitem-container">
-                                                <div class="checkitem-name">{{name}}</div>
+                                                <div class="checkitem-name">{{nameInReport}}</div>
                                                 <div class="checkitem-value">{{result}}</div>
                                                 <div class="checkitem-unit">{{unit}}</div>
                                             </div>
@@ -350,7 +355,7 @@
                                     <a href="#" class="item-link item-content">
                                         <div class="item-inner">
                                             <div class="checkitem-container">
-                                                <div class="checkitem-name">{{name}}</div>
+                                                <div class="checkitem-name">{{nameInReport}}</div>
                                                 <!--<div class="checkitem-value">{{#if numberResult}}{{numberResult}}{{else}}{{result}}{{/if}}</div>-->
                                                 <!--<div class="checkitem-unit">{{unit}}</div>-->
                                             </div>

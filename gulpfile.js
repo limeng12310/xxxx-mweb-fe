@@ -297,6 +297,8 @@
         // watch common
         gulp.watch(paths.common.js, ['common']);
         gulp.watch(paths.common.less, ['common']);
+        gulp.watch(paths.common.resource, ['common']);
+        gulp.watch(paths.common.root + '/*', ['common']);
 
         // watch pages
         paths.pages.list.forEach(function(pageName) {
