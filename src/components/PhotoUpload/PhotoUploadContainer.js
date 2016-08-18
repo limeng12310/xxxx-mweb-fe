@@ -4,6 +4,7 @@ import PhotosToUpload from './PhotosToUpload';
 import boxBackground from './img/background.png';
 import back from './img/back.png';
 import ok from './img/ok.png';
+import foot from './img/foot.svg';
 
 class PhotoUploadContainer extends React.Component {
   constructor(props) {
@@ -78,7 +79,7 @@ class PhotoUploadContainer extends React.Component {
         width: '100%',
         backgroundImage: `url(${boxBackground})`,
         backgroundSize: 'cover',
-        zIndex: -1
+        zIndex: -100
       },
       box: {
         position: 'absolute',
@@ -86,9 +87,11 @@ class PhotoUploadContainer extends React.Component {
         width: '100%'
       },
       nav: {
-        height: '5.5%',
-        paddingTop: '0.203125rem',
-        paddingBottom: '0.203125rem'
+        height: '1rem',
+        position: 'absolute',
+        width: '100%',
+        paddingTop: '0.2rem',
+        paddingBottom: '0.2rem'
       },
       line: {
         marginTop: '1.03275rem',
@@ -121,10 +124,39 @@ class PhotoUploadContainer extends React.Component {
         display: 'flex'
       },
       container: {
-        height: '84.5%',
-        paddingTop: '1.25rem',
+        position: 'absolute',
+        width: '100%',
+        height: 'calc(100% - 2.4rem - 5rem)',
+        marginTop: '1.4rem',
+        paddingTop: '1rem',
         textAlign: 'center',
         overflowY: 'scroll'
+      },
+      footLine: {
+        position: 'fixed',
+        bottom: '1.466667rem',
+        width: '100%',
+        height: '0.078125rem',
+        background: 'linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,1),rgba(255,255,255,0.1))',
+        zIndex: -10
+      },
+      foot: {
+        position: 'fixed',
+        bottom: 0,
+        width: '100%',
+        height: '1.466667rem',
+        backgroundImage: `url(${foot})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover'
+        // position: 'fixed',
+        // bottom: 0,
+        // width: '100%',
+        // height: '1.466667rem',
+        // backgroundColor: '#fff',
+        // filter: 'alpha(opacity=20)', // IE滤镜，透明度50%
+        // mozOpacity: 0.2, // Firefox私有，透明度50%
+        // opacity: 0.2, // 其他，透明度50%
+        // zIndex: -10
       }
     };
     return (
@@ -153,6 +185,8 @@ class PhotoUploadContainer extends React.Component {
               onUserImageDelete={this.handleUserImageDelete}
             />
           </div>
+          <div style={styles.footLine}></div>
+          <div style={styles.foot}></div>
         </div>
       </div>
     );

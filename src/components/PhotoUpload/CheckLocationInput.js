@@ -33,8 +33,8 @@ class CheckLocationInput extends React.Component {
         height: '0.03125rem',
         background: 'linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.6),rgba(255,255,255,0.1))',
         borderTopColor: '#fff',
-        marginLeft: 'auto',
-        marginRight: 'auto'
+        marginLeft: '0.426667rem',
+        marginRight: '0.426667rem'
       }
     };
     return (
