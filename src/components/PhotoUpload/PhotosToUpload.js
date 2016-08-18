@@ -1,6 +1,8 @@
 import backImg from './example.jpg';
 import addImg from './img/add.png';
 import backgroudDelImg from './img/del.png';
+import imgDel from './img/imgDel.svg';
+
 
 class PhotosToUpload extends React.Component {
   constructor(props) {
@@ -47,7 +49,7 @@ class PhotosToUpload extends React.Component {
       }
     }
   }
-  wxUploadImageSuccess(res) {                                    // 使用闭包，实现服务器端ID和图片的本地ID一一对应起来
+  wxUploadImageSuccess(res) {                                 // 使用闭包，实现服务器端ID和图片的本地ID一一对应起来
     this.props.onUserImageUpload(res.serverId); // 返回图片的服务器端ID
   }
   clickPreview(e) {
@@ -79,9 +81,9 @@ class PhotosToUpload extends React.Component {
   render() {
     const styles = {
       layOut: {
-        marginLeft: '1.1rem',
-        marginRight: '1.1rem',
-        marginTop: '0.78125rem'
+        marginLeft: '1.5rem',
+        marginRight: '1.5rem',
+        marginTop: '0.4rem'
       },
       allImage: {
         minHeight: '6.40625rem',
@@ -95,14 +97,14 @@ class PhotosToUpload extends React.Component {
       },
       imgDelBox: {
         margin: '0.109375rem',
-        width: '2.275rem',
-        height: '2.275rem'
+        width: '2rem',
+        height: '2rem'
       },
       img: {
         position: 'relative',
-        margin: '0.3125rem',
-        width: '1.875rem',
-        height: '1.875rem',
+        margin: '0.2rem',
+        width: '1.573333rem',
+        height: '1.573333rem',
         borderWidth: '0.03125rem',
         borderStyle: 'solid',
         borderColor: '#D7D7D7',
@@ -113,31 +115,40 @@ class PhotosToUpload extends React.Component {
       },
       imgDel: {
         position: 'relative',
-        marginTop: '-2.5rem',
-        marginLeft: '-0.078125rem',
+        marginTop: '-2.1rem',
+        marginLeft: 0,
         marginRight: 'auto',
         marginBottom: 'auto',
-        width: '0.959625rem',
-        height: '0.930625rem',
-        backgroundImage: `url(${backgroudDelImg})`,
+        width: '0.533333rem',
+        height: '0.533333rem',
+        backgroundImage: `url(${imgDel})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover'
       },
       add: {
+        position: 'fixed',
+        right: 0,
+        left: 0,
+        bottom: '1.05rem',
         margin: '0.1875rem',
-        width: '2.65625rem',
-        height: '2.66625rem',
+        width: '2.24rem',
+        height: '2.24rem',
         marginLeft: 'auto',
         marginRight: 'auto',
         backgroundImage: `url(${addImg})`,
         backgroundPosition: 'center',
-        backgroundSize: 'cover'
+        backgroundSize: 'cover',
+        zIndex: 100
       },
       delNone: {
+        position: 'fixed',
+        right: 0,
+        left: 0,
+        bottom: '3.53rem',
         marginTop: '0.3125rem',
         marginBottom: '0.1875rem',
-        width: '0.959625rem',
-        height: '0.930625rem',
+        width: '0.7815rem',
+        height: '0.77rem',
         marginLeft: 'auto',
         marginRight: 'auto',
         backgroundImage: 'none',
@@ -145,10 +156,14 @@ class PhotosToUpload extends React.Component {
         backgroundSize: 'cover'
       },
       del: {
+        position: 'fixed',
+        right: 0,
+        left: 0,
+        bottom: '3.53rem',
         marginTop: '0.3125rem',
         marginBottom: '0.1875rem',
-        width: '0.959625rem',
-        height: '0.930625rem',
+        width: '0.7815rem',
+        height: '0.77rem',
         marginLeft: 'auto',
         marginRight: 'auto',
         backgroundImage: `url(${backgroudDelImg})`,
