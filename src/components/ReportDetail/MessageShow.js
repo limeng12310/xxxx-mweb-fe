@@ -31,11 +31,19 @@ class MessageShow extends React.Component {
         verticalAlign: 'middle',
         float: 'none'
       },
+      num: {
+        display: 'inline-block',
+        verticalAlign: 'middle',
+        float: 'none',
+        marginLeft: '-0.95rem',
+        marginTop: '-0.1rem',
+        fontSize: '0.7rem'
+      },
       stan: {
         display: 'inline-block',
         verticalAlign: 'middle',
         float: 'none',
-        paddingLeft: '0.3rem'
+        paddingLeft: '0.9rem'
       },
       location: {
         fontSize: '0.533333rem',
@@ -54,10 +62,12 @@ class MessageShow extends React.Component {
         <div style={styles.boxLeft}>
           <div style={styles.circleBox}>
             <div style={styles.circle}><CircleProgress per="0.2" x="50" /></div>
+            <div style={styles.num}>2</div>
             <div style={styles.stan}>正常指标</div>
           </div>
           <div style={styles.circleBox}>
             <div style={styles.circle}><CircleProgress per="0.9" x="50" /></div>
+            <div style={styles.num}>9</div>
             <div style={styles.stan}>观察指标</div>
           </div>
         </div>

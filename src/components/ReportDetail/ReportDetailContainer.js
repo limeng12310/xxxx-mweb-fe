@@ -63,7 +63,11 @@ class ReportDetailContainer extends React.Component {
       { name: '血生化', items: ['fkaldkf', '1淋巴细胞绝对值', '1中间细胞绝对值', '1粒细胞绝对值', '1淋巴细胞百分比'] },
       { name: '血免疫', items: ['2红细胞数', '2淋巴细胞绝对值', '2中间细胞绝对值', '2粒细胞绝对值', '2淋巴细胞百分比'] }
     ];
-    const image = [example, example, example, example, example, example];
+    const image = [example, example, example, example, example, example,
+      example, example, example, example, example, example, example, example,
+      example, example, example, example, example, example, example, example,
+      example, example, example, example, example, example, example, example,
+      example, example, example, example, example, example, example, example];
     // const report = [{ name: '血常规', items: ['红细胞数'] }];
     const styles = {
       container: {
