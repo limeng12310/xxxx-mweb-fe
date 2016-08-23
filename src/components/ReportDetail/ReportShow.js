@@ -42,15 +42,21 @@ class ReportShow extends React.Component {
         height: '0.94rem',
         paddingTop: '0.1rem'
       },
-      report: {
+      activeMenu: {
         fontSize: '0.666667rem',
         color: '#fff',
         width: '67%',
         textAlign: 'center'
       },
-      result: {
+      inactiveMenu: {
         fontSize: '0.666667rem',
-        color: '#94D7FB',
+        color: '#fff',
+        // IE滤镜，透明度50%
+        filter: 'alpha(opacity=60)',
+        // Firefox私有，透明度50%
+        mozOpacity: 0.6,
+        // 其他，透明度50%
+        opacity: 0.6,
         width: '33%',
         textAlign: 'center'
       },
@@ -137,10 +143,10 @@ class ReportShow extends React.Component {
     let tab;
     if (this.state.tabChoosen === 1) {
       menuLeft = (
-        <div style={styles.report} onClick={this.setTab1} id="tabName1">看报告</div>
+        <div style={styles.activeMenu} onClick={this.setTab1} id="tabName1">看报告</div>
       );
       menuRight = (
-        <div style={styles.result} onClick={this.setTab2} id="tabName2">看图片</div>
+        <div style={styles.inactiveMenu} onClick={this.setTab2} id="tabName2">看图片</div>
       );
       tab = (
         <div style={styles.boxOut1}>
@@ -182,10 +188,10 @@ class ReportShow extends React.Component {
       );
     } else if (this.state.tabChoosen === 2) {
       menuLeft = (
-        <div style={styles.result} onClick={this.setTab1}>看报告</div>
+        <div style={styles.inactiveMenu} onClick={this.setTab1}>看报告</div>
       );
       menuRight = (
-        <div style={styles.report} onClick={this.setTab2}>看图片</div>
+        <div style={styles.activeMenu} onClick={this.setTab2}>看图片</div>
       );
       tab = (
         <div style={styles.boxOut1}>
