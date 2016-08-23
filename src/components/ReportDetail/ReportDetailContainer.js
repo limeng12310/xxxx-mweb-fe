@@ -7,6 +7,8 @@ import Header from './../common/Header';
 class ReportDetailContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.handleChangeScroll1 = this.handleChangeScroll1.bind(this);
+    this.handleChangeScroll2 = this.handleChangeScroll2.bind(this);
     this.state = {
       aaStyle: {}
     };
@@ -30,6 +32,16 @@ class ReportDetailContainer extends React.Component {
           });
         }
       });
+    });
+  }
+  handleChangeScroll1() {
+    $('#scroll').css({
+      overflowY: 'scroll'
+    });
+  }
+  handleChangeScroll2() {
+    $('#scroll').css({
+      overflowY: 'hidden'
     });
   }
   render() {
@@ -92,7 +104,13 @@ class ReportDetailContainer extends React.Component {
           <Header headerType="1" />
           <div style={styles.scrollBox} id="scroll">
             <MessageShow messages={message} />
-            <ReportShow report={report} scrollStyle={this.state.aaStyle} image={image} />
+            <ReportShow
+              report={report}
+              scrollStyle={this.state.aaStyle}
+              image={image}
+              changeScroll1={this.handleChangeScroll1}
+              changeScroll2={this.handleChangeScroll2}
+            />
           </div>
         </div>
       </div>
