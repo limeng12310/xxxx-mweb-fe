@@ -12,9 +12,9 @@ class ReportDetailContainer extends React.Component {
     };
   }
   componentDidMount() {
-    $(function () {
-      $("#scroll").scroll(function () {
-        var scroH = $("#scroll").scrollTop();
+    $(() => {
+      $('#scroll').scroll(() => {
+        const scroH = $('#scroll').scrollTop();
         // console.log(scroH);
         if (scroH >= lib.flexible.rem * 7.8) {
           this.setState({
@@ -29,8 +29,8 @@ class ReportDetailContainer extends React.Component {
             }
           });
         }
-      }.bind(this));
-    }.bind(this));
+      });
+    });
   }
   render() {
     const message = {
@@ -85,7 +85,7 @@ class ReportDetailContainer extends React.Component {
     return (
       <div>
         <div style={styles.container}>
-          <Header headerType='1' />
+          <Header headerType="1" />
           <div style={styles.scrollBox} id="scroll">
             <MessageShow messages={message} />
             <ReportShow report={report} scrollStyle={this.state.aaStyle} image={image} />
