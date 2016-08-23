@@ -18,13 +18,13 @@ class ReportDetailContainer extends React.Component {
       $('#scroll').scroll(() => {
         const scroH = $('#scroll').scrollTop();
         console.log(scroH);
-        if (scroH >= lib.flexible.rem * 7.8) {
+        if (scroH >= Math.floor(lib.flexible.rem * 7.8)) {
           this.setState({
             aaStyle: {
               overflowY: 'scroll'
             }
           });
-        } else if (scroH < lib.flexible.rem * 7.8) {
+        } else if (scroH < Math.floor(lib.flexible.rem * 7.8)) {
           this.setState({
             aaStyle: {
               overflowY: 'hidden'
