@@ -17,7 +17,7 @@ class ReportDetailContainer extends React.Component {
     $(() => {
       $('#scroll').scroll(() => {
         const scroH = $('#scroll').scrollTop();
-        // console.log(scroH);
+        console.log(scroH);
         if (scroH >= lib.flexible.rem * 7.8) {
           this.setState({
             aaStyle: {
