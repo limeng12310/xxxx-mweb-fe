@@ -16,9 +16,9 @@ class ReportShow extends React.Component {
       $('#aa').scroll(() => {
         const aaH = $('#aa').scrollTop();
         console.log(aaH);
-        if (aaH === 0) {
+        if (aaH <= 0) {
           this.props.changeScroll1();
-        } else {
+        } else if (aaH >= 0) {
           this.props.changeScroll2();
         }
       });
