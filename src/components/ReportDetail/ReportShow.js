@@ -26,10 +26,10 @@ class ReportShow extends React.Component {
   }
   setTab1() {
     $('#report').css({
-      'width': '100%'
+      width: '100%'
     });
     $('#image').css({
-      'width': 0
+      width: 0
     });
     $('#tabName1').css({
       filter: 'alpha(opacity=100)',
@@ -49,10 +49,10 @@ class ReportShow extends React.Component {
   }
   setTab2() {
     $('#image').css({
-      'width': '100%'
+      width: '100%'
     });
     $('#report').css({
-      'width': 0
+      width: 0
     });
     $('#tabName1').css({
       filter: 'alpha(opacity=60)',

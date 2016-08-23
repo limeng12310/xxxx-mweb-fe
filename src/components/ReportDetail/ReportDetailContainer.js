@@ -36,12 +36,12 @@ class ReportDetailContainer extends React.Component {
   }
   handleChangeScroll1() {
     $('#scroll').css({
-      'overflow-y': 'scroll'
+      overflowY: 'scroll'
     });
   }
   handleChangeScroll2() {
     $('#scroll').css({
-      'overflow-y': 'hidden'
+      overflowY: 'hidden'
     });
   }
   render() {
