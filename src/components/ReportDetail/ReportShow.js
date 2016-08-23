@@ -4,22 +4,65 @@ class ReportShow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isChoosen: 0,
-      tabChoosen: 1
+      isChoosen: 0
     };
     this.clickChange = this.clickChange.bind(this);
     this.setTab1 = this.setTab1.bind(this);
     this.setTab2 = this.setTab2.bind(this);
     this.clickPreview = this.clickPreview.bind(this);
   }
+  componentDidMount() {
+    $(() => {
+      $('#aa').scroll(() => {
+        const aaH = $('#aa').scrollTop();
+        console.log(aaH);
+        if (aaH === 0) {
+          this.props.changeScroll1();
+        } else {
+          this.props.changeScroll2();
+        }
+      });
+    });
+  }
   setTab1() {
-    this.setState({
-      tabChoosen: 1
+    $('#report').css({
+      'width': '100%'
+    });
+    $('#image').css({
+      'width': 0
+    });
+    $('#tabName1').css({
+      filter: 'alpha(opacity=100)',
+      // Firefox私有，透明度50%
+      mozOpacity: 1,
+      // 其他，透明度50%
+      opacity: 1
+    });
+    $('#tabName2').css({
+      // IE滤镜，透明度50%
+      filter: 'alpha(opacity=60)',
+      // Firefox私有，透明度50%
+      mozOpacity: 0.6,
+      // 其他，透明度50%
+      opacity: 0.6
     });
   }
   setTab2() {
-    this.setState({
-      tabChoosen: 2
+    $('#image').css({
+      'width': '100%'
+    });
+    $('#report').css({
+      'width': 0
+    });
+    $('#tabName1').css({
+      filter: 'alpha(opacity=60)',
+      mozOpacity: 0.6,
+      opacity: 0.6
+    });
+    $('#tabName2').css({
+      filter: 'alpha(opacity=100)',
+      mozOpacity: 1,
+      opacity: 1
     });
   }
   clickChange(e) {
@@ -45,7 +88,7 @@ class ReportShow extends React.Component {
       activeMenu: {
         fontSize: '0.666667rem',
         color: '#fff',
-        width: '67%',
+        width: '50%',
         textAlign: 'center'
       },
       inactiveMenu: {
@@ -57,11 +100,25 @@ class ReportShow extends React.Component {
         mozOpacity: 0.6,
         // 其他，透明度50%
         opacity: 0.6,
-        width: '33%',
+        width: '50%',
         textAlign: 'center'
       },
       boxOut1: {
         width: '100%',
+        backgroundImage: `url(${bottomBackground})`,
+        minHeight: 'calc(100% - 7.8rem - 0.94rem)',
+        // 图片自适应屏幕大小
+        position: 'absolute',
+        // backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundRepeat: 'no-repeat',
+        overflowY: 'hidden',
+        maxHeight: 'calc(100% - 0.92rem)'
+      },
+      boxOut2: {
+        width: 0,
         backgroundImage: `url(${bottomBackground})`,
         minHeight: 'calc(100% - 7.8rem - 0.94rem)',
         // 图片自适应屏幕大小
@@ -138,19 +195,14 @@ class ReportShow extends React.Component {
         backgroundSize: 'cover'
       }
     };
-    let menuLeft;
-    let menuRight;
-    let tab;
-    if (this.state.tabChoosen === 1) {
-      menuLeft = (
-        <div style={styles.activeMenu} onClick={this.setTab1} id="tabName1">看报告</div>
-      );
-      menuRight = (
-        <div style={styles.inactiveMenu} onClick={this.setTab2} id="tabName2">看图片</div>
-      );
-      tab = (
-        <div style={styles.boxOut1}>
-          <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="aa" >
+    return (
+      <div>
+        <div style={styles.nav} id="scrollBox">
+          <div style={styles.activeMenu} onClick={this.setTab1} id="tabName1">看报告</div>
+          <div style={styles.inactiveMenu} onClick={this.setTab2} id="tabName2">看图片</div>
+        </div>
+        <div style={styles.boxOut1} id="report">
+          <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="aa">
             <ul style={styles.leftBox}>
               {
                 this.props.report.map((item, i) => {
@@ -185,16 +237,7 @@ class ReportShow extends React.Component {
             </ul>
           </div>
         </div>
-      );
-    } else if (this.state.tabChoosen === 2) {
-      menuLeft = (
-        <div style={styles.inactiveMenu} onClick={this.setTab1}>看报告</div>
-      );
-      menuRight = (
-        <div style={styles.activeMenu} onClick={this.setTab2}>看图片</div>
-      );
-      tab = (
-        <div style={styles.boxOut1}>
+        <div style={styles.boxOut2} id="image">
           <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="aa" >
             <div style={styles.allImage}>
               {
@@ -216,15 +259,6 @@ class ReportShow extends React.Component {
             </div>
           </div>
         </div>
-      );
-    }
-    return (
-      <div>
-        <div style={styles.nav} id="scrollBox">
-          {menuLeft}
-          {menuRight}
-        </div>
-        {tab}
       </div>
     );
   }
@@ -233,7 +267,9 @@ class ReportShow extends React.Component {
 ReportShow.propTypes = {
   report: React.PropTypes.array,
   scrollStyle: React.PropTypes.object,
-  image: React.PropTypes.array
+  image: React.PropTypes.array,
+  changeScroll1: React.PropTypes.function,
+  changeScroll2: React.PropTypes.function
 };
 
 export default ReportShow;
