@@ -5,7 +5,10 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
-  entry: './src/index.js',
+  entry: [
+    'whatwg-fetch',
+    './src/index.js'
+  ],
   debug: true,
   output: {
     path: path.join(__dirname, '../dist'),
