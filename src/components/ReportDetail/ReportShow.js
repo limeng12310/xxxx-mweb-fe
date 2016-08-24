@@ -247,7 +247,7 @@ class ReportShow extends React.Component {
           </div>
         </div>
         <div style={styles.boxOut2} id="image">
-          <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="ab" >
+          <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="ab">
             <div style={styles.allImage}>
               {
                 this.props.image.map((imgId, i) => {
