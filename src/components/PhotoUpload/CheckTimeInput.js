@@ -42,9 +42,9 @@ class CheckTimeInput extends React.Component {
         background: 'none',
         border: 'none',
         outline: 'none',
-        mozAppearance: 'none',
+        MozAppearance: 'none',
         msProgressAppearance: 'none',
-        webkitAppearance: 'none'
+        WebkitAppearance: 'none'
         // paddingTop: 8,
         // paddingBottom: 7,
         // paddingLeft: 1
@@ -89,7 +89,7 @@ class CheckTimeInput extends React.Component {
 }
 
 CheckTimeInput.propTypes = {
-  onUserDateInput: React.PropTypes.function
+  onUserDateInput: React.PropTypes.func
 };
 
 export default CheckTimeInput;

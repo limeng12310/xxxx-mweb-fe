@@ -2,7 +2,8 @@ import 'lib-flexible';
 import 'babel-polyfill';
 
 import ReactDOM from 'react-dom';
-import ReportDetailContainer from './components/ReportDetail/ReportDetailContainer';
+// import ReportDetailContainer from './components/ReportDetail/ReportDetailContainer';
+import PhotoUploadContainer from './components/PhotoUpload/PhotoUploadContainer';
 import fetch from 'isomorphic-fetch';
 import config from './config/default';
 
@@ -29,7 +30,7 @@ fetch(`${config.apiPrefix}/test-signature`)
   });
 
 ReactDOM.render(
-  <ReportDetailContainer />,
+  <PhotoUploadContainer />,
   document.getElementById('approot')
 );
 
