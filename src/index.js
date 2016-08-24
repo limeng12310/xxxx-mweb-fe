@@ -2,16 +2,20 @@ import 'lib-flexible';
 import 'babel-polyfill';
 
 import ReactDOM from 'react-dom';
-import ReportDetailContainer from './components/ReportDetail/ReportDetailContainer';
-import fetch from 'isomorphic-fetch';
+import HomeContainer from './components/home/HomeContainer';
+// import ReportDetailContainer from './components/ReportDetail/ReportDetailContainer';
+import PhotoUploadContainer from './components/PhotoUpload/PhotoUploadContainer';
 import config from './config/default';
+
+// react router
+import { Router, Route, browserHistory } from 'react-router';
 
 import './common.css';
 
+// 初始化微信jssdk配置
 fetch(`${config.apiPrefix}/test-signature`)
   .then(response => response.json())
   .then(json => {
-    // 初始化微信jssdk配置
     wx.config({
       debug: false,
       appId: json.appId,
@@ -28,8 +32,12 @@ fetch(`${config.apiPrefix}/test-signature`)
     });
   });
 
-ReactDOM.render(
-  <ReportDetailContainer />,
+ReactDOM.render((
+  <Router history={browserHistory}>
+    <Route path="/" component={HomeContainer} />
+    <Route path="/photo-upload" component={PhotoUploadContainer} />
+  </Router>
+  ),
   document.getElementById('approot')
 );
 

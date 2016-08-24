@@ -7,6 +7,7 @@ module.exports = {
   devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client',
+    'whatwg-fetch',
     './src/index.js'
   ],
   debug: true,

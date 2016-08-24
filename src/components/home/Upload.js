@@ -4,6 +4,8 @@
 import manualUpload from './img/manualUpload.png';
 import imgUpload from './img/imgUpload.png';
 
+import { Link } from 'react-router';
+
 const UploadStyle = {
   right: {
     width: '20%',
@@ -32,7 +34,9 @@ class Upload extends React.Component {
           <img src={manualUpload} alt="" style={UploadStyle.icon} />
         </div>
         <div style={UploadStyle.rightUpload}>
-          <img src={imgUpload} alt="" style={UploadStyle.icon} />
+          <Link to="/photo-upload">
+            <img src={imgUpload} alt="" style={UploadStyle.icon} />
+          </Link>
         </div>
       </div>
     );
