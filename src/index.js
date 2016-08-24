@@ -34,7 +34,7 @@ fetch(`${config.apiPrefix}/test-signature`)
 
 ReactDOM.render((
   <Router history={browserHistory}>
-    <Route path="/" component={HomeContainer} />
+    <Route path="/app-home.html" component={HomeContainer} />
     <Route path="/photo-upload" component={PhotoUploadContainer} />
   </Router>
   ),
