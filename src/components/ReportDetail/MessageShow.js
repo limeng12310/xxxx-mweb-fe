@@ -14,7 +14,7 @@ class MessageShow extends React.Component {
       boxLeft: {
         width: '4.6rem',
         height: '100%',
-        paddingLeft: '1.386667rem'
+        paddingLeft: '1.3rem'
       },
       boxRight: {
         paddingRight: '1.386667rem',
@@ -54,8 +54,8 @@ class MessageShow extends React.Component {
         float: 'right'
       },
       date: {
-        fontSize: '0.76rem',
-        fontWeight: 900,
+        fontSize: '0.75rem',
+        fontWeight: 700,
         color: '#fff',
         float: 'right'
       }
@@ -64,13 +64,13 @@ class MessageShow extends React.Component {
       <div style={styles.box}>
         <div style={styles.boxLeft}>
           <div style={styles.circleBox}>
-            <div style={styles.circle}><CircleProgress per="0.2" x={x} /></div>
+            <div style={styles.circle}><CircleProgress per={0.2} x={x} /></div>
             <div style={styles.num}>2</div>
             <div style={styles.stan}>正常指标</div>
           </div>
           <div style={styles.circleBox}>
-            <div style={styles.circle}><CircleProgress per="0.9" x={x} /></div>
-            <div style={styles.num}>9</div>
+            <div style={styles.circle}><CircleProgress per={0.8} x={x} /></div>
+            <div style={styles.num}>8</div>
             <div style={styles.stan}>观察指标</div>
           </div>
         </div>
