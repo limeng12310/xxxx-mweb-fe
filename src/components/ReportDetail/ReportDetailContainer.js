@@ -17,7 +17,7 @@ class ReportDetailContainer extends React.Component {
     $(() => {
       $('#scroll').scroll(() => {
         const scroH = $('#scroll').scrollTop();
-        console.log(scroH);
+        // console.log(scroH);
         if (scroH >= Math.floor(lib.flexible.rem * 7.8)) {
           this.setState({
             aaStyle: {
@@ -104,7 +104,7 @@ class ReportDetailContainer extends React.Component {
     return (
       <div>
         <div style={styles.container}>
-          <Header headerType="1" />
+          <Header headerType="1" onS />
           <div style={styles.scrollBox} id="scroll">
             <MessageShow messages={message} />
             <ReportShow

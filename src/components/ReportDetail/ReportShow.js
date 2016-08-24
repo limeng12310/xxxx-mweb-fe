@@ -13,21 +13,21 @@ class ReportShow extends React.Component {
   }
   componentDidMount() {
     $(() => {
-      $('#aa').scroll(() => {
-        const aaH = $('#aa').scrollTop();
-        console.log(aaH);
-        if (aaH <= 0) {
+      $('#reportScroll').scroll(() => {
+        const reportScrollH = $('#reportScroll').scrollTop();
+        // console.log(reportScrollH);
+        if (reportScrollH <= 0) {
           this.props.changeScroll1();
-        } else if (aaH >= 0) {
+        } else if (reportScrollH >= 0) {
           this.props.changeScroll2();
         }
       });
-      $('#ab').scroll(() => {
-        const abH = $('#ab').scrollTop();
-        console.log(abH);
-        if (abH <= 0) {
+      $('#imageScroll').scroll(() => {
+        const imageScrollH = $('#imageScroll').scrollTop();
+        // console.log(imageScrollH);
+        if (imageScrollH <= 0) {
           this.props.changeScroll1();
-        } else if (abH >= 0) {
+        } else if (imageScrollH >= 0) {
           this.props.changeScroll2();
         }
       });
@@ -214,7 +214,7 @@ class ReportShow extends React.Component {
           <div style={styles.inactiveMenu} onClick={this.setTab2} id="tabName2">看图片</div>
         </div>
         <div style={styles.boxOut1} id="report">
-          <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="aa">
+          <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="reportScroll">
             <ul style={styles.leftBox}>
               {
                 this.props.report.map((item, i) => {
@@ -250,7 +250,7 @@ class ReportShow extends React.Component {
           </div>
         </div>
         <div style={styles.boxOut2} id="image">
-          <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="ab">
+          <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="imageScroll">
             <div style={styles.allImage}>
               {
                 this.props.image.map((imgId, i) => {
@@ -280,8 +280,8 @@ ReportShow.propTypes = {
   report: React.PropTypes.array,
   scrollStyle: React.PropTypes.object,
   image: React.PropTypes.array,
-  changeScroll1: React.PropTypes.function,
-  changeScroll2: React.PropTypes.function
+  changeScroll1: React.PropTypes.func.isRequired,
+  changeScroll2: React.PropTypes.func.isRequired
 };
 
 export default ReportShow;
