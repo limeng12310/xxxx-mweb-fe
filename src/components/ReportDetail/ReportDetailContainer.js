@@ -98,7 +98,7 @@ class ReportDetailContainer extends React.Component {
         height: 'calc(100% - 1.22rem)',
         marginTop: '1.22rem',
         overflowY: 'scroll',
-        webkitOverflowScrolling: 'touch'
+        WebkitOverflowScrolling: 'touch'
       }
     };
     return (
