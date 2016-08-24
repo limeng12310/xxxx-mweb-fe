@@ -22,6 +22,15 @@ class ReportShow extends React.Component {
           this.props.changeScroll2();
         }
       });
+      $('#ab').scroll(() => {
+        const abH = $('#ab').scrollTop();
+        console.log(abH);
+        if (abH <= 0) {
+          this.props.changeScroll1();
+        } else if (abH >= 0) {
+          this.props.changeScroll2();
+        }
+      });
     });
   }
   setTab1() {
@@ -238,7 +247,7 @@ class ReportShow extends React.Component {
           </div>
         </div>
         <div style={styles.boxOut2} id="image">
-          <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="aa" >
+          <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="ab" >
             <div style={styles.allImage}>
               {
                 this.props.image.map((imgId, i) => {
