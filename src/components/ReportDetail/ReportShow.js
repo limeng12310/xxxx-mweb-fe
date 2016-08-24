@@ -43,7 +43,7 @@ class ReportShow extends React.Component {
     $('#tabName1').css({
       filter: 'alpha(opacity=100)',
       // Firefox私有，透明度50%
-      mozOpacity: 1,
+      MozOpacity: 1,
       // 其他，透明度50%
       opacity: 1
     });
@@ -51,7 +51,7 @@ class ReportShow extends React.Component {
       // IE滤镜，透明度50%
       filter: 'alpha(opacity=60)',
       // Firefox私有，透明度50%
-      mozOpacity: 0.6,
+      MozOpacity: 0.6,
       // 其他，透明度50%
       opacity: 0.6
     });
@@ -65,12 +65,12 @@ class ReportShow extends React.Component {
     });
     $('#tabName1').css({
       filter: 'alpha(opacity=60)',
-      mozOpacity: 0.6,
+      MozOpacity: 0.6,
       opacity: 0.6
     });
     $('#tabName2').css({
       filter: 'alpha(opacity=100)',
-      mozOpacity: 1,
+      MozOpacity: 1,
       opacity: 1
     });
   }
@@ -106,7 +106,7 @@ class ReportShow extends React.Component {
         // IE滤镜，透明度50%
         filter: 'alpha(opacity=60)',
         // Firefox私有，透明度50%
-        mozOpacity: 0.6,
+        MozOpacity: 0.6,
         // 其他，透明度50%
         opacity: 0.6,
         width: '50%',
@@ -124,7 +124,7 @@ class ReportShow extends React.Component {
         justifyContent: 'center',
         backgroundRepeat: 'no-repeat',
         overflowY: 'hidden',
-        webkitOverflowScrolling: 'touch',
+        WebkitOverflowScrolling: 'touch',
         maxHeight: 'calc(100% - 0.92rem)'
       },
       boxOut2: {
@@ -139,7 +139,7 @@ class ReportShow extends React.Component {
         justifyContent: 'center',
         backgroundRepeat: 'no-repeat',
         overflowY: 'hidden',
-        webkitOverflowScrolling: 'touch',
+        WebkitOverflowScrolling: 'touch',
         maxHeight: 'calc(100% - 0.92rem)'
       },
       box: {
@@ -154,7 +154,7 @@ class ReportShow extends React.Component {
         display: 'flex',
         justifyContent: 'center',
         overflowY: 'hidden',
-        webkitOverflowScrolling: 'touch',
+        WebkitOverflowScrolling: 'touch',
         maxHeight: 'calc(100% - 0.92rem)'
       },
       leftBox: {
