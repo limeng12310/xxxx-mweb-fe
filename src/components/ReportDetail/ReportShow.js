@@ -124,6 +124,7 @@ class ReportShow extends React.Component {
         justifyContent: 'center',
         backgroundRepeat: 'no-repeat',
         overflowY: 'hidden',
+        webkitOverflowScrolling: 'touch',
         maxHeight: 'calc(100% - 0.92rem)'
       },
       boxOut2: {
@@ -138,6 +139,7 @@ class ReportShow extends React.Component {
         justifyContent: 'center',
         backgroundRepeat: 'no-repeat',
         overflowY: 'hidden',
+        webkitOverflowScrolling: 'touch',
         maxHeight: 'calc(100% - 0.92rem)'
       },
       box: {
@@ -152,6 +154,7 @@ class ReportShow extends React.Component {
         display: 'flex',
         justifyContent: 'center',
         overflowY: 'hidden',
+        webkitOverflowScrolling: 'touch',
         maxHeight: 'calc(100% - 0.92rem)'
       },
       leftBox: {

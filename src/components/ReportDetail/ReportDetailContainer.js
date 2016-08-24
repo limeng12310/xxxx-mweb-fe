@@ -38,6 +38,8 @@ class ReportDetailContainer extends React.Component {
     $('#scroll').css({
       overflowY: 'scroll'
     });
+    const t = $('#scroll').scrollTop();
+    $('#scroll').animate({ scrollTop: t - 2 }, 100);
   }
   handleChangeScroll2() {
     $('#scroll').css({
@@ -95,7 +97,8 @@ class ReportDetailContainer extends React.Component {
         width: '100%',
         height: 'calc(100% - 1.22rem)',
         marginTop: '1.22rem',
-        overflowY: 'scroll'
+        overflowY: 'scroll',
+        webkitOverflowScrolling: 'touch'
       }
     };
     return (
