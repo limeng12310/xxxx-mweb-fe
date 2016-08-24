@@ -232,11 +232,11 @@ class PhotosToUpload extends React.Component {
 }
 
 PhotosToUpload.propTypes = {
-  onUserImageInput: React.PropTypes.function,
-  onUserImageUpload: React.PropTypes.function,
-  onUserImageDelete: React.PropTypes.function,
-  imgCount: React.PropTypes.string,
-  items: React.PropTypes.string
+  onUserImageInput: React.PropTypes.func,
+  onUserImageUpload: React.PropTypes.func,
+  onUserImageDelete: React.PropTypes.func,
+  imgCount: React.PropTypes.number,
+  items: React.PropTypes.array
 };
 
 export default PhotosToUpload;

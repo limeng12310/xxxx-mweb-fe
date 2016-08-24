@@ -104,7 +104,7 @@ class ReportDetailContainer extends React.Component {
     return (
       <div>
         <div style={styles.container}>
-          <Header headerType="1" onS />
+          <Header headerType="1" />
           <div style={styles.scrollBox} id="scroll">
             <MessageShow messages={message} />
             <ReportShow

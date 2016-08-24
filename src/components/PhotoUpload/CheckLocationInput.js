@@ -22,9 +22,9 @@ class CheckLocationInput extends React.Component {
         background: 'none',
         border: 'none',
         outline: 'none',
-        mozAppearance: 'none',
+        MozAppearance: 'none',
         msProgressAppearance: 'none',
-        webkitAppearance: 'none'
+        WebkitAppearance: 'none'
         // paddingTop: 8,
         // paddingBottom: 7,
         // paddingLeft: 1
@@ -54,7 +54,7 @@ class CheckLocationInput extends React.Component {
 }
 
 CheckLocationInput.propTypes = {
-  onUserLocationInput: React.PropTypes.function,
+  onUserLocationInput: React.PropTypes.func,
   location: React.PropTypes.string
 };
 
