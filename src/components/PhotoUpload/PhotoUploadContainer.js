@@ -2,9 +2,8 @@ import CheckTimeInput from './CheckTimeInput';
 import CheckLocationInput from './CheckLocationInput';
 import PhotosToUpload from './PhotosToUpload';
 import boxBackground from './img/background.png';
-import back from './img/back.png';
-import ok from './img/ok.png';
 import foot from './img/foot.svg';
+import Header from './../common/Header';
 
 class PhotoUploadContainer extends React.Component {
   constructor(props) {
@@ -13,6 +12,7 @@ class PhotoUploadContainer extends React.Component {
     this.handleUserLocationInput = this.handleUserLocationInput.bind(this);
     this.handleUserImageInput = this.handleUserImageInput.bind(this);
     this.handleUserImageDelete = this.handleUserImageDelete.bind(this);
+    this.photoSubmit = this.photoSubmit.bind(this);
     this.state = {
       date: '',
       location: '',
@@ -20,6 +20,44 @@ class PhotoUploadContainer extends React.Component {
       count: 0,
       server: []
     };
+  }
+  photoSubmit() {
+    if(this.state.date == null) {
+      alert('检查时间不能为空！');
+    } else if(this.state.location == null) {
+      alert('检查地点不能为空！');
+    } else if(this.state.items == null) {
+      alert('您还未添加图片！');
+    } else {
+      fetch(`${config.apiPrefix}/reports`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          checkTime: this.state.date, // '2016-04-29 11:37:45'
+          reportType: '图片', // '图片'
+          reportValues: this.state.items // ['...', ... ] //图片报告为mediaId
+        })
+      })
+        .then(response => {
+          if (response.status === 200) {
+            return response.json();
+          }
+          throw new Error;
+        })
+        .then(json => {
+          if (json.retCode === 0) {
+            alert('照片上传成功！');
+          } else {
+            alert('请求出错！');
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   }
   handleUserDateInput(date) {
     this.setState({ date });
@@ -62,12 +100,6 @@ class PhotoUploadContainer extends React.Component {
     }
     this.setState({
       items: newItems,
-    // items: this.state.items.map((imgId, i) => {
-      //   if (i !== index) {
-      //     return imgId;
-      //   }
-      //   return null;
-      // }),
       count: this.state.count - 1
     });
   }
@@ -85,43 +117,6 @@ class PhotoUploadContainer extends React.Component {
         position: 'absolute',
         height: '100%',
         width: '100%'
-      },
-      nav: {
-        height: '1rem',
-        position: 'absolute',
-        width: '100%',
-        paddingTop: '0.2rem',
-        paddingBottom: '0.2rem'
-      },
-      line: {
-        marginTop: '1.03275rem',
-        height: '0.078125rem',
-        background: 'linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.8),rgba(255,255,255,0.1))',
-        borderTopColor: '#fff'
-      },
-      back: {
-        width: '1.0625rem',
-        height: '0.890625rem',
-        backgroundImage: `url(${back})`,
-        backgroundSize: 'cover',
-        textDecoration: 'none',
-        position: 'absolute',
-        left: '0.546875rem',
-        border: 'none',
-        cursor: 'pointer',
-        display: 'flex'
-      },
-      ok: {
-        width: '1.03125rem',
-        height: '0.90625rem',
-        backgroundSize: 'cover',
-        backgroundImage: `url(${ok})`,
-        textDecoration: 'none',
-        position: 'absolute',
-        right: '0.4375rem',
-        border: 'none',
-        cursor: 'pointer',
-        display: 'flex'
       },
       container: {
         position: 'absolute',
@@ -148,26 +143,13 @@ class PhotoUploadContainer extends React.Component {
         backgroundImage: `url(${foot})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover'
-        // position: 'fixed',
-        // bottom: 0,
-        // width: '100%',
-        // height: '1.466667rem',
-        // backgroundColor: '#fff',
-        // filter: 'alpha(opacity=20)', // IE滤镜，透明度50%
-        // mozOpacity: 0.2, // Firefox私有，透明度50%
-        // opacity: 0.2, // 其他，透明度50%
-        // zIndex: -10
       }
     };
     return (
       <div>
         <div style={styles.bg}></div>
         <div style={styles.box}>
-          <div style={styles.nav}>
-            <div><a style={styles.back}></a></div>
-            <div style={styles.ok}></div>
-            <div style={styles.line}></div>
-          </div>
+          <Header headerType="1" hasSubmitButton={true} onSubmit={this.photoSubmit} />
           <div style={styles.container}>
             <CheckTimeInput
               date={this.state.date}

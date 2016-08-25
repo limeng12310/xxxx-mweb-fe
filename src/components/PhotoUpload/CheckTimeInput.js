@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import './myinput.css';
+import moment from 'moment';
 
 class CheckTimeInput extends React.Component {
   constructor() {
@@ -18,14 +19,15 @@ class CheckTimeInput extends React.Component {
 
   handleChange(e) {
     this.props.onUserDateInput(
-      e.target.value
+      // e.target.value
+      moment(e.target.value).format('YYYY-MM-DD HH:mm:ss')
     );
   }
   clickChange() {
     this.setState({
       timeClicked: true
     }, function () {
-      $(this.dateInput).trigger('blur');
+      $(this.dateInput).trigger('click'); // blur
       console.log($(this.dateInput));
     });
   }
