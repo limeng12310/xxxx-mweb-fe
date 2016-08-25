@@ -5,6 +5,7 @@ import boxBackground from './img/background.png';
 import foot from './img/foot.svg';
 import Header from './../common/Header';
 
+
 class PhotoUploadContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -22,42 +23,44 @@ class PhotoUploadContainer extends React.Component {
     };
   }
   photoSubmit() {
-    if(this.state.date == null) {
+    if (this.state.date == null) {
       alert('检查时间不能为空！');
-    } else if(this.state.location == null) {
+    } else if (this.state.location == null) {
       alert('检查地点不能为空！');
-    } else if(this.state.items == null) {
+    } else if (this.state.items == null) {
       alert('您还未添加图片！');
-    } else {
-      fetch(`${config.apiPrefix}/reports`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          checkTime: this.state.date, // '2016-04-29 11:37:45'
-          reportType: '图片', // '图片'
-          reportValues: this.state.items // ['...', ... ] //图片报告为mediaId
-        })
-      })
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          }
-          throw new Error;
-        })
-        .then(json => {
-          if (json.retCode === 0) {
-            alert('照片上传成功！');
-          } else {
-            alert('请求出错！');
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
     }
+    // else {
+    //   fetch(`${config.apiPrefix}/reports`, {
+    //     method: 'POST',
+    //     headers: {
+    //       Accept: 'application/json',
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //       checkTime: this.state.date, // '2016-04-29 11:37:45'
+    //       reportType: '图片', // '图片'
+    //       reportValues: this.state.items // ['...', ... ] //图片报告为mediaId
+    //     })
+    //   })
+    //   .then(response => {
+    //     if (response.status === 200) {
+    //       return response.json();
+    //     }
+    //     throw new Error;
+    //   })
+    //   .then(json => {
+    //     if (json.retCode === 0) {
+    //       alert('照片上传成功！');
+    //     } else {
+    //       alert('请求出错！');
+    //     }
+    //   })
+    //   .catch(error => {
+    //     alert('照片上传失败！');
+    //     console.log(error);
+    //   });
+    // }
   }
   handleUserDateInput(date) {
     this.setState({ date });
@@ -149,7 +152,7 @@ class PhotoUploadContainer extends React.Component {
       <div>
         <div style={styles.bg}></div>
         <div style={styles.box}>
-          <Header headerType="1" hasSubmitButton={true} onSubmit={this.photoSubmit} />
+          <Header headerType="1" hasSubmitButton="true" onSubmit={this.photoSubmit} />
           <div style={styles.container}>
             <CheckTimeInput
               date={this.state.date}
