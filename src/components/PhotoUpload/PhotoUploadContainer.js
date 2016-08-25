@@ -76,7 +76,7 @@ class PhotoUploadContainer extends React.Component {
       ],
       count: this.state.count + imgIds.length
     });
-    $('#scroll').scrollTop( $('#scroll')[0].scrollHeight );
+    $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
   }
   // handleUserImageInput() {
   //   this.setState({
