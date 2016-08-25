@@ -8,7 +8,7 @@ import PhotoUploadContainer from './components/PhotoUpload/PhotoUploadContainer'
 import config from './config/default';
 
 // react router
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, hashHistory } from 'react-router';
 
 import './common.css';
 
@@ -33,8 +33,8 @@ fetch(`${config.apiPrefix}/test-signature`)
   });
 
 ReactDOM.render((
-  <Router history={browserHistory}>
-    <Route path="/app-home.html" component={HomeContainer} />
+  <Router history={hashHistory}>
+    <Route path="/" component={HomeContainer} />
     <Route path="/photo-upload" component={PhotoUploadContainer} />
   </Router>
   ),
