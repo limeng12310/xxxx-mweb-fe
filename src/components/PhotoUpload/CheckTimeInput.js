@@ -51,6 +51,21 @@ class CheckTimeInput extends React.Component {
         // paddingBottom: 7,
         // paddingLeft: 1
       },
+      timeInput2: {
+        fontSize: '0.625rem',
+        color: '#fff',
+        height: '1.0rem',
+        textAlign: 'center',
+        background: 'none',
+        border: 'none',
+        outline: 'none',
+        MozAppearance: 'none',
+        msProgressAppearance: 'none',
+        WebkitAppearance: 'none',
+        paddingLeft: '1rem',
+        // paddingBottom: 7,
+        // paddingLeft: 1
+      },
       line: {
         height: '0.03125rem',
         background: 'linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.6),rgba(255,255,255,0.1))',
@@ -64,7 +79,7 @@ class CheckTimeInput extends React.Component {
     if (this.state.timeClicked) {
       input = (
         <input
-          style={styles.timeInput1}
+          style={styles.timeInput2}
           type="datetime-local"
           ref={this.updateRef}
           onChange={this.handleChange}
