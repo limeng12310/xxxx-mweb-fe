@@ -86,7 +86,7 @@ class PhotosToUpload extends React.Component {
         marginTop: '0.4rem'
       },
       allImage: {
-        minHeight: '6.40625rem',
+        minHeight: 'calc((100% - 2.4rem) - 5rem - 2.76rem)',
         // height: '6.40625rem',
         // overflowY: 'scroll',
         display: 'flex',
