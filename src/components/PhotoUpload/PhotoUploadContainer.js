@@ -32,8 +32,7 @@ class PhotoUploadContainer extends React.Component {
       alert('检查地点不能为空！');
     } else if (this.state.items == null) {
       alert('您还未添加图片！');
-    }
-    else {
+    } else {
       fetch(`${config.apiPrefix}/reports`, {
         method: 'POST',
         headers: {
@@ -49,9 +48,8 @@ class PhotoUploadContainer extends React.Component {
       .then(response => {
         if (response.status === 200) {
           return response.json();
-        } else {
-          throw new Error;
         }
+        throw new Error;
       })
       .then(json => {
         if (json.retCode === 0) {
