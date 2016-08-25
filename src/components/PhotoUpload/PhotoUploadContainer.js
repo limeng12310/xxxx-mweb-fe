@@ -76,6 +76,7 @@ class PhotoUploadContainer extends React.Component {
       ],
       count: this.state.count + imgIds.length
     });
+    $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
   }
   // handleUserImageInput() {
   //   this.setState({
@@ -154,7 +155,7 @@ class PhotoUploadContainer extends React.Component {
         <div style={styles.bg}></div>
         <div style={styles.box}>
           <Header headerType="1" hasSubmitButton="true" onSubmit={this.photoSubmit} />
-          <div style={styles.container}>
+          <div style={styles.container} id="scroll">
             <CheckTimeInput
               date={this.state.date}
               onUserDateInput={this.handleUserDateInput}
