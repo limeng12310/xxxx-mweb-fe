@@ -62,7 +62,7 @@ class CheckTimeInput extends React.Component {
         MozAppearance: 'none',
         msProgressAppearance: 'none',
         WebkitAppearance: 'none',
-        paddingLeft: '1rem',
+        paddingLeft: '1rem'
         // paddingBottom: 7,
         // paddingLeft: 1
       },
