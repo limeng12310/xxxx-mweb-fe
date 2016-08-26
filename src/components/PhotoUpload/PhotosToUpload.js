@@ -62,7 +62,7 @@ class PhotosToUpload extends React.Component {
         });
       }
       // console.log(serverIds);
-      if(serverIds.length === res.localIds.length){
+      if (serverIds.length === res.localIds.length) {
         this.props.onUserImageUpload(serverIds);
       }
     }
