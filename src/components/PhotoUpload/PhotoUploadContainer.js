@@ -27,11 +27,11 @@ class PhotoUploadContainer extends React.Component {
     };
   }
   photoSubmit() {
-    if (this.state.date == null) {
+    if (this.state.date == '') {
       alert('检查时间不能为空！');
-    } else if (this.state.location == null) {
+    } else if (this.state.location == '') {
       alert('检查地点不能为空！');
-    } else if (this.state.items == null) {
+    } else if (this.state.items.length == 0) {
       alert('您还未添加图片！');
     } else {
       fetch(`${config.apiPrefix}/reports`, {
