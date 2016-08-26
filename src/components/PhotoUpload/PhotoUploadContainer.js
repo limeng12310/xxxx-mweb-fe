@@ -15,6 +15,7 @@ class PhotoUploadContainer extends React.Component {
     this.handleUserDateInput = this.handleUserDateInput.bind(this);
     this.handleUserLocationInput = this.handleUserLocationInput.bind(this);
     this.handleUserImageInput = this.handleUserImageInput.bind(this);
+    this.handleUserImageUpload = this.handleUserImageUpload.bind(this);
     this.handleUserImageDelete = this.handleUserImageDelete.bind(this);
     this.photoSubmit = this.photoSubmit.bind(this);
     this.state = {
@@ -90,7 +91,8 @@ class PhotoUploadContainer extends React.Component {
   //     count: this.state.count + 1
   //   });
   // }
-  handleUserImageUpload = (serverIds) => {
+  // handleUserImageUpload = (serverIds) => {
+  handleUserImageUpload(serverIds) {
     this.setState({
       server: [
         ...this.state.server,
