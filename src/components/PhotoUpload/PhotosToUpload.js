@@ -45,12 +45,13 @@ class PhotosToUpload extends React.Component {
         wx.uploadImage({
           localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
           isShowProgressTips: 1, // 默认为1，显示进度提示
-          success: () => {
+          success: (() => {
             const j = i;
             return function (cbkRes) {
+              console.log(cbkRes.serverId);
               serverIds[j] = cbkRes.serverId;
             };
-          }
+          })()
           //  () => {
           //   const ctx = this;
           //   const localId = res.localIds[i];
@@ -64,6 +65,7 @@ class PhotosToUpload extends React.Component {
           // }
         });
       }
+      console.log(serverIds);
       this.props.onUserImageUpload(serverIds);
     }
   }
