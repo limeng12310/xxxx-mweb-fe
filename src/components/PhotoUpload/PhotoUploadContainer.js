@@ -90,7 +90,7 @@ class PhotoUploadContainer extends React.Component {
   //     count: this.state.count + 1
   //   });
   // }
-  handleUserImageUpload(serverIds) {
+  handleUserImageUpload = (serverIds) => {
     this.setState({
       server: [
         ...this.state.server,
