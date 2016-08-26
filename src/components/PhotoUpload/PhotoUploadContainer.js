@@ -42,7 +42,7 @@ class PhotoUploadContainer extends React.Component {
         body: JSON.stringify({
           checkTime: this.state.date, // '2016-04-29 11:37:45'
           reportType: '图片', // '图片'
-          reportValues: this.state.items // ['...', ... ] //图片报告为mediaId
+          reportValues: this.state.server // ['...', ... ] //图片报告为mediaId
         })
       })
       .then(response => {
@@ -105,8 +105,15 @@ class PhotoUploadContainer extends React.Component {
         newItems.push(this.state.items[i]);
       }
     }
+    const newSever = [];
+    for (let i = 0; i < this.state.server.length; i ++) {
+      if (i !== index) {
+        newSever.push(this.state.server[i]);
+      }
+    }
     this.setState({
       items: newItems,
+      server: newSever,
       count: this.state.count - 1
     });
   }
