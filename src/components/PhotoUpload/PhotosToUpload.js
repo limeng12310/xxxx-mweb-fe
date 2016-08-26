@@ -48,7 +48,7 @@ class PhotosToUpload extends React.Component {
           success: (() => {
             const j = i;
             return function (cbkRes) {
-              console.log(cbkRes.serverId);
+              // console.log(cbkRes.serverId);
               serverIds[j] = cbkRes.serverId;
             };
           })()
@@ -56,17 +56,15 @@ class PhotosToUpload extends React.Component {
           //   const ctx = this;
           //   const localId = res.localIds[i];
           //   return function (cbkRes) {
-          //     const a = [];
-          //     let j = 0;
-          //     a[j] = cbkRes.serverId;
-          //     j ++;
           //     ctx.props.onUserImageUpload(cbkRes.serverId, localId);
           //   };
           // }
         });
       }
-      console.log(serverIds);
-      this.props.onUserImageUpload(serverIds);
+      // console.log(serverIds);
+      if(serverIds.length === res.localIds.length){
+        this.props.onUserImageUpload(serverIds);
+      }
     }
   }
   clickPreview(e) {
