@@ -50,7 +50,7 @@ class PhotosToUpload extends React.Component {
     }
   }
   wxUploadImageSuccess(ctx, res) {                                 // 使用闭包，实现服务器端ID和图片的本地ID一一对应起来
-    this.props.onUserImageUpload(res.serverId); // 返回图片的服务器端ID
+    ctx.props.onUserImageUpload(res.serverId); // 返回图片的服务器端ID
   }
   clickPreview(e) {
     wx.previewImage({
