@@ -5,10 +5,16 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
-  entry: [
-    'whatwg-fetch',
-    './src/index.js'
-  ],
+  entry: {
+    home: [
+      'whatwg-fetch',
+      './src/index.js'
+    ],
+    index: [
+      'whatwg-fetch',
+      './src/entry.js'
+    ]
+  },
   debug: true,
   output: {
     path: path.join(__dirname, '../dist'),
@@ -19,7 +25,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Thorgene',
       template: 'src/index.ejs',
-      filename: 'app-home.html'
+      filename: 'app-home.html',
+      chunks: ['home']
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Thorgene',
+      filename: 'index.html',
+      chunks: ['index']
     }),
     new webpack.ProvidePlugin({
       React: 'react'
