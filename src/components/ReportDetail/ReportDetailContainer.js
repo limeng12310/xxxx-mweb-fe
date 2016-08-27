@@ -22,7 +22,8 @@ class ReportDetailContainer extends React.Component {
         values: []
       }
     };
-    fetch(`${config.apiPrefix}/reports/${321}`) // 321 341 366
+    // 321 341 366
+    fetch(`${config.apiPrefix}/reports/${321}`)
     .then(response => {
       if (response.status === 200) {
         return response.json();
