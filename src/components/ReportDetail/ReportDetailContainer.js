@@ -7,6 +7,10 @@ import config from '../../config';
 
 class ReportDetailContainer extends React.Component {
   constructor(props) {
+    this.state = {
+      aaStyle: {},
+      message: {}
+    };
     fetch(`${config.apiPrefix}/reports/${321}`) // 321 341 366
     .then(response => {
       if (response.status === 200) {
@@ -16,8 +20,7 @@ class ReportDetailContainer extends React.Component {
     })
     .then(json => {
       if (json.retCode === 0) {
-        this.state = {
-          aaStyle: {},
+        this.setState = {
           message: json.data
         };
       } else {
