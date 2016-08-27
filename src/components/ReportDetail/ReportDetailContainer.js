@@ -7,7 +7,7 @@ import config from '../../config';
 
 class ReportDetailContainer extends React.Component {
   constructor(props) {
-    fetch(`${config.apiPrefix}/reports/${id}`)
+    fetch(`${config.apiPrefix}/reports/${321}`) // 321 341 366
     .then(response => {
       if (response.status === 200) {
         return response.json();
