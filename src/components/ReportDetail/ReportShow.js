@@ -217,7 +217,7 @@ class ReportShow extends React.Component {
           <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="reportScroll">
             <ul style={styles.leftBox}>
               {
-                this.props.report.map((item, i) => {
+                this.props.values.map((item, i) => {
                   let circleBorder = {};
                   if (this.state.isChoosen === i) {
                     circleBorder = {
@@ -234,7 +234,7 @@ class ReportShow extends React.Component {
                       style={Object.assign({}, styles.leftList, circleBorder)}
                       onClick={this.clickChange}
                     >
-                      {item.name}
+                      {item.classify}
                     </li>
                   );
                 })
@@ -242,8 +242,8 @@ class ReportShow extends React.Component {
             </ul>
             <ul style={styles.rightBox}>
               {
-                this.props.report[this.state.isChoosen].items.map((item, i) => (
-                  <li key={i} style={styles.rightList}>{item}</li>
+                this.props.values[this.state.isChoosen].items.map((item, i) => (
+                  <li key={i} style={styles.rightList}>{item.name}</li>
                 ))
               }
             </ul>
@@ -277,7 +277,7 @@ class ReportShow extends React.Component {
 }
 
 ReportShow.propTypes = {
-  report: React.PropTypes.array,
+  values: React.PropTypes.array,
   scrollStyle: React.PropTypes.object,
   image: React.PropTypes.array,
   changeScroll1: React.PropTypes.func.isRequired,
