@@ -7,6 +7,9 @@ import config from '../../config';
 
 class ReportDetailContainer extends React.Component {
   constructor(props) {
+    super(props);
+    this.handleChangeScroll1 = this.handleChangeScroll1.bind(this);
+    this.handleChangeScroll2 = this.handleChangeScroll2.bind(this);
     this.state = {
       aaStyle: {},
       message: {}
@@ -31,9 +34,6 @@ class ReportDetailContainer extends React.Component {
       alert('出错啦！');
       console.log(error);
     });
-    super(props);
-    this.handleChangeScroll1 = this.handleChangeScroll1.bind(this);
-    this.handleChangeScroll2 = this.handleChangeScroll2.bind(this);
   }
   componentDidMount() {
     $(() => {
