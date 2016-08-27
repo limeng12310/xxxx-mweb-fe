@@ -3,8 +3,8 @@ import 'babel-polyfill';
 
 import ReactDOM from 'react-dom';
 import HomeContainer from './components/home/HomeContainer';
-// import ReportDetailContainer from './components/ReportDetail/ReportDetailContainer';
-import PhotoUploadContainer from './components/PhotoUpload/PhotoUploadContainer';
+import ReportDetailContainer from './components/ReportDetail/ReportDetailContainer';
+// import PhotoUploadContainer from './components/PhotoUpload/PhotoUploadContainer';
 import config from './config/default';
 
 // react router
@@ -35,7 +35,7 @@ fetch(`${config.apiPrefix}/test-signature`)
 ReactDOM.render((
   <Router history={hashHistory}>
     <Route path="/" component={HomeContainer} />
-    <Route path="/photo-upload" component={PhotoUploadContainer} />
+    <Route path="/photo-upload" component={ReportDetailContainer} />
   </Router>
   ),
   document.getElementById('approot')
