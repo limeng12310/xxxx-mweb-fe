@@ -207,6 +207,70 @@ class ReportShow extends React.Component {
         backgroundSize: 'cover'
       }
     };
+    let reportScrollBox;
+    let imageScrollBox;
+    if (this.props.values.length !== 0) {
+      reportScrollBox = (
+        <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="reportScroll">
+          <ul style={styles.leftBox}>
+            {
+              this.props.values.map((item, i) => {
+                let circleBorder = {};
+                if (this.state.isChoosen === i) {
+                  circleBorder = {
+                    borderWidth: '0.026667rem',
+                    borderStyle: 'solid',
+                    borderRadius: '0.266667rem',
+                    display: 'table'
+                  };
+                }
+                return (
+                  <li
+                    key={i}
+                    data-index={i}
+                    style={Object.assign({}, styles.leftList, circleBorder)}
+                    onClick={this.clickChange}
+                  >
+                    {item.classify}
+                  </li>
+                );
+              })
+            }
+          </ul>
+          <ul style={styles.rightBox}>
+            {
+              this.props.values[this.state.isChoosen].items.map((item, i) => (
+                <li key={i} style={styles.rightList}>{item.name}</li>
+              ))
+            }
+          </ul>
+        </div>
+      );
+    }
+    if (this.props.image.length !== 0) {
+      imageScrollBox = (
+        <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="imageScroll">
+          <div style={styles.allImage}>
+            {
+              this.props.image.map((imgId, i) => {
+                const background = {
+                  backgroundImage: `url(${imgId})`
+                };
+                return (
+                  <div
+                    data-url={imgId}
+                    key={i}
+                    style={Object.assign({}, styles.img, background)}
+                    onClick={this.clickPreview}
+                  >
+                  </div>
+                );
+              })
+            }
+          </div>
+        </div>
+      );
+    }
     return (
       <div>
         <div style={styles.nav} id="scrollBox">
@@ -214,62 +278,10 @@ class ReportShow extends React.Component {
           <div style={styles.inactiveMenu} onClick={this.setTab2} id="tabName2">看图片</div>
         </div>
         <div style={styles.boxOut1} id="report">
-          <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="reportScroll">
-            <ul style={styles.leftBox}>
-              {
-                this.props.values.map((item, i) => {
-                  let circleBorder = {};
-                  if (this.state.isChoosen === i) {
-                    circleBorder = {
-                      borderWidth: '0.026667rem',
-                      borderStyle: 'solid',
-                      borderRadius: '0.266667rem',
-                      display: 'table'
-                    };
-                  }
-                  return (
-                    <li
-                      key={i}
-                      data-index={i}
-                      style={Object.assign({}, styles.leftList, circleBorder)}
-                      onClick={this.clickChange}
-                    >
-                      {item.classify}
-                    </li>
-                  );
-                })
-              }
-            </ul>
-            <ul style={styles.rightBox}>
-              {
-                this.props.values[this.state.isChoosen].items.map((item, i) => (
-                  <li key={i} style={styles.rightList}>{item.name}</li>
-                ))
-              }
-            </ul>
-          </div>
+          {reportScrollBox}
         </div>
         <div style={styles.boxOut2} id="image">
-          <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="imageScroll">
-            <div style={styles.allImage}>
-              {
-                this.props.image.map((imgId, i) => {
-                  const background = {
-                    backgroundImage: `url(${imgId})`
-                  };
-                  return (
-                    <div
-                      data-url={imgId}
-                      key={i}
-                      style={Object.assign({}, styles.img, background)}
-                      onClick={this.clickPreview}
-                    >
-                    </div>
-                  );
-                })
-              }
-            </div>
-          </div>
+          {imageScrollBox}
         </div>
       </div>
     );
