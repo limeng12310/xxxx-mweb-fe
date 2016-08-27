@@ -12,7 +12,15 @@ class ReportDetailContainer extends React.Component {
     this.handleChangeScroll2 = this.handleChangeScroll2.bind(this);
     this.state = {
       aaStyle: {},
-      message: {}
+      message: {
+        location: '',
+        date: '',
+        normal: 0,
+        warning: 0,
+        danger: 0,
+        image: [],
+        values: []
+      }
     };
     fetch(`${config.apiPrefix}/reports/${321}`) // 321 341 366
     .then(response => {
