@@ -31,9 +31,9 @@ class ReportDetailContainer extends React.Component {
     })
     .then(json => {
       if (json.retCode === 0) {
-        this.setState = {
+        this.setState({
           message: json.data
-        };
+        });
       } else {
         alert('请求出错！');
       }
