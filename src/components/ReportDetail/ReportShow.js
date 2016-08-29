@@ -209,7 +209,7 @@ class ReportShow extends React.Component {
     };
     let reportScrollBox;
     let imageScrollBox;
-    if (this.props.values.length !== 0) {
+    if (this.props.values !== []) {
       reportScrollBox = (
         <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="reportScroll">
           <ul style={styles.leftBox}>
@@ -246,8 +246,12 @@ class ReportShow extends React.Component {
           </ul>
         </div>
       );
+    } else {
+      reportScrollBox = (
+        <div></div>
+      );
     }
-    if (this.props.image.length !== 0) {
+    if (this.props.image !== []) {
       imageScrollBox = (
         <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="imageScroll">
           <div style={styles.allImage}>
@@ -269,6 +273,10 @@ class ReportShow extends React.Component {
             }
           </div>
         </div>
+      );
+    } else {
+      imageScrollBox = (
+        <div></div>
       );
     }
     return (
