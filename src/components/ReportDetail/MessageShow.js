@@ -3,9 +3,6 @@ import CircleProgress from './../common/CircleProgress';
 class MessageShow extends React.Component {
   render() {
     const x = lib.flexible.rem * 0.67;
-    const normal = this.props.messages.normal;
-    const observe = this.props.messages.warning + this.props.messages.danger;
-    const sum = this.props.messages.normal + observe;
     const styles = {
       box: {
         height: '7.8rem',
@@ -63,25 +60,38 @@ class MessageShow extends React.Component {
         float: 'right'
       }
     };
+    let messageBox;
+    if (this.props.messages !== []) {
+      const normal = this.props.messages.normal;
+      const observe = this.props.messages.warning + this.props.messages.danger;
+      const sum = this.props.messages.normal + observe;
+      messageBox = (
+        <div style={styles.box}>
+          <div style={styles.boxLeft}>
+            <div style={styles.circleBox}>
+              <div style={styles.circle}><CircleProgress per={normal / sum} x={x} /></div>
+              <div style={styles.num}>{normal}</div>
+              <div style={styles.stan}>正常指标</div>
+            </div>
+            <div style={styles.circleBox}>
+              <div style={styles.circle}><CircleProgress per={observe / sum} x={x} /></div>
+              <div style={styles.num}>{observe}</div>
+              <div style={styles.stan}>观察指标</div>
+            </div>
+          </div>
+          <div style={styles.boxRight}>
+            // /*<div style={styles.location}>{this.props.messages.location}</div>*/
+            <div style={styles.date}>{this.props.messages.checkTime.substring(0, 10)}</div>
+          </div>
+        </div>
+      );
+    } else {
+      messageBox = (
+        <div></div>
+      );
+    }
     return (
-      <div style={styles.box}>
-        <div style={styles.boxLeft}>
-          <div style={styles.circleBox}>
-            <div style={styles.circle}><CircleProgress per={normal / sum} x={x} /></div>
-            <div style={styles.num}>{normal}</div>
-            <div style={styles.stan}>正常指标</div>
-          </div>
-          <div style={styles.circleBox}>
-            <div style={styles.circle}><CircleProgress per={observe / sum} x={x} /></div>
-            <div style={styles.num}>{observe}</div>
-            <div style={styles.stan}>观察指标</div>
-          </div>
-        </div>
-        <div style={styles.boxRight}>
-          <div style={styles.location}>{this.props.messages.location}</div>
-          <div style={styles.date}>{this.props.messages.date.substring(0, 10)}</div>
-        </div>
-      </div>
+    { messageBox }
     );
   }
 }
