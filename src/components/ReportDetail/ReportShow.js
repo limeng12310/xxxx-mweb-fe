@@ -251,34 +251,28 @@ class ReportShow extends React.Component {
         <div></div>
       );
     }
-    if (this.props.messages !== {}) {
-      imageScrollBox = (
-        <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="imageScroll">
-          <div style={styles.allImage}>
-            {
-              this.props.messages.imgs.map((imgId, i) => {
-                const background = {
-                  backgroundImage: `url(${imgId})`
-                };
-                return (
-                  <div
-                    data-url={imgId}
-                    key={i}
-                    style={Object.assign({}, styles.img, background)}
-                    onClick={this.clickPreview}
-                  >
-                  </div>
-                );
-              })
-            }
-          </div>
+    imageScrollBox = (
+      <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="imageScroll">
+        <div style={styles.allImage}>
+          {
+            this.props.messages.imgs.map((imgId, i) => {
+              const background = {
+                backgroundImage: `url(${imgId})`
+              };
+              return (
+                <div
+                  data-url={imgId}
+                  key={i}
+                  style={Object.assign({}, styles.img, background)}
+                  onClick={this.clickPreview}
+                >
+                </div>
+              );
+            })
+          }
         </div>
-      );
-    } else {
-      imageScrollBox = (
-        <div></div>
-      );
-    }
+      </div>
+    );
     return (
       <div>
         <div style={styles.nav} id="scrollBox">

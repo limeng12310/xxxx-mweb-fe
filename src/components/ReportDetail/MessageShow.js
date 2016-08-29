@@ -38,9 +38,12 @@ class MessageShow extends React.Component {
         display: 'inline-block',
         verticalAlign: 'middle',
         float: 'none',
-        marginLeft: '-0.85rem',
-        marginTop: '-0.1rem',
-        fontSize: '0.7rem'
+        fontSize: '0.7rem',
+        marginLeft: '-1.33rem',
+        paddingTop: '0.2rem',
+        height: '1.33rem',
+        width: '1.33rem',
+        textAlign: 'center'
       },
       stan: {
         display: 'inline-block',
@@ -80,6 +83,7 @@ class MessageShow extends React.Component {
             </div>
           </div>
           <div style={styles.boxRight}>
+            <div style={styles.location}>中日协和医院</div>
             <div style={styles.date}>{this.props.messages.checkTime.substring(0, 10)}</div>
           </div>
         </div>
