@@ -87,7 +87,7 @@ class MessageShow extends React.Component {
       );
     } else {
       messageBox = (
-        <div></div>
+        <div style={styles.box}></div>
       );
     }
     return (
