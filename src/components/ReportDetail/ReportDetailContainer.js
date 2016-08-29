@@ -19,7 +19,7 @@ class ReportDetailContainer extends React.Component {
         warning: 0,
         danger: 0,
         image: [],
-        values: []
+        values: [{ classify: '', items: [{ name: '' }] }]
       }
     };
     // 321 341 366
