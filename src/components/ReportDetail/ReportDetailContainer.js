@@ -12,37 +12,31 @@ class ReportDetailContainer extends React.Component {
     this.handleChangeScroll2 = this.handleChangeScroll2.bind(this);
     this.state = {
       aaStyle: {},
-      message: {
-        location: '',
-        date: '',
-        normal: 0,
-        warning: 0,
-        danger: 0,
-        image: [],
-        values: [{ classify: '', items: [{ name: '' }] }]
-      }
+      message: {}
     };
+  }
+  componentWillMount() {
     // 321 341 366
     fetch(`${config.apiPrefix}/reports/${321}`)
-    .then(response => {
-      if (response.status === 200) {
-        return response.json();
-      }
-      throw new Error;
-    })
-    .then(json => {
-      if (json.retCode === 0) {
-        this.setState({
-          message: json.data
-        });
-      } else {
-        alert('请求出错！');
-      }
-    })
-    .catch(error => {
-      alert('出错啦！');
-      console.log(error);
-    });
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        }
+        throw new Error;
+      })
+      .then(json => {
+        if (json.retCode === 0) {
+          this.setState({
+            message: json.data
+          });
+        } else {
+          alert('请求出错！');
+        }
+      })
+      .catch(error => {
+        alert('出错啦！');
+        console.log(error);
+      });
   }
   componentDidMount() {
     $(() => {
@@ -139,9 +133,8 @@ class ReportDetailContainer extends React.Component {
           <div style={styles.scrollBox} id="scroll">
             <MessageShow messages={this.state.message} />
             <ReportShow
-              values={this.state.message.values}
+              messages={this.state.message}
               scrollStyle={this.state.aaStyle}
-              image={this.state.message.image}
               changeScroll1={this.handleChangeScroll1}
               changeScroll2={this.handleChangeScroll2}
             />

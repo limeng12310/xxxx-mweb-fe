@@ -82,7 +82,7 @@ class ReportShow extends React.Component {
   clickPreview(e) {
     wx.previewImage({
       current: e.target.getAttribute('data-url'), // 当前显示图片的http链接
-      urls: this.props.image // 需要预览的图片http链接列表
+      urls: this.props.messages.imgs // 需要预览的图片http链接列表
     });
   }
   render() {
@@ -209,12 +209,12 @@ class ReportShow extends React.Component {
     };
     let reportScrollBox;
     let imageScrollBox;
-    if (this.props.values !== []) {
+    if (this.props.messages !== []) {
       reportScrollBox = (
         <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="reportScroll">
           <ul style={styles.leftBox}>
             {
-              this.props.values.map((item, i) => {
+              this.props.messages.values.map((item, i) => {
                 let circleBorder = {};
                 if (this.state.isChoosen === i) {
                   circleBorder = {
@@ -239,7 +239,7 @@ class ReportShow extends React.Component {
           </ul>
           <ul style={styles.rightBox}>
             {
-              this.props.values[this.state.isChoosen].items.map((item, i) => (
+              this.props.messages.values[this.state.isChoosen].items.map((item, i) => (
                 <li key={i} style={styles.rightList}>{item.name}</li>
               ))
             }
@@ -251,12 +251,12 @@ class ReportShow extends React.Component {
         <div></div>
       );
     }
-    if (this.props.image !== []) {
+    if (this.props.messages !== []) {
       imageScrollBox = (
         <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="imageScroll">
           <div style={styles.allImage}>
             {
-              this.props.image.map((imgId, i) => {
+              this.props.messages.imgs.map((imgId, i) => {
                 const background = {
                   backgroundImage: `url(${imgId})`
                 };
@@ -297,9 +297,8 @@ class ReportShow extends React.Component {
 }
 
 ReportShow.propTypes = {
-  values: React.PropTypes.array,
+  messages: React.PropTypes.object,
   scrollStyle: React.PropTypes.object,
-  image: React.PropTypes.array,
   changeScroll1: React.PropTypes.func.isRequired,
   changeScroll2: React.PropTypes.func.isRequired
 };
