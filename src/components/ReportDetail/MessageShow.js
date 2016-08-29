@@ -40,7 +40,7 @@ class MessageShow extends React.Component {
         float: 'none',
         fontSize: '0.7rem',
         marginLeft: '-1.33rem',
-        paddingTop: '0.2rem',
+        paddingTop: '0.23rem',
         height: '1.33rem',
         width: '1.33rem',
         textAlign: 'center'
@@ -49,7 +49,7 @@ class MessageShow extends React.Component {
         display: 'inline-block',
         verticalAlign: 'middle',
         float: 'none',
-        paddingLeft: '0.7rem'
+        paddingLeft: '0.2rem'
       },
       location: {
         fontSize: '0.43rem',
@@ -57,7 +57,7 @@ class MessageShow extends React.Component {
         float: 'right'
       },
       date: {
-        fontSize: '0.75rem',
+        fontSize: '0.70rem',
         fontWeight: 700,
         color: '#fff',
         float: 'right'
@@ -68,16 +68,18 @@ class MessageShow extends React.Component {
       const normal = this.props.messages.normal;
       const observe = this.props.messages.warning + this.props.messages.danger;
       const sum = this.props.messages.normal + observe;
+      const normalPercent = normal / sum;
+      const observePercent = observe / sum;
       messageBox = (
         <div style={styles.box}>
           <div style={styles.boxLeft}>
             <div style={styles.circleBox}>
-              <div style={styles.circle}><CircleProgress per={normal / sum} x={x} /></div>
+              <div style={styles.circle}><CircleProgress per={normalPercent} x={x} /></div>
               <div style={styles.num}>{normal}</div>
               <div style={styles.stan}>正常指标</div>
             </div>
             <div style={styles.circleBox}>
-              <div style={styles.circle}><CircleProgress per={observe / sum} x={x} /></div>
+              <div style={styles.circle}><CircleProgress per={observePercent} x={x} /></div>
               <div style={styles.num}>{observe}</div>
               <div style={styles.stan}>观察指标</div>
             </div>
