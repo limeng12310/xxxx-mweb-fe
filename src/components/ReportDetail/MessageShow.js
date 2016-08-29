@@ -80,7 +80,6 @@ class MessageShow extends React.Component {
             </div>
           </div>
           <div style={styles.boxRight}>
-            // /*<div style={styles.location}>{this.props.messages.location}</div>*/
             <div style={styles.date}>{this.props.messages.checkTime.substring(0, 10)}</div>
           </div>
         </div>
@@ -90,9 +89,7 @@ class MessageShow extends React.Component {
         <div style={styles.box}></div>
       );
     }
-    return (
-    { messageBox }
-    );
+    return messageBox;
   }
 }
 
