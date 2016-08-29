@@ -61,7 +61,7 @@ class MessageShow extends React.Component {
       }
     };
     let messageBox;
-    if (this.props.messages !== []) {
+    if (this.props.messages !== {}) {
       const normal = this.props.messages.normal;
       const observe = this.props.messages.warning + this.props.messages.danger;
       const sum = this.props.messages.normal + observe;
