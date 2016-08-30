@@ -19,7 +19,8 @@ module.exports = {
       filename: 'app-home.html'
     }),
     new webpack.ProvidePlugin({
-      React: 'react'
+      React: 'react',
+      $: 'jquery'
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),

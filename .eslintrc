@@ -3,7 +3,8 @@
   "extends": "airbnb",
   "globals": {
     "React": true,
-    "wx": true
+    "wx": true,
+    "$": true
   },
   "rules": {
     "max-len": [ "error", 120 ],

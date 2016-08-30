@@ -4,6 +4,7 @@
   import Header from '../common/Header';
   import ButtomBar from '../common/ButtomBar';
   import historyBg from './historyBg.png';
+  import Category from './Category';
   const HistoryStyle = {
     history: {
       width: '100%',
@@ -73,7 +74,7 @@
           <div style={HistoryStyle.Main}>
             <div style={HistoryStyle.Title}>白细胞计数</div>
             <div style={HistoryStyle.tuBiao}>echarts折线图组件</div>
-            <div style={HistoryStyle.Category}>分类组件</div>
+            <Category style={HistoryStyle.Category} />
             <div style={HistoryStyle.Range}>
               <dl>
                 <dt style={HistoryStyle.Circle}>{maxCnt}</dt>
