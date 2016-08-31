@@ -4,7 +4,8 @@
   "globals": {
     "React": true,
     "wx": true,
-    "$": true
+    "$": true,
+    "lib": true
   },
   "rules": {
     "max-len": [ "error", 120 ],
