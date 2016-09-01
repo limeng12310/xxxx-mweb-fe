@@ -138,6 +138,7 @@
                   }
                   return (
                     <a
+                      data-name={item.name}
                       data-unit={item.unit}
                       key={i}
                       data-index={i}

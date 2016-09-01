@@ -74,13 +74,16 @@
       this.dataRequestOne = this.dataRequestOne.bind(this);
       this.dataRequestTwo = this.dataRequestTwo.bind(this);
       this.dataRequestThree = this.dataRequestThree.bind(this);
+      this.getMaxAndMin = this.getMaxAndMin.bind(this);
       this.state = {
         dataOne: [],
         dataTwo: [],
         dataTree: [],
         idOne: 0,
         idTwo: 0,
-        title: ''
+        title: '',
+        max: 0,
+        min: 0
       };
     }
     componentWillMount() {
@@ -90,11 +93,34 @@
             this.dataRequestTwo()
               .then(() => {
                 if (this.state.dataTwo.length !== 0) {
-                  this.dataRequestThree();
+                  this.dataRequestThree()
+                    .then(() => {
+                      this.getMaxAndMin();
+                    });
                 }
               });
           }
         });
+    }
+    getMaxAndMin() {
+      let maxValue = 0;
+      let minValue = 0;
+      if (this.state.dataTree.length !== 0) {
+        maxValue = this.state.dataTree[0].value;
+        minValue = this.state.dataTree[0].value;
+        for (let i = 1; i < this.state.dataTree.length; i ++) {
+          if (this.state.dataTree[i].value > maxValue) {
+            maxValue = this.state.dataTree[i].value;
+          }
+          if (this.state.dataTree[i].value < minValue) {
+            minValue = this.state.dataTree[i].value;
+          }
+        }
+      }
+      this.setState({
+        max: maxValue,
+        min: minValue
+      });
     }
     dataRequestOne() {
       return new Promise((resolve, reject) => {
@@ -188,7 +214,10 @@
           this.dataRequestTwo()
             .then(() => {
               if (this.state.dataTwo.length !== 0) {
-                this.dataRequestThree();
+                this.dataRequestThree()
+                  .then(() => {
+                    this.getMaxAndMin();
+                  });
               }
             });
         }
@@ -200,7 +229,10 @@
         title
       }, () => {
         if (this.state.dataTwo.length !== 0) {
-          this.dataRequestThree();
+          this.dataRequestThree()
+            .then(() => {
+              this.getMaxAndMin();
+            });
         }
       });
     }
@@ -232,20 +264,6 @@
       //   { checkTime: '2016/4/29 15:15:00', value: 164.4 },
       //   { checkTime: '2016/4/29 19:15:00', value: 135.4 }
       // ];
-      let maxValue = 0;
-      let minValue = 0;
-      if (this.state.dataTree.length !== 0) {
-        maxValue = this.state.dataTree[0].value;
-        minValue = this.state.dataTree[0].value;
-        for (let i = 1; i < this.state.dataTree.length; i ++) {
-          if (this.state.dataTree[i].value > maxValue) {
-            maxValue = this.state.dataTree[i].value;
-          }
-          if (this.state.dataTree[i].value < minValue) {
-            minValue = this.state.dataTree[i].value;
-          }
-        }
-      }
       return (
         <div style={HistoryStyle.history}>
           <Header headerType="0" />
@@ -261,11 +279,11 @@
             />
             <div style={HistoryStyle.Range}>
               <dl>
-                <dt style={HistoryStyle.Circle}>{maxValue}</dt>
+                <dt style={HistoryStyle.Circle}>{this.state.max}</dt>
                 <dd style={HistoryStyle.MaxMin}>最高</dd>
               </dl>
               <dl>
-                <dt style={HistoryStyle.Circle}>{minValue}</dt>
+                <dt style={HistoryStyle.Circle}>{this.state.min}</dt>
                 <dd style={HistoryStyle.MaxMin}>最低</dd>
               </dl>
             </div>
