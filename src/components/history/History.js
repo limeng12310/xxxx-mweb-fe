@@ -84,90 +84,113 @@
       };
     }
     componentWillMount() {
-      this.dataRequestOne();
-      if (this.state.dataOne.length !== 0) {
-        this.dataRequestTwo();
-        if (this.state.dataTwo.length !== 0) {
-          this.dataRequestThree();
-        }
-      }
+      this.dataRequestOne()
+        .then(() => {
+          if (this.state.dataOne.length !== 0) {
+            this.dataRequestTwo()
+              .then(() => {
+                if (this.state.dataTwo.length !== 0) {
+                  this.dataRequestThree();
+                }
+              });
+          }
+        });
     }
     dataRequestOne() {
-      fetch(`${config.apiPrefix}/user-check-classifies`)
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          }
-          throw new Error;
-        })
-        .then(json => {
-          if (json.retCode === 0) {
-            this.setState({
-              dataOne: json.data
-            });
-          } else {
-            alert('请求出错！');
-          }
-        })
-        .catch(error => {
-          alert('出错啦！');
-          console.log(error);
-        });
+      return new Promise((resolve, reject) => {
+        fetch(`${config.apiPrefix}/user-check-classifies`)
+          .then(response => {
+            if (response.status === 200) {
+              return response.json();
+            }
+            throw new Error;
+          })
+          .then(json => {
+            if (json.retCode === 0) {
+              this.setState({
+                dataOne: json.data
+              }, () => {
+                resolve();
+              });
+            } else {
+              alert('请求出错！');
+            }
+          })
+          .catch(error => {
+            alert('出错啦！');
+            console.log(error);
+            reject(error);
+          });
+      });
     }
     dataRequestTwo() {
-      fetch(`${config.apiPrefix}/user-check-classifies/${this.state.dataOne[this.state.idOne].id}/check-items`)
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          }
-          throw new Error;
-        })
-        .then(json => {
-          if (json.retCode === 0) {
-            this.setState({
-              dataTwo: json.data
-            });
-          } else {
-            alert('请求出错！');
-          }
-        })
-        .catch(error => {
-          alert('出错啦！');
-          console.log(error);
-        });
+      return new Promise((resolve, reject) => {
+        fetch(`${config.apiPrefix}/user-check-classifies/${this.state.dataOne[this.state.idOne].id}/check-items`)
+          .then(response => {
+            if (response.status === 200) {
+              return response.json();
+            }
+            throw new Error;
+          })
+          .then(json => {
+            if (json.retCode === 0) {
+              this.setState({
+                dataTwo: json.data
+              }, () => {
+                resolve();
+              });
+            } else {
+              alert('请求出错！');
+            }
+          })
+          .catch(error => {
+            alert('出错啦！');
+            console.log(error);
+            reject(error);
+          });
+      });
     }
     dataRequestThree() {
-      fetch(`${config.apiPrefix}
-      /user-check-classifies
-      /${this.state.dataTwo[this.state.idTwo].id}?unit=${this.state.dataTwo[this.state.idTwo].unit}`)
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          }
-          throw new Error;
-        })
-        .then(json => {
-          if (json.retCode === 0) {
-            this.setState({
-              dataThree: json.data
-            });
-          } else {
-            alert('请求出错！');
-          }
-        })
-        .catch(error => {
-          alert('出错啦！');
-          console.log(error);
-        });
+      return new Promise((resolve, reject) => {
+        fetch(`${config.apiPrefix}` +
+        '/user-check-classifies' +
+        `/${this.state.dataTwo[this.state.idTwo].id}?unit=${this.state.dataTwo[this.state.idTwo].unit}`)
+          .then(response => {
+            if (response.status === 200) {
+              return response.json();
+            }
+            throw new Error;
+          })
+          .then(json => {
+            if (json.retCode === 0) {
+              this.setState({
+                dataThree: json.data
+              }, () => {
+                resolve();
+              });
+            } else {
+              alert('请求出错！');
+            }
+          })
+          .catch(error => {
+            alert('出错啦！');
+            console.log(error);
+            reject(error);
+          });
+      });
     }
     ChangeDataOne(idOne) {
       this.setState({
         idOne,
         idTwo: 0
-      }, function () {
-        this.dataRequestTwo();
+      }, () => {
         if (this.state.dataTwo.length !== 0) {
-          this.dataRequestThree();
+          this.dataRequestTwo()
+            .then(() => {
+              if (this.state.dataTwo.length !== 0) {
+                this.dataRequestThree();
+              }
+            });
         }
       });
     }
@@ -175,8 +198,10 @@
       this.setState({
         idTwo,
         title
-      }, function () {
-        this.dataRequestThree();
+      }, () => {
+        if (this.state.dataTwo.length !== 0) {
+          this.dataRequestThree();
+        }
       });
     }
     render() {
