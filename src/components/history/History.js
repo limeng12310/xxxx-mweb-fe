@@ -153,7 +153,7 @@
     dataRequestThree() {
       return new Promise((resolve, reject) => {
         fetch(`${config.apiPrefix}` +
-        '/user-check-classifies' +
+        '/user-check-items' +
         `/${this.state.dataTwo[this.state.idTwo].id}?unit=${this.state.dataTwo[this.state.idTwo].unit}`)
           .then(response => {
             if (response.status === 200) {
