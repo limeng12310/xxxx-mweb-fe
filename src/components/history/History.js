@@ -78,7 +78,7 @@
       this.state = {
         dataOne: [],
         dataTwo: [],
-        dataTree: [],
+        dataThree: [],
         idOne: 0,
         idTwo: 0,
         title: '',
@@ -102,15 +102,15 @@
     getMaxAndMin() {
       let maxValue = 0;
       let minValue = 0;
-      if (this.state.dataTree.length !== 0) {
-        maxValue = parseInt(this.state.dataTree[0].value, 10);
-        minValue = parseInt(this.state.dataTree[0].value, 10);
-        for (let i = 0; i < this.state.dataTree.length; i ++) {
-          if (parseInt(this.state.dataTree[i].value, 10) > maxValue) {
-            maxValue = parseInt(this.state.dataTree[i].value, 10);
+      if (this.state.dataThree.length !== 0) {
+        maxValue = parseInt(this.state.dataThree[0].value, 10);
+        minValue = parseInt(this.state.dataThree[0].value, 10);
+        for (let i = 0; i < this.state.dataThree.length; i ++) {
+          if (parseInt(this.state.dataThree[i].value, 10) > maxValue) {
+            maxValue = parseInt(this.state.dataThree[i].value, 10);
           }
-          if (parseInt(this.state.dataTree[i].value, 10) < minValue) {
-            minValue = parseInt(this.state.dataTree[i].value, 10);
+          if (parseInt(this.state.dataThree[i].value, 10) < minValue) {
+            minValue = parseInt(this.state.dataThree[i].value, 10);
           }
         }
       }
