@@ -82,8 +82,8 @@
         idOne: 0,
         idTwo: 0,
         title: '',
-        max: 0,
-        min: 0
+        max: '0',
+        min: '0'
       };
     }
     componentWillMount() {
@@ -100,17 +100,17 @@
         });
     }
     getMaxAndMin() {
-      let maxValue = 0;
-      let minValue = 0;
+      let maxValue = '0';
+      let minValue = '0';
       if (this.state.dataThree.length !== 0) {
-        maxValue = parseInt(this.state.dataThree[0].value, 10);
-        minValue = parseInt(this.state.dataThree[0].value, 10);
+        maxValue = this.state.dataThree[0].value;
+        minValue = this.state.dataThree[0].value;
         for (let i = 0; i < this.state.dataThree.length; i ++) {
-          if (parseInt(this.state.dataThree[i].value, 10) > maxValue) {
-            maxValue = parseInt(this.state.dataThree[i].value, 10);
+          if (this.state.dataThree[i].value > maxValue) {
+            maxValue = this.state.dataThree[i].value;
           }
-          if (parseInt(this.state.dataThree[i].value, 10) < minValue) {
-            minValue = parseInt(this.state.dataThree[i].value, 10);
+          if (this.state.dataThree[i].value < minValue) {
+            minValue = this.state.dataThree[i].value;
           }
         }
       }
