@@ -17,7 +17,7 @@
       canvas.beginPath();
       canvas.lineWidth = 0.06 * x;
       const sR = x - 1 - 0.03 * x;
-      canvas.strokeStyle = '#f00';
+      canvas.strokeStyle = '#fff';
       canvas.arc(x, x, sR, -0.5 * Math.PI, endArc, false);
       canvas.stroke();
     }
