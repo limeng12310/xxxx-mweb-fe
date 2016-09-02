@@ -78,7 +78,7 @@
       this.state = {
         dataOne: [],
         dataTwo: [],
-        dataTree: [],
+        dataThree: [],
         idOne: 0,
         idTwo: 0,
         title: '',
