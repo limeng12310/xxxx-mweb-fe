@@ -49,15 +49,10 @@ const HomeContainerStyle = {
   }
 };
 class HomeContainer extends React.Component {
-  aa = () => {
-    alert('点击确认按钮的callback()');
-  };
   render() {
     const cnt = {
       normalCnt: 9,
-      warningCnt: 3,
-      dangerCnt: 1,
-      otherCnt: 5
+      warningCnt: 13
     };
     const data = [
       {
@@ -111,7 +106,7 @@ class HomeContainer extends React.Component {
 }
 
 HomeContainer.propTypes = {
-  headerType: React.PropTypes.number,
+  headerType: React.PropTypes.string,
   hasSubmitButton: React.PropTypes.boolean,
   onSubmit: React.PropTypes.function
 };
