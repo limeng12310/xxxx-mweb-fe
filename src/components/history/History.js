@@ -93,10 +93,7 @@
             this.dataRequestTwo()
               .then(() => {
                 if (this.state.dataTwo.length !== 0) {
-                  this.dataRequestThree()
-                    .then(() => {
-                      this.getMaxAndMin();
-                    });
+                  this.dataRequestThree();
                 }
               });
           }
@@ -192,7 +189,7 @@
               this.setState({
                 dataThree: json.data
               }, () => {
-                resolve();
+                this.getMaxAndMin();
               });
             } else {
               alert('请求出错！');
@@ -214,10 +211,7 @@
           this.dataRequestTwo()
             .then(() => {
               if (this.state.dataTwo.length !== 0) {
-                this.dataRequestThree()
-                  .then(() => {
-                    this.getMaxAndMin();
-                  });
+                this.dataRequestThree();
               }
             });
         }
@@ -229,10 +223,7 @@
         title
       }, () => {
         if (this.state.dataTwo.length !== 0) {
-          this.dataRequestThree()
-            .then(() => {
-              this.getMaxAndMin();
-            });
+          this.dataRequestThree();
         }
       });
     }
@@ -264,11 +255,21 @@
       //   { checkTime: '2016/4/29 15:15:00', value: 164.4 },
       //   { checkTime: '2016/4/29 19:15:00', value: 135.4 }
       // ];
+      let name;
+      if (this.state.dataTwo.length !== 0) {
+        name = (
+          <div style={HistoryStyle.Title}>{this.state.dataTwo[this.state.idTwo].name}</div>
+        );
+      } else {
+        name = (
+          <div style={HistoryStyle.Title}></div>
+        );
+      }
       return (
         <div style={HistoryStyle.history}>
           <Header headerType="0" />
           <div style={HistoryStyle.Main}>
-            <div style={HistoryStyle.Title}>{this.state.dataTwo[this.state.idTwo].name}</div>
+            <div style={HistoryStyle.Title}>{name}</div>
             <div style={HistoryStyle.tuBiao}>echarts折线图组件</div>
             <Category
               style={HistoryStyle.Category}
