@@ -10,7 +10,9 @@ const HeaderStyle = {
     height: '1.2rem',
     position: 'absolute',
     left: 0,
-    top: 0
+    top: 0,
+    zIndex: 999,
+    backgroundColor: 'rgb(60,228,255)'
   },
   HeaderBox: {
     width: '100%',

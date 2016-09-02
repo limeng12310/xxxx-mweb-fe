@@ -3,6 +3,9 @@
   margin: 0;
   box-sizing: border-box;
 }
+html{
+  font-size: 50px;
+}
 /*  细横线  */
 .line{
   border: 0;
