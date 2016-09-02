@@ -53,7 +53,7 @@
       this.clickChangeOne = this.clickChangeOne.bind(this);
       this.clickChangeTwo = this.clickChangeTwo.bind(this);
     }
-    componentDidMount() {
+    componentWillReceiveProps() {
       let width = 0;
       $(this.refs.container).children('a').each(
         function () {
