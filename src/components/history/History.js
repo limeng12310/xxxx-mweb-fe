@@ -81,7 +81,6 @@
         dataThree: [],
         idOne: 0,
         idTwo: 0,
-        title: '',
         max: '0',
         min: '0'
       };
@@ -217,10 +216,9 @@
         }
       });
     }
-    ChangeDataTwo(idTwo, title) {
+    ChangeDataTwo(idTwo) {
       this.setState({
-        idTwo,
-        title
+        idTwo
       }, () => {
         if (this.state.dataTwo.length !== 0) {
           this.dataRequestThree();
