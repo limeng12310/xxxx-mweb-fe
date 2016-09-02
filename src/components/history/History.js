@@ -5,6 +5,7 @@
   import ButtomBar from '../common/ButtomBar';
   import historyBg from './historyBg.png';
   import Category from './Category';
+  import HistoryEcharts from './HistoryEcharts';
   import config from '../../config';
   const HistoryStyle = {
     history: {
@@ -82,7 +83,9 @@
         idOne: 0,
         idTwo: 0,
         max: '0',
-        min: '0'
+        min: '0',
+        dataX: [],
+        dataY: []
       };
     }
     componentWillMount() {
@@ -101,6 +104,8 @@
     getMaxAndMin() {
       let maxValue = '0';
       let minValue = '0';
+      const x = [];
+      const y = [];
       if (this.state.dataThree.length !== 0) {
         maxValue = this.state.dataThree[0].value;
         minValue = this.state.dataThree[0].value;
@@ -111,11 +116,15 @@
           if (this.state.dataThree[i].value < minValue) {
             minValue = this.state.dataThree[i].value;
           }
+          x.push(this.state.dataThree[i].checkTime.substring(0, 10));
+          y.push(this.state.dataThree[i].value);
         }
       }
       this.setState({
         max: maxValue,
-        min: minValue
+        min: minValue,
+        dataX: x,
+        dataY: y
       });
     }
     dataRequestOne() {
@@ -268,7 +277,7 @@
           <Header headerType="0" />
           <div style={HistoryStyle.Main}>
             <div style={HistoryStyle.Title}>{name}</div>
-            <div style={HistoryStyle.tuBiao}>echarts折线图组件</div>
+            <HistoryEcharts style={HistoryStyle.tuBiao} dataX={this.state.dataX} dataY={this.state.dataY} />
             <Category
               style={HistoryStyle.Category}
               itemListOne={this.state.dataOne}
