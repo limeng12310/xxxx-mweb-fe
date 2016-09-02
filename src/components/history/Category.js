@@ -9,11 +9,15 @@
       height: '1rem',
       lineHeight: '1rem'
     },
+    boxIn: {
+      height: '100%',
+      width: '100%'
+    },
     item: {
       marginRight: '0.5rem',
       marginLeft: '0.5rem',
       float: 'left',
-      fontSize: '0.8rem',
+      fontSize: '0.7rem',
       textDecoration: 'none',
       color: '#FFF',
       // IE滤镜，透明度50%
@@ -77,8 +81,7 @@
         isChoosenTwo: parseInt(e.target.getAttribute('data-index'), 10)
       });
       this.props.handleChangeDataTwo(
-        parseInt(e.target.getAttribute('data-index'), 10),
-        e.target.getAttribute('data-name')
+        parseInt(e.target.getAttribute('data-index'), 10)
       );
     }
     render() {
@@ -89,7 +92,7 @@
         <div>
           <div className="weightLine"></div>
           <div style={CategoryStyle.box}>
-            <div ref="container">
+            <div ref="container" style={CategoryStyle.boxIn}>
               {
                 this.props.itemListOne.map((item, i) => {
                   let colorChoosen = {};
@@ -118,7 +121,7 @@
             </div>
           </div>
           <div style={CategoryStyle.box}>
-            <div ref="container2">
+            <div ref="container2" style={CategoryStyle.boxIn}>
               {
                 this.props.itemListTwo.map((item, i) => {
                   let circleChoosen = {};
@@ -138,8 +141,6 @@
                   }
                   return (
                     <a
-                      data-name={item.name}
-                      data-unit={item.unit}
                       key={i}
                       data-index={i}
                       style={Object.assign({}, CategoryStyle.littleItem, circleChoosen)}
