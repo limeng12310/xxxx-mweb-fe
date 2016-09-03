@@ -22,7 +22,17 @@ const EchartStyle = {
 };
 
 class HistoryEcharts extends React.Component {
-  componentWillReceiveProps() {
+  constructor(props) {
+    super(props);
+    this.echart = this.echart.bind(this);
+  }
+  componentDidMount() {
+    this.echart();
+  }
+  componentDidUpdate() {
+    this.echart();
+  }
+  echart() {
     const Main = this.refs.main;
     const myChart = echarts.init(Main);
     const date = this.props.dataX;
