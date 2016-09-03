@@ -21,11 +21,12 @@ const EchartStyle = {
   }
 };
 
-
 class HistoryEcharts extends React.Component {
-  render() {
+  componentWillReceiveProps() {
     const Main = this.refs.main;
     const myChart = echarts.init(Main);
+    const date = this.props.dataX;
+    const val = this.props.dataY;
     const option = {
       tooltip: {
         trigger: 'axis',
@@ -37,7 +38,7 @@ class HistoryEcharts extends React.Component {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: this.props.dataX
+        data: date
       },
       yAxis: {
         show: false,
@@ -74,11 +75,13 @@ class HistoryEcharts extends React.Component {
               color: 'rgb(3,3,3)'
             }
           },
-          data: this.props.dataY
+          data: val
         }
       ]
     };
     myChart.setOption(option);
+  }
+  render() {
     return (
       <div style={EchartStyle.box}>
         <div ref="main" style={EchartStyle.cont}></div>
