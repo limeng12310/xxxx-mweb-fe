@@ -23,21 +23,9 @@ const EchartStyle = {
 
 
 class HistoryEcharts extends React.Component {
-  componentWillReceiveProps() {
+  render() {
     const Main = this.refs.main;
     const myChart = echarts.init(Main);
-    // const date = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-    //   16, 17, 18, 19, 20, 21, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-    //   13, 14, 15, 16, 17, 18, 19, 20, 21, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-    //   10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 1, 2, 3, 4, 5,
-    //   6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
-    // const val = [1111, 155, 545, 356, 1010, 888, 51, 535, 125, 256,
-    //   465, 356, 546, 959, 585, 356, 56, 99, 121, 265, 356, 356, 155,
-    //   545, 54, 84, 8, 51, 356, 12, 356, 46, 36, 46, 356, 85, 13, 56,
-    //   99, 121, 265, 356, 11, 155, 545, 54, 84, 8, 51, 53, 12, 26, 46,
-    //   36, 46, 99, 85, 13, 56, 1111, 1215, 265, 356, 356, 155, 545, 554,
-    //   84, 508, 51, 553, 12, 526, 46, 36, 456, 599, 855, 135, 565,
-    //   995, 121, 265, 356];
     const option = {
       tooltip: {
         trigger: 'axis',
@@ -91,8 +79,6 @@ class HistoryEcharts extends React.Component {
       ]
     };
     myChart.setOption(option);
-  }
-  render() {
     return (
       <div style={EchartStyle.box}>
         <div ref="main" style={EchartStyle.cont}></div>

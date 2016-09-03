@@ -32,7 +32,7 @@
     },
     tuBiao: {
       width: '100%',
-      height: '8.6rem',
+      height: '8rem',
       background: '#FFF',
       fontSize: '0.5rem'
     },
