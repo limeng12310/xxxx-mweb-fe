@@ -132,11 +132,7 @@
                       // Firefox私有，透明度50%
                       MozOpacity: 1,
                       // 其他，透明度50%
-                      opacity: 1,
-                      borderWidth: '0.026667rem',
-                      borderStyle: 'solid',
-                      borderRadius: '0.266667rem',
-                      display: 'table'
+                      opacity: 1
                     };
                   }
                   return (

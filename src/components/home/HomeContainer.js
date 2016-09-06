@@ -106,9 +106,9 @@ class HomeContainer extends React.Component {
 }
 
 HomeContainer.propTypes = {
-  headerType: React.PropTypes.string,
-  hasSubmitButton: React.PropTypes.boolean,
-  onSubmit: React.PropTypes.function
+  headerType: React.PropTypes.number,
+  hasSubmitButton: React.PropTypes.bool,
+  onSubmit: React.PropTypes.func
 };
 
 export default HomeContainer;
