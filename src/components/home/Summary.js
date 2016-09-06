@@ -55,7 +55,7 @@ const SummaryStyle = {
 };
 class Summary extends React.Component {
   render() {
-    const { normalCnt, warningCnt } = this.props.cnt;
+    const { normal, warning } = this.props.cnt;
     return (
       <dl style={SummaryStyle.SummaryBox}>
         <dt style={SummaryStyle.SummaryIcon}>
@@ -63,14 +63,14 @@ class Summary extends React.Component {
         </dt>
         <dd style={SummaryStyle.SummaryKpi}>
           <p style={SummaryStyle.SummaryKpiItem}>
-            <div style={SummaryStyle.SummaryKpiItemCut}>{normalCnt}</div>
+            <div style={SummaryStyle.SummaryKpiItemCut}>{normal}</div>
             <div style={SummaryStyle.SummeryKpiCircle}>
               <CircleProgress per="0.5" x="50" />
             </div>
             <span style={SummaryStyle.SummaryKpiItemZi}>正常指标</span>
           </p>
           <p style={SummaryStyle.SummaryKpiItem}>
-            <div style={SummaryStyle.SummaryKpiItemCut}>{warningCnt}</div>
+            <div style={SummaryStyle.SummaryKpiItemCut}>{warning}</div>
             <div style={SummaryStyle.SummeryKpiCircle}>
               <CircleProgress per="0.5" x="50" />
             </div>

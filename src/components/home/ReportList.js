@@ -3,6 +3,7 @@
  */
 import ReportIcon1 from './img/ReportIcon1.png';
 import DeleteIcon from './img/delete.png';
+import moment from 'moment';
 const ReportItemStyle = {
   reportList: {
     width: '80%',
@@ -75,27 +76,31 @@ class ReportItem extends React.Component {
     return (
       <div style={ReportItemStyle.reportList}>
         {
-          data.map(item => (
-            <div style={ReportItemStyle.reportItem}>
-              <div style={ReportItemStyle.reportContent}>
-                <div>
-                  <img src={ReportIcon1} alt="" style={ReportItemStyle.reportKpi} />
-                  <b style={ReportItemStyle.year}>{item.year}</b>
-                  <div style={ReportItemStyle.Date}>
-                    <b style={ReportItemStyle.day}>{item.day}</b>
-                    <span style={ReportItemStyle.diagonal}></span>
-                    <b style={ReportItemStyle.month}>{item.month}</b>
+          data.map(item => {
+            let Year = moment(item.checkTime).format('YY');
+            let Month = moment(item.checkTime).format('MM');
+            let Day = moment(item.checkTime).format('DD');
+            return (
+              <div style={ReportItemStyle.reportItem}>
+                <div style={ReportItemStyle.reportContent}>
+                  <div>
+                    <img src={ReportIcon1} alt="" style={ReportItemStyle.reportKpi} />
+                    <b style={ReportItemStyle.year}>{Year}</b>
+                    <div style={ReportItemStyle.Date}>
+                      <b style={ReportItemStyle.day}>{Month}</b>
+                      <span style={ReportItemStyle.diagonal}></span>
+                      <b style={ReportItemStyle.month}>{Day}</b>
+                    </div>
+                    <span style={ReportItemStyle.hospital}>{item.content}</span>
                   </div>
-                  <span style={ReportItemStyle.hospital}>{item.content}</span>
+                  <div>
+                    <img src={DeleteIcon} alt="" style={ReportItemStyle.Delete} />
+                  </div>
                 </div>
-                <div>
-                  <img src={DeleteIcon} alt="" style={ReportItemStyle.Delete} />
-                </div>
+                <div className="line"></div>
               </div>
-              <div className="line"></div>
-            </div>
-            )
-          )
+            );
+          })
         }
       </div>
     );
