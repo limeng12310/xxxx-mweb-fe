@@ -29,7 +29,7 @@
     }
 }
   CircleProgress.propTypes = {
-    per: React.PropTypes.number,
-    x: React.PropTypes.number
+    per: React.PropTypes.string,
+    x: React.PropTypes.string
   };
   export default CircleProgress;

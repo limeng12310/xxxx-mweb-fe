@@ -1,12 +1,12 @@
-/**
+﻿/**
  * Created by zc on 2016/7/26.
  */
 import ButtomBar from './../common/ButtomBar';
 import Upload from './Upload';
 import ReportList from './ReportList';
 import Summary from './Summary';
-import Header from './../common/Header';
 import homeBG from './img/homeBG.png';
+import config from '../../config';
 
 const HomeContainerStyle = {
   ReportListBox: {
@@ -30,8 +30,8 @@ const HomeContainerStyle = {
   Center: {
     width: '100%',
     position: 'absolute',
-    top: '1.2rem',
-    left: '0',
+    top: '0.8rem',
+    left: 0,
     height: '45%'
   },
   Filter: {
@@ -49,44 +49,78 @@ const HomeContainerStyle = {
   }
 };
 class HomeContainer extends React.Component {
-  render() {
-    const cnt = {
-      normalCnt: 9,
-      warningCnt: 13
+  constructor(props) {
+    super(props);
+    this.reportList = this.reportList.bind(this);
+    this.amount = this.amount.bind(this);
+    this.state = {
+      reportList: [],
+      aggregation: []
     };
-    const data = [
-      {
-        year: 16,
-        month: 2,
-        day: 14,
-        content: '北京大学第一医院'
-      }, {
-        year: 15,
-        month: 3,
-        day: 14,
-        content: '山西大学第一医院'
-      }, {
-        year: 14,
-        month: 4,
-        day: 14,
-        content: '东北大学第一医院'
-      }, {
-        year: 15,
-        month: 3,
-        day: 14,
-        content: '山西大学第一医院'
-      }, {
-        year: 14,
-        month: 4,
-        day: 14,
-        content: '东北大学第一医院'
-      }
-    ];
+  }
+  componentWillMount() {
+    this.reportList();
+    this.amount();
+  }
+  reportList() {
+    return new Promise((resolve, reject) => {
+      fetch(`${config.apiPrefix}/reports?_limit=99999&_offset=0`)
+        .then(response => {
+          if (response.status === 200) {
+            return response.json();
+          }
+          throw new Error;
+        })
+        .then(json => {
+          if (json.retCode === 0) {
+            this.setState({
+              reportList: json.data
+            }, () => {
+              resolve();
+            });
+          } else {
+            alert('请求出错！');
+          }
+        })
+        .catch(error => {
+          alert('出错啦！');
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
+  amount() {
+    return new Promise((resolve, reject) => {
+      fetch(`${config.apiPrefix}/report-aggregation`)
+        .then(response => {
+          if (response.status === 200) {
+            return response.json();
+          }
+          throw new Error;
+        })
+        .then(json => {
+          if (json.retCode === 0) {
+            this.setState({
+              aggregation: json.data
+            }, () => {
+              resolve();
+            });
+          } else {
+            alert('请求出错！');
+          }
+        })
+        .catch(error => {
+          alert('出错啦！');
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
+  render() {
     return (
       <div style={HomeContainerStyle.HomeBox}>
-        <Header headerType="0" />
         <div style={HomeContainerStyle.Center}>
-          <Summary cnt={cnt} />
+          <Summary cnt={this.state.aggregation} />
         </div>
         <div style={HomeContainerStyle.Report}>
           <div style={HomeContainerStyle.Filter}>
@@ -95,7 +129,7 @@ class HomeContainer extends React.Component {
           </div>
           <div className="weightLine"></div>
           <div style={HomeContainerStyle.ReportListBox}>
-            <ReportList data={data} />
+            <ReportList data={this.state.reportList} />
             <Upload />
           </div>
         </div>
