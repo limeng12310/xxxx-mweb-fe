@@ -58,7 +58,7 @@ class HistoryEcharts extends React.Component {
       dataZoom: [{
         type: 'inside',
         start: 0,
-        end: 10
+        end: 100
       }, {
         start: 0,
         end: 10,
@@ -79,10 +79,11 @@ class HistoryEcharts extends React.Component {
           name: '检测值',
           type: 'line',
           smooth: true,
-          showSymbol: false,
+          showSymbol: true,
+          symbolSize: 10,
           itemStyle: {
             normal: {
-              color: 'rgb(3,3,3)'
+              color: '#FFF'
             }
           },
           data: val

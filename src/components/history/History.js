@@ -33,7 +33,7 @@
     },
     tuBiao: {
       width: '100%',
-      height: 'calc(100% - 6.37rem)',
+      height: 'calc(100% - 9.37rem)',
       background: '#FFF',
       fontSize: '0.5rem'
     },
