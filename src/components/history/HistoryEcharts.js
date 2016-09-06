@@ -11,7 +11,7 @@ import wangGe from './wangGe.png';
 const EchartStyle = {
   box: {
     width: '100%',
-    height: '8rem',
+    height: 'calc(100% - 9.37rem)',
     background: `url(${wangGe}) no-repeat`,
     backgroundSize: 'contain'
   },

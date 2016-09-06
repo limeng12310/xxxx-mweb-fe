@@ -18,6 +18,7 @@
     },
     Main: {
       width: '100%',
+      height: '100%',
       position: 'absolute',
       top: '1.2rem',
       left: 0
@@ -32,7 +33,7 @@
     },
     tuBiao: {
       width: '100%',
-      height: '8rem',
+      height: 'calc(100% - 6.37rem)',
       background: '#FFF',
       fontSize: '0.5rem'
     },
