@@ -5,20 +5,21 @@
   import Warning from './warning.png';
   class NumberTu extends React.Component {
     componentDidMount() {
-      const { min, max, value } = this.props;
-      this.drawDial('myCanvas', min, max, value);
+      const { min, max, value, width } = this.props;
+      this.drawDial('myCanvas', min, max, value, width);
     }
-    drawDial(ref, min, max, value) {
+    drawDial(ref, min, max, value, width) {
+      const Width = lib.flexible.rem * width;
       const myCanvas = this.refs[ref];
       const ctx = myCanvas.getContext('2d');
       const clientWidth = document.documentElement.clientWidth;
-      const canvasWidth = Math.floor(clientWidth * 400 / 750);
+      const canvasWidth = Math.floor(clientWidth * 495 / 750);
       myCanvas.setAttribute('width', `${canvasWidth}px`);
       myCanvas.setAttribute('height', `${canvasWidth}px`);
       const r = canvasWidth / 2;
       const r2 = 0.8 * r;
       const r3 = (r - r2) / 2;
-      const angle = 30;
+      const angle = 45;
       const angle2 = (360 - 2 * angle) / 3;
       const angle3 = angle2 + angle - 90;
       const radian1 = angle * Math.PI / 180;
@@ -95,7 +96,7 @@
         ctx.translate(dx, dy);
         ctx.rotate(radian);
         ctx.translate(-dx, -dy);
-        ctx.drawImage(image, dx - image.width / 2, dy - image.height / 2);
+        ctx.drawImage(image, dx - image.width / 2, dy - image.height / 2, Width * 0.1, Width * 0.25);
       };
       if (value <= max && value >= min) {
         image.src = Normol;
@@ -112,6 +113,7 @@
   NumberTu.propTypes = {
     min: React.PropTypes.number,
     max: React.PropTypes.number,
-    value: React.PropTypes.number
+    value: React.PropTypes.number,
+    width: React.PropTypes.string
   };
   export default NumberTu;

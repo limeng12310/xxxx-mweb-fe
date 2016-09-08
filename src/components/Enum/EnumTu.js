@@ -9,7 +9,7 @@ class EnumTu extends React.Component {
     const myCanvas = this.refs[ref];
     const ctx = myCanvas.getContext('2d');
     const clientWidth = document.documentElement.clientWidth;
-    const canvasWidth = Math.floor(clientWidth * 400 / 750);
+    const canvasWidth = Math.floor(clientWidth * 496 / 750);
     myCanvas.setAttribute('width', `${canvasWidth}px`);
     myCanvas.setAttribute('height', `${canvasWidth}px`);
     const r = canvasWidth / 2;
