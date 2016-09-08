@@ -64,8 +64,8 @@ class EnumChart extends React.Component {
   render() {
     const EnumChartStyle = {
       itemEnum: {
-        width: this.props.Width,
-        height: this.props.Height,
+        width: this.props.width,
+        height: this.props.height,
         background: `url(${itemWg}) no-repeat`,
         backgroundSize: 'contain'
       },
@@ -82,7 +82,7 @@ class EnumChart extends React.Component {
   }
 }
 EnumChart.propTypes = {
-  Width: React.PropTypes.string,
-  Height: React.PropTypes.string
+  width: React.PropTypes.string,
+  height: React.PropTypes.string
 };
 export default EnumChart;
