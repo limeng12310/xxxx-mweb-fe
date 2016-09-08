@@ -13,25 +13,23 @@ class ReportShow extends React.Component {
     this.goItemReport = this.goItemReport.bind(this);
   }
   componentDidMount() {
-    $(() => {
-      $('#reportScroll').scroll(() => {
-        const reportScrollH = $('#reportScroll').scrollTop();
-        // console.log(reportScrollH);
-        if (reportScrollH <= 0) {
-          this.props.changeScroll1();
-        } else if (reportScrollH > 0) {
-          this.props.changeScroll2();
-        }
-      });
-      $('#imageScroll').scroll(() => {
-        const imageScrollH = $('#imageScroll').scrollTop();
-        // console.log(imageScrollH);
-        if (imageScrollH <= 0) {
-          this.props.changeScroll1();
-        } else if (imageScrollH > 0) {
-          this.props.changeScroll2();
-        }
-      });
+    $('#reportScroll').scroll(() => {
+      const reportScrollH = $('#reportScroll').scrollTop();
+      // console.log(reportScrollH);
+      if (reportScrollH <= 0) {
+        this.props.changeScroll1();
+      } else if (reportScrollH > 0) {
+        this.props.changeScroll2();
+      }
+    });
+    $('#imageScroll').scroll(() => {
+      const imageScrollH = $('#imageScroll').scrollTop();
+      // console.log(imageScrollH);
+      if (imageScrollH <= 0) {
+        this.props.changeScroll1();
+      } else if (imageScrollH > 0) {
+        this.props.changeScroll2();
+      }
     });
   }
   setTab1() {
@@ -258,7 +256,7 @@ class ReportShow extends React.Component {
       );
     } else {
       reportScrollBox = (
-        <div></div>
+        <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="reportScroll"></div>
       );
     }
     imageScrollBox = (

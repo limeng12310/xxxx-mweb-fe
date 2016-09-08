@@ -126,8 +126,7 @@ class PhotoUploadContainer extends React.Component {
         height: '100%',
         width: '100%',
         backgroundImage: `url(${boxBackground})`,
-        backgroundSize: 'cover',
-        zIndex: -100
+        backgroundSize: 'cover'
       },
       box: {
         position: 'absolute',

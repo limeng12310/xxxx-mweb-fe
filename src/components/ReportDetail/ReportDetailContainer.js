@@ -51,24 +51,22 @@ class ReportDetailContainer extends React.Component {
       });
   }
   componentDidMount() {
-    $(() => {
-      $('#scroll').scroll(() => {
-        const scroH = $('#scroll').scrollTop();
-        // console.log(scroH);
-        if (scroH >= Math.floor(lib.flexible.rem * 7.8)) {
-          this.setState({
-            aaStyle: {
-              overflowY: 'scroll'
-            }
-          });
-        } else if (scroH < Math.floor(lib.flexible.rem * 7.8)) {
-          this.setState({
-            aaStyle: {
-              overflowY: 'hidden'
-            }
-          });
-        }
-      });
+    $('#scroll').scroll(() => {
+      const scroH = $('#scroll').scrollTop();
+      // console.log(scroH);
+      if (scroH >= Math.floor(lib.flexible.rem * 7.8)) {
+        this.setState({
+          aaStyle: {
+            overflowY: 'scroll'
+          }
+        });
+      } else if (scroH < Math.floor(lib.flexible.rem * 7.8)) {
+        this.setState({
+          aaStyle: {
+            overflowY: 'hidden'
+          }
+        });
+      }
     });
   }
   handleChangeScroll1() {
