@@ -14,22 +14,27 @@ class Enum extends React.Component {
     super(props);
     this.itemChart = this.itemChart.bind(this);
     this.state = {
-      nameInReport: '氨基酸',
-      result: '200',
-      warning: '正常',
-      unit: 'mg/L',
-      intro: '肠道寄生虫分为原虫和蠕虫两类。前者是由单细胞构成的具有生命的微生物',
-      dataType: '数值',
-      abnormal: '他生活于人体消化道，部分种类是致病或条件致病原虫,生活史中大多不用转换寄生',
-      ref: '阴性',
-      refLow: 50,
-      refHigh: 200,
+      message: {
+        nameInReport: '',
+        result: '',
+        warning: '',
+        unit: '',
+        intro: '',
+        dataType: '',
+        abnormal: '',
+        ref: '',
+        refLow: 0,
+        refHigh: 0
+      },
       width: '6.6',
       itemChartData: []
     };
   }
   componentWillMount() {
     this.itemChart();
+    this.setState({
+      message: this.props.location.state
+    });
   }
   itemChart() {
     return new Promise((resolve, reject) => {
@@ -137,21 +142,21 @@ class Enum extends React.Component {
     };
     let Tu;
     let Chart;
-    if (this.state.dataType === '数值') {
+    if (this.state.message.dataType === '数值') {
       Tu = (
         <NumberTu
-          min={this.state.refLow}
-          max={this.state.refHigh}
-          value={this.state.result}
+          min={this.state.message.refLow}
+          max={this.state.message.refHigh}
+          value={this.state.message.result}
           width={this.state.width}
         />
         );
       Chart = (
         <NumChart width="100%" height="3.4rem" itemChartData={this.state.itemChartData} />
         );
-    } else if (this.state.dataType === '枚举') {
+    } else if (this.state.message.dataType === '枚举') {
       Tu = (
-        <EnumTu value={this.state.ref} width={this.state.width} />
+        <EnumTu value={this.state.message.ref} width={this.state.width} />
       );
       Chart = (<div></div>);
     } else {
@@ -165,9 +170,9 @@ class Enum extends React.Component {
           <div style={EnumStyle.canBox}>
             {Tu}
             <div style={EnumStyle.itemDetails}>
-              <p style={EnumStyle.result}>{this.state.result}</p>
-              <p style={EnumStyle.nameReport}>{this.state.nameInReport}</p>
-              <p style={EnumStyle.range}>合理范围:{this.state.refLow}-{this.state.refHigh}</p>
+              <p style={EnumStyle.result}>{this.state.message.result}</p>
+              <p style={EnumStyle.nameReport}>{this.state.message.nameInReport}</p>
+              <p style={EnumStyle.range}>合理范围:{this.state.message.refLow}-{this.state.message.refHigh}</p>
             </div>
           </div>
           <div style={EnumStyle.bt}><img src={historyBT} alt="" style={EnumStyle.img} /></div>
@@ -178,12 +183,12 @@ class Enum extends React.Component {
           </div>
           <div style={EnumStyle.intro}>
             <h2 style={EnumStyle.title}>项目介绍:</h2>
-            <p style={EnumStyle.content}>{this.state.intro}</p>
+            <p style={EnumStyle.content}>{this.state.message.intro}</p>
           </div>
           <div className="weightLine"></div>
           <div style={EnumStyle.intro}>
             <h2 style={EnumStyle.title}>临床意义:</h2>
-            <p style={EnumStyle.content}>{this.state.abnormal}</p>
+            <p style={EnumStyle.content}>{this.state.message.abnormal}</p>
           </div>
           <div className="weightLine" style={EnumStyle.line}></div>
         </div>
@@ -192,4 +197,7 @@ class Enum extends React.Component {
     );
   }
 }
+Enum.propTypes = {
+  location: React.PropTypes.object
+};
 export default Enum;

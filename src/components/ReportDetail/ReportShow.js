@@ -10,6 +10,7 @@ class ReportShow extends React.Component {
     this.setTab1 = this.setTab1.bind(this);
     this.setTab2 = this.setTab2.bind(this);
     this.clickPreview = this.clickPreview.bind(this);
+    this.goItemReport = this.goItemReport.bind(this);
   }
   componentDidMount() {
     $(() => {
@@ -18,7 +19,7 @@ class ReportShow extends React.Component {
         // console.log(reportScrollH);
         if (reportScrollH <= 0) {
           this.props.changeScroll1();
-        } else if (reportScrollH >= 0) {
+        } else if (reportScrollH > 0) {
           this.props.changeScroll2();
         }
       });
@@ -27,7 +28,7 @@ class ReportShow extends React.Component {
         // console.log(imageScrollH);
         if (imageScrollH <= 0) {
           this.props.changeScroll1();
-        } else if (imageScrollH >= 0) {
+        } else if (imageScrollH > 0) {
           this.props.changeScroll2();
         }
       });
@@ -84,6 +85,9 @@ class ReportShow extends React.Component {
       current: e.target.getAttribute('data-url'), // 当前显示图片的http链接
       urls: this.props.messages.imgs // 需要预览的图片http链接列表
     });
+  }
+  goItemReport(e) {
+    this.props.handleGoItemReport(this.state.isChoosen, parseInt(e.target.getAttribute('data-rightIndex'), 10));
   }
   render() {
     const styles = {
@@ -241,7 +245,12 @@ class ReportShow extends React.Component {
           <ul style={styles.rightBox}>
             {
               this.props.messages.values[this.state.isChoosen].items.map((item, i) => (
-                <li key={i} style={styles.rightList}>{item.name}</li>
+                <li
+                  data-rightIndex={i}
+                  key={i}
+                  style={styles.rightList}
+                  onClick={this.goItemReport}
+                >{item.name}</li>
               ))
             }
           </ul>
@@ -295,7 +304,8 @@ ReportShow.propTypes = {
   messages: React.PropTypes.object,
   scrollStyle: React.PropTypes.object,
   changeScroll1: React.PropTypes.func.isRequired,
-  changeScroll2: React.PropTypes.func.isRequired
+  changeScroll2: React.PropTypes.func.isRequired,
+  handleGoItemReport: React.PropTypes.func
 };
 
 export default ReportShow;
