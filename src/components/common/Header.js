@@ -104,7 +104,7 @@ class Header extends React.Component {
 }
 Header.propTypes = {
   headerType: React.PropTypes.string,
-  hasSubmitButton: React.PropTypes.boolean,
-  onSubmit: React.PropTypes.function
+  hasSubmitButton: React.PropTypes.bool,
+  onSubmit: React.PropTypes.func
 };
 export default Header;
