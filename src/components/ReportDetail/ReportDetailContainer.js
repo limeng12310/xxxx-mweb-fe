@@ -5,11 +5,13 @@ import containerBackground from './img/background1.svg';
 import Header from './../common/Header';
 import config from '../../config';
 
+import { hashHistory } from 'react-router';
 class ReportDetailContainer extends React.Component {
   constructor(props) {
     super(props);
     this.handleChangeScroll1 = this.handleChangeScroll1.bind(this);
     this.handleChangeScroll2 = this.handleChangeScroll2.bind(this);
+    this.handleGoItemReport = this.handleGoItemReport.bind(this);
     this.state = {
       aaStyle: {},
       message: {
@@ -81,6 +83,12 @@ class ReportDetailContainer extends React.Component {
       overflowY: 'hidden'
     });
   }
+  handleGoItemReport(leftIndex, rightIndex) {
+    hashHistory.push({
+      pathname: '/item-report',
+      state: this.state.message.values[leftIndex].items[rightIndex]
+    });
+  }
   render() {
     const styles = {
       container: {
@@ -111,6 +119,7 @@ class ReportDetailContainer extends React.Component {
               scrollStyle={this.state.aaStyle}
               changeScroll1={this.handleChangeScroll1}
               changeScroll2={this.handleChangeScroll2}
+              handleGoItemReport={this.handleGoItemReport}
             />
           </div>
         </div>

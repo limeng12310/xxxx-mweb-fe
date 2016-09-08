@@ -6,6 +6,7 @@ import HomeContainer from './components/home/HomeContainer';
 import ReportDetailContainer from './components/ReportDetail/ReportDetailContainer';
 import PhotoUploadContainer from './components/PhotoUpload/PhotoUploadContainer';
 import History from './components/history/History';
+import Enum from './components/Enum/Enum';
 import config from './config/default';
 
 // react router
@@ -39,6 +40,7 @@ ReactDOM.render((
     <Route path="/photo-upload" component={PhotoUploadContainer} />
     <Route path="/history" component={History} />
     <Route path="/report-detail" component={ReportDetailContainer} />
+    <Route path="/item-report" component={Enum} />
   </Router>
   ),
   document.getElementById('approot')
