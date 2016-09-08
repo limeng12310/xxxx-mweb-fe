@@ -275,7 +275,7 @@
       }
       return (
         <div style={HistoryStyle.history}>
-          <Header headerType="0" />
+          <Header headerType="1" />
           <div style={HistoryStyle.Main}>
             <div style={HistoryStyle.Title}>{name}</div>
             <HistoryEcharts style={HistoryStyle.tuBiao} dataX={this.state.dataX} dataY={this.state.dataY} />
@@ -297,7 +297,7 @@
               </dl>
             </div>
           </div>
-          <ButtomBar />
+          <ButtomBar bottombarType="1" />
         </div>
       );
     }

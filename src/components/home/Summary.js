@@ -3,6 +3,7 @@
  */
 import tree from './img/tree1.svg';
 import CircleProgress from '../common/CircleProgress';
+const x = lib.flexible.rem * 0.67;
 const SummaryStyle = {
   SummaryBox: {
     width: '100%',
@@ -31,11 +32,11 @@ const SummaryStyle = {
   SummaryKpiItemCut: {
     fontSize: '0.6rem',
     color: '#f6f6ff',
-    width: '1rem',
-    height: '1rem',
+    width: '1.33rem',
+    height: '1.33rem',
     position: 'absolute',
-    left: '0.45rem',
-    top: '0.2rem',
+    left: '0.4rem',
+    paddingTop: '0.22rem',
     textAlign: 'center',
     lineHeight: '1rem'
   },
@@ -48,14 +49,24 @@ const SummaryStyle = {
     marginTop: '0.5rem'
   },
   SummeryKpiCircle: {
-    width: '1.4rem',
-    height: '1.4rem',
+    width: 2 * x,
+    height: 2 * x,
     display: 'inline-block'
   }
 };
 class Summary extends React.Component {
   render() {
     const { normal, warning } = this.props.cnt;
+    const sum = normal + warning;
+    let normalPercent;
+    let warningPercent;
+    if (sum === 0) {
+      normalPercent = 0;
+      warningPercent = 0;
+    } else {
+      normalPercent = normal / sum;
+      warningPercent = warning / sum;
+    }
     return (
       <dl style={SummaryStyle.SummaryBox}>
         <dt style={SummaryStyle.SummaryIcon}>
@@ -65,14 +76,14 @@ class Summary extends React.Component {
           <p style={SummaryStyle.SummaryKpiItem}>
             <div style={SummaryStyle.SummaryKpiItemCut}>{normal}</div>
             <div style={SummaryStyle.SummeryKpiCircle}>
-              <CircleProgress per="0.5" x="50" />
+              <CircleProgress per={normalPercent} x={x} />
             </div>
             <span style={SummaryStyle.SummaryKpiItemZi}>正常指标</span>
           </p>
           <p style={SummaryStyle.SummaryKpiItem}>
             <div style={SummaryStyle.SummaryKpiItemCut}>{warning}</div>
             <div style={SummaryStyle.SummeryKpiCircle}>
-              <CircleProgress per="0.5" x="50" />
+              <CircleProgress per={warningPercent} x={x} />
             </div>
             <span style={SummaryStyle.SummaryKpiItemZi}>观察指标</span>
           </p>

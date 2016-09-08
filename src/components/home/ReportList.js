@@ -4,6 +4,8 @@
 import ReportIcon1 from './img/ReportIcon1.png';
 import DeleteIcon from './img/delete.png';
 import moment from 'moment';
+
+import { hashHistory } from 'react-router';
 const ReportItemStyle = {
   reportList: {
     width: '80%',
@@ -71,19 +73,32 @@ const ReportItemStyle = {
 };
 
 class ReportItem extends React.Component {
+  constructor() {
+    super();
+    this.reportDelete = this.reportDelete.bind(this);
+  }
+  reportDelete(e) {
+    const index = parseInt(e.target.getAttribute('data-index'), 10);
+    this.props.onUserReportDelete(index);
+  }
   render() {
     const data = this.props.data;
     return (
       <div style={ReportItemStyle.reportList}>
         {
-          data.map(item => {
+          data.map((item, i) => {
             let Year = moment(item.checkTime).format('YY');
             let Month = moment(item.checkTime).format('MM');
             let Day = moment(item.checkTime).format('DD');
             return (
               <div style={ReportItemStyle.reportItem}>
                 <div style={ReportItemStyle.reportContent}>
-                  <div>
+                  <div
+                    onClick={() => hashHistory.push({
+                      pathname: '/report-detail',
+                      state: { id: item.id }
+                    })}
+                  >
                     <img src={ReportIcon1} alt="" style={ReportItemStyle.reportKpi} />
                     <b style={ReportItemStyle.year}>{Year}</b>
                     <div style={ReportItemStyle.Date}>
@@ -94,7 +109,13 @@ class ReportItem extends React.Component {
                     <span style={ReportItemStyle.hospital}>{item.content}</span>
                   </div>
                   <div>
-                    <img src={DeleteIcon} alt="" style={ReportItemStyle.Delete} />
+                    <img
+                      src={DeleteIcon}
+                      data-index={i}
+                      alt=""
+                      style={ReportItemStyle.Delete}
+                      onClick={this.reportDelete}
+                    />
                   </div>
                 </div>
                 <div className="line"></div>
@@ -107,6 +128,7 @@ class ReportItem extends React.Component {
   }
 }
 ReportItem.propTypes = {
-  data: React.PropTypes.array
+  data: React.PropTypes.array,
+  onUserReportDelete: React.PropTypes.func
 };
 export default ReportItem;

@@ -1,7 +1,7 @@
 /**
  * Created by zc on 2016/7/26.
  */
-import manualUpload from './img/manualUpload.png';
+// import manualUpload from './img/manualUpload.png';
 import imgUpload from './img/imgUpload.png';
 
 import { Link } from 'react-router';
@@ -31,9 +31,6 @@ class Upload extends React.Component {
     return (
       <div style={UploadStyle.right}>
         <div style={UploadStyle.rightUpload}>
-          <img src={manualUpload} alt="" style={UploadStyle.icon} />
-        </div>
-        <div style={UploadStyle.rightUpload}>
           <Link to="/photo-upload">
             <img src={imgUpload} alt="" style={UploadStyle.icon} />
           </Link>
@@ -43,3 +40,7 @@ class Upload extends React.Component {
   }
 }
 export default Upload;
+
+/* <div style={UploadStyle.rightUpload}>
+ <img src={manualUpload} alt="" style={UploadStyle.icon} />
+ </div> */

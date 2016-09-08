@@ -39,7 +39,7 @@ class MessageShow extends React.Component {
         verticalAlign: 'middle',
         float: 'none',
         fontSize: '0.7rem',
-        marginLeft: '-1.33rem',
+        marginLeft: '-1.28rem',
         paddingTop: '0.23rem',
         height: '1.33rem',
         width: '1.33rem',
@@ -57,7 +57,7 @@ class MessageShow extends React.Component {
         float: 'right'
       },
       date: {
-        fontSize: '0.70rem',
+        fontSize: '0.65rem',
         fontWeight: 700,
         color: '#fff',
         float: 'right'

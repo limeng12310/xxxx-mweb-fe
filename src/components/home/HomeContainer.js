@@ -53,41 +53,50 @@ class HomeContainer extends React.Component {
     super(props);
     this.reportList = this.reportList.bind(this);
     this.amount = this.amount.bind(this);
+    this.onUserReportDelete = this.onUserReportDelete.bind(this);
     this.state = {
       reportList: [],
-      aggregation: []
+      aggregation: {}
     };
   }
   componentWillMount() {
     this.reportList();
     this.amount();
   }
-  reportList() {
-    return new Promise((resolve, reject) => {
-      fetch(`${config.apiPrefix}/reports?_limit=99999&_offset=0`)
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          }
-          throw new Error;
-        })
-        .then(json => {
-          if (json.retCode === 0) {
-            this.setState({
-              reportList: json.data
-            }, () => {
-              resolve();
-            });
-          } else {
-            alert('请求出错！');
-          }
-        })
-        .catch(error => {
-          alert('出错啦！');
-          console.log(error);
-          reject(error);
-        });
+  onUserReportDelete(index) {
+    const newReportList = [];
+    for (let i = 0; i < this.state.reportList.length; i ++) {
+      if (i !== index) {
+        newReportList.push(this.state.reportList[i]);
+      }
+    }
+    this.setState({
+      reportList: newReportList
     });
+    // fetch(`${config.apiPrefix}/reports/${this.state.reportList[index].id}`, {
+    //   method: 'DELETE',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
+    //   .then(response => {
+    //   if (response.status === 200) {
+    //     return response.json();
+    //   }
+    //   throw new Error;
+    //   })
+    //   .then(json => {
+    //     if (json.retCode === 0) {
+    //       alert('成功删除一个报告！');
+    //     } else {
+    //       alert('请求出错！');
+    //     }
+    //   })
+    //   .catch(error => {
+    //     alert('出错啦！');
+    //     console.log(error);
+    //   });
   }
   amount() {
     return new Promise((resolve, reject) => {
@@ -116,6 +125,33 @@ class HomeContainer extends React.Component {
         });
     });
   }
+  reportList() {
+    return new Promise((resolve, reject) => {
+      fetch(`${config.apiPrefix}/reports?_limit=99999&_offset=0`)
+        .then(response => {
+          if (response.status === 200) {
+            return response.json();
+          }
+          throw new Error;
+        })
+        .then(json => {
+          if (json.retCode === 0) {
+            this.setState({
+              reportList: json.data
+            }, () => {
+              resolve();
+            });
+          } else {
+            alert('请求出错！');
+          }
+        })
+        .catch(error => {
+          alert('出错啦！');
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
   render() {
     return (
       <div style={HomeContainerStyle.HomeBox}>
@@ -125,20 +161,20 @@ class HomeContainer extends React.Component {
         <div style={HomeContainerStyle.Report}>
           <div style={HomeContainerStyle.Filter}>
             <a href="###" style={HomeContainerStyle.Button}>报告时间</a>
-            <a href="###" style={HomeContainerStyle.Button}>上传时间</a>
+            <a href="###" style={HomeContainerStyle.Button}></a>
           </div>
           <div className="weightLine"></div>
           <div style={HomeContainerStyle.ReportListBox}>
-            <ReportList data={this.state.reportList} />
+            <ReportList data={this.state.reportList} onUserReportDelete={this.onUserReportDelete} />
             <Upload />
           </div>
         </div>
-        <ButtomBar />
+        <ButtomBar bottombarType="0" />
       </div>
     );
   }
 }
-
+ // 上传时间
 HomeContainer.propTypes = {
   headerType: React.PropTypes.number,
   hasSubmitButton: React.PropTypes.bool,

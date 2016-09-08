@@ -13,7 +13,7 @@ const EchartStyle = {
     width: '100%',
     height: 'calc(100% - 9.37rem)',
     background: `url(${wangGe}) no-repeat`,
-    backgroundSize: 'contain'
+    backgroundSize: '100% 80%'
   },
   cont: {
     width: '100%',
@@ -48,7 +48,12 @@ class HistoryEcharts extends React.Component {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: date
+        data: date,
+        axisLine: {
+          lineStyle: {
+            color: '#eee'
+          }
+        }
       },
       yAxis: {
         show: false,
@@ -59,7 +64,7 @@ class HistoryEcharts extends React.Component {
         type: 'inside',
         start: 0,
         end: 100
-      }, {
+      } /* , {
         start: 0,
         end: 10,
         handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,' +
@@ -73,7 +78,7 @@ class HistoryEcharts extends React.Component {
           shadowOffsetX: 2,
           shadowOffsetY: 2
         }
-      }],
+      } */ ],
       series: [
         {
           name: '检测值',

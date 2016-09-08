@@ -17,7 +17,7 @@
       marginRight: '0.5rem',
       marginLeft: '0.5rem',
       float: 'left',
-      fontSize: '0.7rem',
+      fontSize: '0.5rem',
       textDecoration: 'none',
       color: '#FFF',
       // IE滤镜，透明度50%
@@ -31,7 +31,7 @@
       marginRight: '0.8rem',
       marginLeft: '0.7rem',
       float: 'left',
-      fontSize: '0.6rem',
+      fontSize: '0.45rem',
       textDecoration: 'none',
       color: '#FFF',
       // IE滤镜，透明度50%

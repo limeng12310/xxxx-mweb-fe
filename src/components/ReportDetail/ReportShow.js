@@ -170,17 +170,18 @@ class ReportShow extends React.Component {
         // marginTop: '1.333333rem',
         fontSize: '0.533333rem',
         color: '#9C9C9C',
-        listStyle: 'none'
+        listStyle: 'none',
+        marginLeft: '0.8rem'
       },
       leftList: {
-        marginBottom: '1.333333rem'
+        marginBottom: '0.8rem'
         // borderWidth: 2,
         // borderStyle: 'solid',
         // borderRadius: 20,
         // display: 'table'
       },
       rightList: {
-        marginBottom: '0.933333rem'
+        marginBottom: '0.7rem'
       },
       allImage: {
         minHeight: '6.40625rem',

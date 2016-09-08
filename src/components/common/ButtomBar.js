@@ -5,6 +5,8 @@ import State from './../home/img/state.png';
 import history from './../home/img/history.png';
 import user from './../home/img/user.png';
 
+import { hashHistory } from 'react-router';
+
 const ButtomBarStyle = {
   bottomBarBox: {
     width: '100%',
@@ -29,27 +31,85 @@ const ButtomBarStyle = {
   },
   iconFont: {
     color: '#fff',
-    fontSize: '0.4rem',
-    textDecoration: 'none'
+    fontSize: '0.4rem'
   }
 };
 class ButtomBar extends React.Component {
   render() {
+    // 0表示动态
+    // 1表示历史
+    // 2表示用户
+    const { bottombarType } = this.props;
+    let barItemOne = {};
+    let barItemTwo = {};
+    let barItemThree = {};
+    if (bottombarType === '0') {
+      barItemOne = {
+        filter: 'alpha(opacity=100)',
+        MozOpacity: 1,
+        opacity: 1
+      };
+      barItemTwo = {
+        filter: 'alpha(opacity=60)',
+        MozOpacity: 0.6,
+        opacity: 0.6
+      };
+      barItemThree = {
+        filter: 'alpha(opacity=60)',
+        MozOpacity: 0.6,
+        opacity: 0.6
+      };
+    } else if (bottombarType === '1') {
+      barItemOne = {
+        filter: 'alpha(opacity=60)',
+        MozOpacity: 0.6,
+        opacity: 0.6
+      };
+      barItemTwo = {
+        filter: 'alpha(opacity=100)',
+        MozOpacity: 1,
+        opacity: 1
+      };
+      barItemThree = {
+        filter: 'alpha(opacity=60)',
+        MozOpacity: 0.6,
+        opacity: 0.6
+      };
+    } else if (bottombarType === '2') {
+      barItemOne = {
+        filter: 'alpha(opacity=60)',
+        MozOpacity: 0.6,
+        opacity: 0.6
+      };
+      barItemTwo = {
+        filter: 'alpha(opacity=60)',
+        MozOpacity: 0.6,
+        opacity: 0.6
+      };
+      barItemThree = {
+        filter: 'alpha(opacity=100)',
+        MozOpacity: 1,
+        opacity: 1
+      };
+    }
     return (
       <div style={ButtomBarStyle.bottomBarBox}>
         <div className="weightLine"></div>
         <div style={ButtomBarStyle.bottomBar}>
-          <div style={ButtomBarStyle.barItem}>
+          <div style={Object.assign({}, ButtomBarStyle.barItem, barItemOne)} onClick={() => hashHistory.push('/')}>
             <img src={State} alt="" style={ButtomBarStyle.icon} />
-            <a href="#" style={ButtomBarStyle.iconFont}>动态</a>
+            <span style={ButtomBarStyle.iconFont}>动态</span>
           </div>
-          <div style={ButtomBarStyle.barItem}>
+          <div
+            style={Object.assign({}, ButtomBarStyle.barItem, barItemTwo)}
+            onClick={() => hashHistory.push('/history')}
+          >
             <img src={history} alt="" style={ButtomBarStyle.icon} />
-            <a href="#" style={ButtomBarStyle.iconFont}>历史</a>
+            <span style={ButtomBarStyle.iconFont}>历史</span>
           </div>
-          <div style={ButtomBarStyle.barItem}>
+          <div style={Object.assign({}, ButtomBarStyle.barItem, barItemThree)}>
             <img src={user} alt="" style={ButtomBarStyle.icon} />
-            <a href="#" style={ButtomBarStyle.iconFont}>用户</a>
+            <span style={ButtomBarStyle.iconFont}>用户</span>
           </div>
         </div>
       </div>
@@ -57,4 +117,7 @@ class ButtomBar extends React.Component {
   }
 }
 
+ButtomBar.propTypes = {
+  bottombarType: React.PropTypes.string
+};
 export default ButtomBar;

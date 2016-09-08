@@ -2,7 +2,7 @@ import CheckTimeInput from './CheckTimeInput';
 import CheckLocationInput from './CheckLocationInput';
 import PhotosToUpload from './PhotosToUpload';
 import boxBackground from './img/background.png';
-import foot from './img/foot.svg';
+import foot from './img/foot.png';
 import Header from './../common/Header';
 
 import config from '../../config';
@@ -144,19 +144,11 @@ class PhotoUploadContainer extends React.Component {
         overflowY: 'scroll',
         WebkitOverflowScrolling: 'touch'
       },
-      footLine: {
-        position: 'fixed',
-        bottom: '1.466667rem',
-        width: '100%',
-        height: '0.078125rem',
-        background: 'linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,1),rgba(255,255,255,0.1))',
-        zIndex: -10
-      },
       foot: {
         position: 'fixed',
         bottom: 0,
         width: '100%',
-        height: '1.466667rem',
+        height: '1.5rem',
         backgroundImage: `url(${foot})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover'
@@ -184,7 +176,6 @@ class PhotoUploadContainer extends React.Component {
               onUserImageDelete={this.handleUserImageDelete}
             />
           </div>
-          <div style={styles.footLine}></div>
           <div style={styles.foot}></div>
         </div>
       </div>

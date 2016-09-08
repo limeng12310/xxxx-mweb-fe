@@ -4,6 +4,8 @@
 import advisoryIcon from './../home/img/advisoryIcon.png';
 import back from './../home/img/back.svg';
 import ok from './../home/img/ok.svg';
+
+import { hashHistory } from 'react-router';
 const HeaderStyle = {
   Header: {
     width: '100%',
@@ -71,7 +73,7 @@ class Header extends React.Component {
           return (
             <div style={HeaderStyle.Header}>
               <div style={HeaderStyle.HeaderBox}>
-                <img src={back} alt="" style={HeaderStyle.backStyle} />
+                <img src={back} alt="" style={HeaderStyle.backStyle} onClick={() => hashHistory.goBack()} />
                 <img src={ok} alt="" style={HeaderStyle.okStyle} onClick={onSubmit} />
               </div>
               <div className="weightLine"></div>
@@ -81,7 +83,7 @@ class Header extends React.Component {
         return (
           <div style={HeaderStyle.Header}>
             <div style={HeaderStyle.HeaderBox}>
-              <img src={back} alt="" style={HeaderStyle.backStyle} />
+              <img src={back} alt="" style={HeaderStyle.backStyle} onClick={() => hashHistory.goBack()} />
               <img src={ok} alt="" style={HeaderStyle.okStyle} onClick={this.EmptyOnClick} />
             </div>
             <div className="weightLine"></div>
@@ -91,7 +93,7 @@ class Header extends React.Component {
       return (
         <div style={HeaderStyle.Header}>
           <div style={HeaderStyle.HeaderBox}>
-            <img src={back} alt="" style={HeaderStyle.backStyle} />
+            <img src={back} alt="" style={HeaderStyle.backStyle} onClick={() => hashHistory.goBack()} />
           </div>
           <div className="weightLine"></div>
         </div>

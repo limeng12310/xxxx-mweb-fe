@@ -145,7 +145,7 @@ class PhotosToUpload extends React.Component {
         position: 'fixed',
         right: 0,
         left: 0,
-        bottom: '1.05rem',
+        bottom: '1.01rem',
         margin: '0.1875rem',
         width: '2.24rem',
         height: '2.24rem',
