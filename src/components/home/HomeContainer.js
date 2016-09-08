@@ -154,22 +154,25 @@ class HomeContainer extends React.Component {
   }
   render() {
     return (
-      <div style={HomeContainerStyle.HomeBox}>
-        <div style={HomeContainerStyle.Center}>
-          <Summary cnt={this.state.aggregation} />
-        </div>
-        <div style={HomeContainerStyle.Report}>
-          <div style={HomeContainerStyle.Filter}>
-            <a href="###" style={HomeContainerStyle.Button}>报告时间</a>
-            <a href="###" style={HomeContainerStyle.Button}></a>
+      <div>
+        <div style={HomeContainerStyle.HomeBox}>
+          <div style={HomeContainerStyle.Center}>
+            <Summary cnt={this.state.aggregation} />
           </div>
-          <div className="weightLine"></div>
-          <div style={HomeContainerStyle.ReportListBox}>
-            <ReportList data={this.state.reportList} onUserReportDelete={this.onUserReportDelete} />
-            <Upload />
+          <div style={HomeContainerStyle.Report}>
+            <div style={HomeContainerStyle.Filter}>
+              <a href="###" style={HomeContainerStyle.Button}>报告时间</a>
+              <a href="###" style={HomeContainerStyle.Button}></a>
+            </div>
+            <div className="weightLine"></div>
+            <div style={HomeContainerStyle.ReportListBox}>
+              <ReportList data={this.state.reportList} onUserReportDelete={this.onUserReportDelete} />
+              <Upload />
+            </div>
           </div>
+          <ButtomBar bottombarType="0" />
         </div>
-        <ButtomBar bottombarType="0" />
+        {this.props.children}
       </div>
     );
   }
@@ -178,7 +181,8 @@ class HomeContainer extends React.Component {
 HomeContainer.propTypes = {
   headerType: React.PropTypes.number,
   hasSubmitButton: React.PropTypes.bool,
-  onSubmit: React.PropTypes.func
+  onSubmit: React.PropTypes.func,
+  children: React.PropTypes.element
 };
 
 export default HomeContainer;

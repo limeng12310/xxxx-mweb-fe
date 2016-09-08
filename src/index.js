@@ -36,11 +36,13 @@ fetch(`${config.apiPrefix}/test-signature`)
 
 ReactDOM.render((
   <Router history={hashHistory}>
-    <Route path="/" component={HomeContainer} />
-    <Route path="/photo-upload" component={PhotoUploadContainer} />
+    <Route path="/" component={HomeContainer} >
+      <Route path="/report-detail" component={ReportDetailContainer} >
+        <Route path="/item-report" component={Enum} />
+      </Route>
+      <Route path="/photo-upload" component={PhotoUploadContainer} />
+    </Route>
     <Route path="/history" component={History} />
-    <Route path="/report-detail" component={ReportDetailContainer} />
-    <Route path="/item-report" component={Enum} />
   </Router>
   ),
   document.getElementById('approot')

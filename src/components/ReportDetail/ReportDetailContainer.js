@@ -123,12 +123,14 @@ class ReportDetailContainer extends React.Component {
             />
           </div>
         </div>
+        {this.props.children}
       </div>
 
     );
   }
 }
 ReportDetailContainer.propTypes = {
-  location: React.PropTypes.object
+  location: React.PropTypes.object,
+  children: React.PropTypes.element
 };
 export default ReportDetailContainer;
