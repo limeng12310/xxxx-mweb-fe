@@ -40,9 +40,9 @@ ReactDOM.render((
       <Route path="/report-detail" component={ReportDetailContainer} >
         <Route path="/item-report" component={Enum} />
       </Route>
-      <Route path="/photo-upload" component={PhotoUploadContainer} />
     </Route>
     <Route path="/history" component={History} />
+    <Route path="/photo-upload" component={PhotoUploadContainer} />
   </Router>
   ),
   document.getElementById('approot')
