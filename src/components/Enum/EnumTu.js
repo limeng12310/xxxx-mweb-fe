@@ -43,7 +43,7 @@ class EnumTu extends React.Component {
     ctx.arc(cx2, cy2, r3, 0.5 * Math.PI + radian2, 1.5 * Math.PI + radian2, true);
     ctx.arc(r, r, r2, 0.5 * Math.PI + radian2, 1.5 * Math.PI - radian, false);
     ctx.arc(cx1, cy1, r3, 0.5 * Math.PI - radian, 1.5 * Math.PI - radian, true);
-    ctx.fillStyle = 'rgb(39, 240, 188)';
+    ctx.fillStyle = this.props.leftColor;
     ctx.fill();
     ctx.closePath();
     ctx.beginPath();
@@ -52,7 +52,7 @@ class EnumTu extends React.Component {
     ctx.arc(cx4, cy2, r3, 0.5 * Math.PI - radian2, 1.5 * Math.PI - radian2, false);
     ctx.arc(r, r, r2, 0.5 * Math.PI - radian2, 1.5 * Math.PI + radian, true);
     ctx.arc(cx3, cy1, r3, 0.5 * Math.PI + radian, 1.5 * Math.PI + radian, false);
-    ctx.fillStyle = 'rgba(252, 252, 252, 0.5)';
+    ctx.fillStyle = this.props.rightColor;
     ctx.fill();
     ctx.closePath();
   }
@@ -62,5 +62,8 @@ class EnumTu extends React.Component {
     );
   }
 }
-
+EnumTu.propTypes = {
+  leftColor: React.PropTypes.string,
+  rightColor: React.PropTypes.string
+};
 export default EnumTu;
