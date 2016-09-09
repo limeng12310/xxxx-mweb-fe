@@ -59,7 +59,7 @@ class HomeContainer extends React.Component {
       aggregation: {}
     };
   }
-  componentWillMount() {
+  componentDidMount() {
     this.reportList();
     this.amount();
   }
