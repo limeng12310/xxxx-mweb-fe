@@ -1,7 +1,8 @@
 /**
  * Created by zc on 2016/7/25.
  */
-import ReportIcon1 from './img/ReportIcon1.png';
+import Manual from './img/ReportIcon1.png';
+import Photo from './img/ReportIcon2.png';
 import DeleteIcon from './img/delete.png';
 import moment from 'moment';
 
@@ -83,6 +84,13 @@ class ReportItem extends React.Component {
   }
   render() {
     const data = this.props.data;
+    let ReportTu;
+    let ClickFunction;
+    if (data.type === '用户输入') {
+      ReportTu = Manual;
+    } else {
+      ReportTu = Photo;
+    }
     return (
       <div style={ReportItemStyle.reportList}>
         {
@@ -90,16 +98,17 @@ class ReportItem extends React.Component {
             let Year = moment(item.checkTime).format('YY');
             let Month = moment(item.checkTime).format('MM');
             let Day = moment(item.checkTime).format('DD');
+            if (data[i].status === '返回用户') {
+              ClickFunction = () => hashHistory.push({ pathname: '/report-detail', state: { id: item.id } });
+            } else {
+              ClickFunction = () => { alert('报告正在解读中'); };
+            }
             return (
               <div style={ReportItemStyle.reportItem}>
                 <div style={ReportItemStyle.reportContent}>
-                  <div
-                    onClick={() => hashHistory.push({
-                      pathname: '/report-detail',
-                      state: { id: item.id }
-                    })}
-                  >
-                    <img src={ReportIcon1} alt="" style={ReportItemStyle.reportKpi} />
+
+                  <div onClick={ClickFunction}>
+                    <img src={ReportTu} alt="" style={ReportItemStyle.reportKpi} />
                     <b style={ReportItemStyle.year}>{Year}</b>
                     <div style={ReportItemStyle.Date}>
                       <b style={ReportItemStyle.day}>{Month}</b>
@@ -108,6 +117,7 @@ class ReportItem extends React.Component {
                     </div>
                     <span style={ReportItemStyle.hospital}>{item.content}</span>
                   </div>
+
                   <div>
                     <img
                       src={DeleteIcon}
