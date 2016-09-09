@@ -10,7 +10,8 @@ const ReportItemStyle = {
   reportList: {
     width: '80%',
     height: '4.8rem',
-    overflowY: 'auto'
+    overflowY: 'scroll',
+    overflowScrolling: 'touch'
   },
   reportContent: {
     width: '100%',
