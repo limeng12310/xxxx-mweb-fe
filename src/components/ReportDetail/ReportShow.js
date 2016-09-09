@@ -1,4 +1,5 @@
 import bottomBackground from './img/background2.2.svg';
+import config from '../../config';
 
 class ReportShow extends React.Component {
   constructor(props) {
@@ -265,7 +266,7 @@ class ReportShow extends React.Component {
           {
             this.props.messages.imgs.map((imgId, i) => {
               const background = {
-                backgroundImage: `url(${imgId})`
+                backgroundImage: `url(${config.cdnPrefix}/${imgId})`
               };
               return (
                 <div
