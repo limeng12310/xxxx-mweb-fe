@@ -8,6 +8,7 @@ import enumBg from './enumBg.png';
 import historyBT from './historyBT.png';
 import NumChart from './NumChart';
 import config from '../../config';
+import identifying from './identifying.png';
 
 class Enum extends React.Component {
   constructor(props) {
@@ -138,49 +139,99 @@ class Enum extends React.Component {
       },
       img: {
         width: '0.75rem'
+      },
+      emptyHeight: {
+        height: '1.2rem'
+      },
+      identifying: {
+        marginTop: '0.5rem',
+        width: '1.2rem'
       }
     };
     let Tu;
     let Chart;
+    let HistoryBt;
+    let Warning;
+    let LColor;
+    let RColor;
+    if (this.state.message.warning === '观察' || this.state.message.warning === '危险') {
+      Warning = (
+        <p><img src={identifying} alt="" style={EnumStyle.identifying} /></p>
+      );
+    } else {
+      Warning = (
+        <div></div>
+      );
+    }
     if (this.state.message.dataType === '数值') {
       Tu = (
-        <NumberTu
-          min={this.state.message.refLow}
-          max={this.state.message.refHigh}
-          value={this.state.message.result}
-          width={this.state.width}
-        />
+        <div style={EnumStyle.canBox}>
+          <NumberTu
+            min={this.state.message.refLow}
+            max={this.state.message.refHigh}
+            value={this.state.message.result}
+            width={this.state.width}
+          />
+          <div style={EnumStyle.itemDetails}>
+            <p style={EnumStyle.result}>{this.state.message.result}</p>
+            <p style={EnumStyle.nameReport}>{this.state.message.nameInReport}</p>
+            <p style={EnumStyle.range}>合理范围:{this.state.message.refLow}-{this.state.message.refHigh}</p>
+            {Warning}
+          </div>
+        </div>
         );
+      HistoryBt = (
+        <div style={EnumStyle.bt}><img src={historyBT} alt="" style={EnumStyle.img} /></div>
+      );
       Chart = (
-        <NumChart width="100%" height="3.4rem" itemChartData={this.state.itemChartData} />
+        <div style={EnumStyle.chart}>
+          <div className="weightLine"></div>
+          <NumChart width="100%" height="3.4rem" itemChartData={this.state.itemChartData} />
+          <div className="weightLine"></div>
+        </div>
         );
     } else if (this.state.message.dataType === '枚举') {
+      if (this.state.message.result === '阳性') {
+        LColor = 'rgba(252, 252, 252, 0.5)';
+        if (this.state.message.ref === '阴性') {
+          RColor = 'rgb(140,136,65)';
+        } else if (this.state.message.ref === '阳性') {
+          RColor = 'rgb(39, 240, 188)';
+        }
+      } else if (this.state.message.result === '阴性') {
+        RColor = 'rgba(252, 252, 252, 0.5)';
+        if (this.state.message.ref === '阴性') {
+          LColor = 'rgb(39, 240, 188)';
+        } else if (this.state.message.ref === '阳性') {
+          LColor = 'rgb(140,136,65)';
+        }
+      } else {
+        LColor = 'rgba(252, 252, 252, 0.5)';
+        RColor = 'rgba(252, 252, 252, 0.5)';
+      }
       Tu = (
-        <EnumTu value={this.state.message.ref} width={this.state.width} />
+        <div style={EnumStyle.canBox}>
+          <EnumTu value={this.state.message.ref} width={this.state.width} leftColor={LColor} rightColor={RColor} />
+          <div style={EnumStyle.itemDetails}>
+            <p style={EnumStyle.result}>{this.state.message.result}</p>
+            <p style={EnumStyle.nameReport}>{this.state.message.nameInReport}</p>
+            <p style={EnumStyle.range}>合理范围:{this.state.message.ref}</p>
+            {Warning}
+          </div>
+        </div>
       );
       Chart = (<div></div>);
     } else {
       Tu = (<div></div>);
-      Chart = (<div></div>);
+      Chart = (<div style={EnumStyle.emptyHeight}></div>);
     }
     return (
       <div style={EnumStyle.box}>
         <Header headerType="1" />
         <div style={EnumStyle.item}>
-          <div style={EnumStyle.canBox}>
-            {Tu}
-            <div style={EnumStyle.itemDetails}>
-              <p style={EnumStyle.result}>{this.state.message.result}</p>
-              <p style={EnumStyle.nameReport}>{this.state.message.nameInReport}</p>
-              <p style={EnumStyle.range}>合理范围:{this.state.message.refLow}-{this.state.message.refHigh}</p>
-            </div>
-          </div>
-          <div style={EnumStyle.bt}><img src={historyBT} alt="" style={EnumStyle.img} /></div>
-          <div style={EnumStyle.chart}>
-            <div className="weightLine"></div>
-            {Chart}
-            <div className="weightLine"></div>
-          </div>
+          {Tu}
+          {HistoryBt}
+          {Chart}
           <div style={EnumStyle.intro}>
             <h2 style={EnumStyle.title}>项目介绍:</h2>
             <p style={EnumStyle.content}>{this.state.message.intro}</p>

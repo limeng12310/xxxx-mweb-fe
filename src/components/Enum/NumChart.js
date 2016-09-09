@@ -9,53 +9,6 @@ import 'echarts/lib/component/dataZoom';
 import 'echarts/lib/component/grid';
 import itemWg from './itemWg.png';
 class NumChart extends React.Component {
-/*  componentDidMount() {
-    const num = this.refs.num;
-    const myChart = echarts.init(num);
-    if(this.props.itemChartData.length !== 0) {
-      const option = {
-        tooltip: {
-          trigger: 'axis',
-          position: (pt) => ([pt[0], '1%'])
-        },
-        xAxis: {
-          show: false,
-          type: 'category',
-          boundaryGap: false,
-          data: this.props.itemChartData.checkTime
-        },
-        yAxis: {
-          show: false,
-          type: 'value',
-          boundaryGap: [0, '100%']
-        },
-        dataZoom: [{
-          type: 'inside',
-          start: 90,
-          end: 100
-        }],
-        grid: {
-          top: 30,
-          bottom: 30
-        },
-        series: [
-          {
-            name: '检测值',
-            type: 'line',
-            smooth: true,
-            showSymbol: false,
-            itemStyle: {
-              normal: {
-                color: '#FFF'
-              }
-            },
-            data: this.props.itemChartData.value
-          }
-        ]
-      };
-      myChart.setOption(option);
-    }
-  }*/
   componentDidUpdate() {
     const num = this.refs.num;
     const myChart = echarts.init(num);
@@ -68,8 +21,7 @@ class NumChart extends React.Component {
       }
       const option = {
         tooltip: {
-          trigger: 'axis',
-          position: (pt) => ([pt[0], '1%'])
+          trigger: 'axis'
         },
         xAxis: {
           show: false,
