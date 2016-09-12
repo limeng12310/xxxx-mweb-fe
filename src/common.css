@@ -24,5 +24,4 @@ html{
 a,input,textarea{
   outline:0;
   text-decoration:none;
-  tap-highlight-color:rgba(0,0,0,0);
 }
