@@ -271,7 +271,7 @@ class ReportShow extends React.Component {
               };
               return (
                 <div
-                  data-url={imgId}
+                  data-url={`${config.cdnPrefix}/${imgId}`}
                   key={i}
                   style={Object.assign({}, styles.img, background)}
                   onClick={this.clickPreview}

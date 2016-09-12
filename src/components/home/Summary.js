@@ -32,11 +32,11 @@ const SummaryStyle = {
   SummaryKpiItemCut: {
     fontSize: '0.6rem',
     color: '#f6f6ff',
-    width: '1.33rem',
-    height: '1.33rem',
+    width: '1.413333rem',
+    height: '1.413333rem',
     position: 'absolute',
-    left: '0.4rem',
-    paddingTop: '0.22rem',
+    left: '0.32rem',
+    paddingTop: '0.16rem',
     textAlign: 'center',
     lineHeight: '1rem'
   },
