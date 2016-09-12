@@ -96,7 +96,8 @@ class Enum extends React.Component {
         lineHeight: '0.8rem',
         fontSize: '0.5rem',
         color: 'rgb(252,252,252)',
-        paddingTop: '0.1rem'
+        paddingTop: '0.1rem',
+        marginBottom: '0.2rem'
       },
       content: {
         width: '100%',
@@ -105,7 +106,7 @@ class Enum extends React.Component {
         fontSize: '0.4rem'
       },
       line: {
-        margin: '0.3rem 0'
+        margin: '0.2rem 0'
       },
       item: {
         width: '100%',
@@ -146,6 +147,18 @@ class Enum extends React.Component {
       identifying: {
         marginTop: '0.5rem',
         width: '1.2rem'
+      },
+      describe: {
+        width: '100%',
+        color: '#fff',
+        fontSize: '0.45rem',
+        lineHeight: '0.8rem',
+        marginTop: '0.2rem'
+      },
+      resultBox: {
+        width: '73%',
+        margin: '0 auto',
+        marginTop: '1rem'
       }
     };
     let Tu;
@@ -154,6 +167,9 @@ class Enum extends React.Component {
     let Warning;
     let LColor;
     let RColor;
+    let Intro;
+    let Abnormal;
+    let DescribeResult;
     if (this.state.message.warning === '观察' || this.state.message.warning === '危险') {
       Warning = (
         <p><img src={identifying} alt="" style={EnumStyle.identifying} /></p>
@@ -222,8 +238,35 @@ class Enum extends React.Component {
       );
       Chart = (<div></div>);
     } else {
-      Tu = (<div></div>);
       Chart = (<div style={EnumStyle.emptyHeight}></div>);
+      DescribeResult = (
+        <div style={EnumStyle.resultBox}>
+          <h2 style={EnumStyle.title}>检查结果:</h2>
+          <div className="weightLine"></div>
+          <p style={EnumStyle.describe}>{this.state.message.result}</p>
+        </div>);
+    }
+    if (this.state.message.intro === '') {
+      Intro = (<div></div>);
+    } else {
+      Intro = (<div style={EnumStyle.intro}>
+        <h2 style={EnumStyle.title}>项目介绍:</h2>
+        <div className="weightLine" style={EnumStyle.line}></div>
+        <p style={EnumStyle.content}>{this.state.message.intro}</p>
+        <div className="weightLine" style={EnumStyle.line}></div>
+      </div>);
+    }
+    if (this.state.message.abnormal === '') {
+      Abnormal = (<div></div>);
+    } else {
+      Abnormal = (
+        <div style={EnumStyle.intro}>
+          <h2 style={EnumStyle.title}>临床意义:</h2>
+          <div className="weightLine" style={EnumStyle.line}></div>
+          <p style={EnumStyle.content}>{this.state.message.abnormal}</p>
+          <div className="weightLine" style={EnumStyle.line}></div>
+        </div>
+      );
     }
     return (
       <div style={EnumStyle.box}>
@@ -232,19 +275,11 @@ class Enum extends React.Component {
           {Tu}
           {HistoryBt}
           {Chart}
-          <div style={EnumStyle.intro}>
-            <h2 style={EnumStyle.title}>项目介绍:</h2>
-            <p style={EnumStyle.content}>{this.state.message.intro}</p>
-          </div>
-          <div className="weightLine"></div>
-          <div style={EnumStyle.intro}>
-            <h2 style={EnumStyle.title}>临床意义:</h2>
-            <p style={EnumStyle.content}>{this.state.message.abnormal}</p>
-          </div>
-          <div className="weightLine" style={EnumStyle.line}></div>
+          {DescribeResult}
+          {Intro}
+          {Abnormal}
         </div>
       </div>
-
     );
   }
 }

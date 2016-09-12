@@ -111,9 +111,9 @@
     }
   }
   NumberTu.propTypes = {
-    min: React.PropTypes.number,
-    max: React.PropTypes.number,
-    value: React.PropTypes.number,
+    min: React.PropTypes.string,
+    max: React.PropTypes.string,
+    value: React.PropTypes.string,
     width: React.PropTypes.string
   };
   export default NumberTu;
