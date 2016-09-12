@@ -1,5 +1,5 @@
 import backImg from './example.jpg';
-import addImg from './img/add.png';
+// import addImg from './img/add.png';
 import backgroudDelImg from './img/del.png';
 import imgDel from './img/imgDel.svg';
 
@@ -99,10 +99,11 @@ class PhotosToUpload extends React.Component {
       layOut: {
         marginLeft: '1.5rem',
         marginRight: '1.5rem',
-        marginTop: '0.4rem'
+        marginTop: '0.4rem',
+        height: '100%'
       },
       allImage: {
-        minHeight: 'calc((100% - 2.4rem) - 5rem - 2.76rem)',
+        minHeight: 'calc(100% - 2.76rem)',
         // height: '6.40625rem',
         // overflowY: 'scroll',
         WebkitOverflowScrolling: 'touch',
@@ -152,10 +153,10 @@ class PhotosToUpload extends React.Component {
         height: '2.24rem',
         marginLeft: 'auto',
         marginRight: 'auto',
-        backgroundImage: `url(${addImg})`,
+        // backgroundImage: `url(${addImg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
-        zIndex: 20000
+        zIndex: 200
       },
       delNone: {
         position: 'fixed',

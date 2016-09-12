@@ -3,6 +3,7 @@ import CheckLocationInput from './CheckLocationInput';
 import PhotosToUpload from './PhotosToUpload';
 import boxBackground from './img/background.png';
 import foot from './img/foot.png';
+import add from './img/add.png';
 import Header from './../common/Header';
 
 import config from '../../config';
@@ -143,6 +144,21 @@ class PhotoUploadContainer extends React.Component {
         overflowY: 'auto',
         WebkitOverflowScrolling: 'touch'
       },
+      add: {
+        position: 'fixed',
+        right: 0,
+        left: 0,
+        bottom: '1.01rem',
+        margin: '0.1875rem',
+        width: '2.24rem',
+        height: '2.24rem',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        backgroundImage: `url(${add})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        zIndex: 2000
+      },
       foot: {
         position: 'fixed',
         bottom: 0,
@@ -175,6 +191,7 @@ class PhotoUploadContainer extends React.Component {
               onUserImageDelete={this.handleUserImageDelete}
             />
           </div>
+          <div style={styles.add}></div>
           <div style={styles.foot}></div>
         </div>
       </div>

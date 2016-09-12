@@ -39,8 +39,8 @@ class MessageShow extends React.Component {
         verticalAlign: 'middle',
         float: 'none',
         fontSize: '0.7rem',
-        marginLeft: '-1.28rem',
-        paddingTop: '0.23rem',
+        marginLeft: '-1.32rem',
+        paddingTop: '0.2rem',
         height: '1.33rem',
         width: '1.33rem',
         textAlign: 'center'
