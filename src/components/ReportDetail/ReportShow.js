@@ -83,7 +83,7 @@ class ReportShow extends React.Component {
   clickPreview(e) {
     wx.previewImage({
       current: e.target.getAttribute('data-url'), // 当前显示图片的http链接
-      urls: this.props.messages.imgs.map(img => `${config.cdnPrefix}${img}`) // 需要预览的图片http链接列表
+      urls: this.props.messages.imgs.map(img => `${config.cdnPrefix}/${img}`) // 需要预览的图片http链接列表
     });
   }
   goItemReport(e) {
