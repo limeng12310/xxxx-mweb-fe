@@ -140,7 +140,7 @@ class PhotoUploadContainer extends React.Component {
         marginTop: '1.4rem',
         paddingTop: '1rem',
         textAlign: 'center',
-        overflowY: 'scroll',
+        overflowY: 'auto',
         WebkitOverflowScrolling: 'touch'
       },
       foot: {

@@ -5,6 +5,7 @@
     box: {
       overflowX: 'scroll',
       overflowY: 'hidden',
+      WebkitOverflowScrolling: 'touch',
       width: '100%',
       height: '1rem',
       lineHeight: '1rem'

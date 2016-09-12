@@ -57,7 +57,8 @@ class ReportDetailContainer extends React.Component {
       if (scroH >= Math.floor(lib.flexible.rem * 7.8)) {
         this.setState({
           aaStyle: {
-            overflowY: 'scroll'
+            overflowY: 'auto',
+            WebkitOverflowScrolling: 'touch'
           }
         });
       } else if (scroH < Math.floor(lib.flexible.rem * 7.8)) {
@@ -71,7 +72,8 @@ class ReportDetailContainer extends React.Component {
   }
   handleChangeScroll1() {
     $('#scroll').css({
-      overflowY: 'scroll'
+      overflowY: 'scroll',
+      WebkitOverflowScrolling: 'touch'
     });
     const t = $('#scroll').scrollTop();
     $('#scroll').animate({ scrollTop: t - 2 }, 100);
@@ -102,7 +104,7 @@ class ReportDetailContainer extends React.Component {
         width: '100%',
         height: 'calc(100% - 1.22rem)',
         marginTop: '1.22rem',
-        overflowY: 'scroll',
+        overflowY: 'auto',
         WebkitOverflowScrolling: 'touch'
       }
     };
