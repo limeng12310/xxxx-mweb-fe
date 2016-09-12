@@ -105,6 +105,7 @@ class PhotosToUpload extends React.Component {
         minHeight: 'calc((100% - 2.4rem) - 5rem - 2.76rem)',
         // height: '6.40625rem',
         // overflowY: 'scroll',
+        WebkitOverflowScrolling: 'touch',
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
