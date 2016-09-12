@@ -72,7 +72,8 @@ class Enum extends React.Component {
         background: `url(${enumBg}) no-repeat`,
         backgroundSize: '100% 100%',
         position: 'absolute',
-        overflow: 'auto'
+        overflow: 'auto',
+        WebkitOverflowScrolling: 'touch'
       },
       canBox: {
         width: `${this.state.width}rem`,

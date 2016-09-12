@@ -155,7 +155,7 @@ class PhotosToUpload extends React.Component {
         backgroundImage: `url(${addImg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
-        zIndex: 100
+        zIndex: 20000
       },
       delNone: {
         position: 'fixed',
