@@ -49,7 +49,8 @@ class EnumChart extends React.Component {
           name: '检测值',
           type: 'line',
           smooth: true,
-          showSymbol: false,
+          showSymbol: true,
+          symbolSize: 10,
           itemStyle: {
             normal: {
               color: 'rgb(255,255,255)'
