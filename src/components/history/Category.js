@@ -58,14 +58,14 @@
       let width = 0;
       $(this.refs.container).children('a').each(
         function () {
-          width += (this.offsetWidth + 100);
+          width += (this.offsetWidth + 70);
         });
       width = lib.flexible.px2rem(width);
       $(this.refs.container).css('width', `${width}rem`);
       let width2 = 0;
       $(this.refs.container2).children('a').each(
         function () {
-          width2 += (this.offsetWidth + 120);
+          width2 += (this.offsetWidth + 80);
         });
       width2 = lib.flexible.px2rem(width2);
       $(this.refs.container2).css('width', `${width2}rem`);
