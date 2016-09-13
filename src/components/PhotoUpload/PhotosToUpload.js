@@ -1,5 +1,5 @@
 import backImg from './example.jpg';
-// import addImg from './img/add.png';
+import addImg from './img/add.png';
 import backgroudDelImg from './img/del.png';
 import imgDel from './img/imgDel.svg';
 
@@ -153,7 +153,7 @@ class PhotosToUpload extends React.Component {
         height: '2.24rem',
         marginLeft: 'auto',
         marginRight: 'auto',
-        // backgroundImage: `url(${addImg})`,
+        backgroundImage: `url(${addImg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         zIndex: 200
