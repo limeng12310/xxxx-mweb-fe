@@ -10,7 +10,6 @@ import Header from './../common/Header';
 import config from '../../config';
 import { hashHistory } from 'react-router';
 
-
 class PhotoUploadContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +22,7 @@ class PhotoUploadContainer extends React.Component {
     this.clickAlert = this.clickAlert.bind(this);
     this.clickChange = this.clickChange.bind(this);
     this.clickDelete = this.clickDelete.bind(this);
+    this.wxChooseImgSuccess = this.wxChooseImgSuccess.bind(this);
     this.state = {
       date: '',
       location: '',
@@ -297,6 +297,7 @@ class PhotoUploadContainer extends React.Component {
             />
             <PhotosToUpload
               items={this.state.items}
+              isDelete={this.state.isDelete}
               // imgCount={this.state.count}
               // onUserImageInput={this.handleUserImageInput}
               // onUserImageUpload={this.handleUserImageUpload}
