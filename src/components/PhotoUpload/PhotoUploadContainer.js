@@ -157,7 +157,7 @@ class PhotoUploadContainer extends React.Component {
         backgroundImage: `url(${add})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
-        zIndex: 2000
+        zIndex: 20
       },
       foot: {
         position: 'fixed',
