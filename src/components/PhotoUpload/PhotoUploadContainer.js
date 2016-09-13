@@ -3,7 +3,8 @@ import CheckLocationInput from './CheckLocationInput';
 import PhotosToUpload from './PhotosToUpload';
 import boxBackground from './img/background.png';
 import foot from './img/foot.png';
-import add from './img/add.png';
+import addImg from './img/add.png';
+import backgroudDelImg from './img/del.png';
 import Header from './../common/Header';
 
 import config from '../../config';
@@ -19,12 +20,17 @@ class PhotoUploadContainer extends React.Component {
     this.handleUserImageUpload = this.handleUserImageUpload.bind(this);
     this.handleUserImageDelete = this.handleUserImageDelete.bind(this);
     this.photoSubmit = this.photoSubmit.bind(this);
+    this.clickAlert = this.clickAlert.bind(this);
+    this.clickChange = this.clickChange.bind(this);
+    this.clickDelete = this.clickDelete.bind(this);
     this.state = {
       date: '',
       location: '',
       items: [],
       count: 0,
-      server: []
+      server: [],
+      isDelete: false,
+      i: true
     };
   }
   photoSubmit() {
@@ -120,6 +126,62 @@ class PhotoUploadContainer extends React.Component {
       count: this.state.count - 1
     });
   }
+  clickAlert() {
+    alert('最多只能添加九张图片！');
+  }
+  clickChange() {
+    this.setState({
+      isDelete: false,
+      i: true
+    });
+    wx.chooseImage({
+      count: 9,
+      sizeType: ['original'],
+      sourceType: ['album', 'camera'],
+      success: this.wxChooseImgSuccess,
+      error() {
+        alert('图片选择失败');
+      }
+    });
+  }
+  wxChooseImgSuccess(res) {
+    if ((this.state.count + res.localIds.length) > 9) {
+      alert('最多只能添加九张图片！');
+    } else {
+      this.handleUserImageInput(res.localIds);
+      const serverIds = [];
+      for (let i = 0; i < res.localIds.length; i ++) {
+        wx.uploadImage({
+          localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
+          isShowProgressTips: 1, // 默认为1，显示进度提示
+          success: (() => {
+            const ctx = this;
+            const j = i;
+            return function (cbkRes) {
+              // console.log(cbkRes.serverId);
+              serverIds[j] = cbkRes.serverId;
+              if (serverIds.length === res.localIds.length) {
+                ctx.handleUserImageUpload(serverIds);
+              }
+            };
+          })()
+        });
+      }
+    }
+  }
+  clickDelete() {
+    if (this.state.i) {
+      this.setState({
+        isDelete: true,
+        i: false
+      });
+    } else {
+      this.setState({
+        isDelete: false,
+        i: true
+      });
+    }
+  }
   render() {
     const styles = {
       bg: {
@@ -154,10 +216,40 @@ class PhotoUploadContainer extends React.Component {
         height: '2.24rem',
         marginLeft: 'auto',
         marginRight: 'auto',
-        backgroundImage: `url(${add})`,
+        backgroundImage: `url(${addImg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
-        zIndex: 20
+        zIndex: 2000
+      },
+      delNone: {
+        position: 'fixed',
+        right: 0,
+        left: 0,
+        bottom: '3.53rem',
+        marginTop: '0.3125rem',
+        marginBottom: '0.1875rem',
+        width: '0.7815rem',
+        height: '0.77rem',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        backgroundImage: 'none',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover'
+      },
+      del: {
+        position: 'fixed',
+        right: 0,
+        left: 0,
+        bottom: '3.53rem',
+        marginTop: '0.3125rem',
+        marginBottom: '0.1875rem',
+        width: '0.7815rem',
+        height: '0.77rem',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        backgroundImage: `url(${backgroudDelImg})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover'
       },
       foot: {
         position: 'fixed',
@@ -169,6 +261,26 @@ class PhotoUploadContainer extends React.Component {
         backgroundSize: 'cover'
       }
     };
+    let add;
+    let del;
+    if (this.state.count >= 9) {
+      add = (
+        <div onClick={this.clickAlert} style={styles.add}></div>
+      );
+    } else {
+      add = (
+        <div onClick={this.clickChange} style={styles.add}></div>
+      );
+    }
+    if (this.state.count >= 1) {
+      del = (
+        <div onClick={this.clickDelete} style={styles.del}></div>
+      );
+    } else {
+      del = (
+        <div style={styles.delNone}></div>
+      );
+    }
     return (
       <div>
         <div style={styles.bg}></div>
@@ -185,13 +297,14 @@ class PhotoUploadContainer extends React.Component {
             />
             <PhotosToUpload
               items={this.state.items}
-              imgCount={this.state.count}
-              onUserImageInput={this.handleUserImageInput}
-              onUserImageUpload={this.handleUserImageUpload}
+              // imgCount={this.state.count}
+              // onUserImageInput={this.handleUserImageInput}
+              // onUserImageUpload={this.handleUserImageUpload}
               onUserImageDelete={this.handleUserImageDelete}
             />
           </div>
-          <div style={styles.add}></div>
+          {del}
+          {add}
           <div style={styles.foot}></div>
         </div>
       </div>

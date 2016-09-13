@@ -11,7 +11,7 @@ const SummaryStyle = {
     display: 'flex'
   },
   SummaryIcon: {
-    width: '60%',
+    width: '6rem',
     height: '5rem',
     textAlign: 'center',
     paddingTop: '0.4rem'
@@ -21,7 +21,7 @@ const SummaryStyle = {
   },
   SummaryKpi: {
     paddingTop: '1.6rem',
-    width: '40%'
+    width: '4rem'
   },
   SummaryKpiItem: {
     height: '2rem',
