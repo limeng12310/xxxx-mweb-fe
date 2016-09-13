@@ -8,7 +8,7 @@ class PhotosToUpload extends React.Component {
     super(props);
     // this.clickAlert = this.clickAlert.bind(this);
     // this.clickChange = this.clickChange.bind(this);
-    // his.clickDelete = this.clickDelete.bind(this);
+    // this.clickDelete = this.clickDelete.bind(this);
     this.clickDeleteImage = this.clickDeleteImage.bind(this);
     // this.wxChooseImgSuccess = this.wxChooseImgSuccess.bind(this);
     this.clickPreview = this.clickPreview.bind(this);
@@ -211,7 +211,7 @@ class PhotosToUpload extends React.Component {
                 // display: imgId != null ? 'block' : 'none'
               };
               const displayDel = {
-                display: this.state.isDelete ? 'block' : 'none'
+                display: this.props.isDelete ? 'block' : 'none'
               };
               return (
                 <div style={styles.imgDelBox}>
@@ -243,7 +243,8 @@ PhotosToUpload.propTypes = {
   // onUserImageUpload: React.PropTypes.func,
   onUserImageDelete: React.PropTypes.func,
   // imgCount: React.PropTypes.number,
-  items: React.PropTypes.array
+  items: React.PropTypes.array,
+  isDelete: React.PropTypes.bool
 };
 
 export default PhotosToUpload;
