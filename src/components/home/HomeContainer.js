@@ -73,30 +73,30 @@ class HomeContainer extends React.Component {
     this.setState({
       reportList: newReportList
     });
-    // fetch(`${config.apiPrefix}/reports/${this.state.reportList[index].id}`, {
-    //   method: 'DELETE',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
-    //   .then(response => {
-    //   if (response.status === 200) {
-    //     return response.json();
-    //   }
-    //   throw new Error;
-    //   })
-    //   .then(json => {
-    //     if (json.retCode === 0) {
-    //       alert('成功删除一个报告！');
-    //     } else {
-    //       alert('请求出错！');
-    //     }
-    //   })
-    //   .catch(error => {
-    //     alert('出错啦！');
-    //     console.log(error);
-    //   });
+    fetch(`${config.apiPrefix}/reports/${this.state.reportList[index].id}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        }
+        throw new Error;
+      })
+      .then(json => {
+        if (json.retCode === 0) {
+          alert('成功删除一个报告！');
+        } else {
+          alert('请求出错！');
+        }
+      })
+      .catch(error => {
+        alert('出错啦！');
+        console.log(error);
+      });
   }
   amount() {
     return new Promise((resolve, reject) => {

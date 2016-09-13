@@ -21,11 +21,12 @@ const SummaryStyle = {
   },
   SummaryKpi: {
     paddingTop: '1.6rem',
-    width: '4rem'
+    width: '4rem',
+    margin: 'auto 0.2rem'
   },
   SummaryKpiItem: {
     height: '2rem',
-    textAlign: 'center',
+    // textAlign: 'center',
     marginBottom: '1rem',
     position: 'relative'
   },
@@ -35,7 +36,7 @@ const SummaryStyle = {
     width: '1.413333rem',
     height: '1.413333rem',
     position: 'absolute',
-    left: '0.32rem',
+    // left: '0.32rem',
     paddingTop: '0.16rem',
     textAlign: 'center',
     lineHeight: '1rem'
