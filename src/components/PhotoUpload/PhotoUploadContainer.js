@@ -298,9 +298,6 @@ class PhotoUploadContainer extends React.Component {
             <PhotosToUpload
               items={this.state.items}
               isDelete={this.state.isDelete}
-              // imgCount={this.state.count}
-              // onUserImageInput={this.handleUserImageInput}
-              // onUserImageUpload={this.handleUserImageUpload}
               onUserImageDelete={this.handleUserImageDelete}
             />
           </div>
