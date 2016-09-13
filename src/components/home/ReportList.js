@@ -71,6 +71,11 @@ const ReportItemStyle = {
   Delete: {
     width: '0.6rem',
     marginTop: '0.6rem'
+  },
+  report: {
+    filter: 'alpha(opacity=100)',
+    MozOpacity: 1,
+    opacity: 1
   }
 };
 
@@ -99,16 +104,26 @@ class ReportItem extends React.Component {
             let Year = moment(item.checkTime).format('YY');
             let Month = moment(item.checkTime).format('MM');
             let Day = moment(item.checkTime).format('DD');
+            let close = {};
             if (data[i].status === '返回用户') {
               ClickFunction = () => hashHistory.push({ pathname: '/report-detail', state: { id: item.id } });
+              close = {
+                filter: 'alpha(opacity=100)',
+                MozOpacity: 1,
+                opacity: 1
+              };
             } else {
               ClickFunction = () => { alert('报告正在解读中'); };
+              close = {
+                filter: 'alpha(opacity=60)',
+                MozOpacity: 0.6,
+                opacity: 0.6
+              };
             }
             return (
               <div style={ReportItemStyle.reportItem}>
                 <div style={ReportItemStyle.reportContent}>
-
-                  <div onClick={ClickFunction}>
+                  <div onClick={ClickFunction} style={Object.assign({}, ReportItemStyle.report, close)}>
                     <img src={ReportTu} alt="" style={ReportItemStyle.reportKpi} />
                     <b style={ReportItemStyle.year}>{Year}</b>
                     <div style={ReportItemStyle.Date}>
@@ -118,7 +133,6 @@ class ReportItem extends React.Component {
                     </div>
                     <span style={ReportItemStyle.hospital}>{item.content}</span>
                   </div>
-
                   <div>
                     <img
                       src={DeleteIcon}
