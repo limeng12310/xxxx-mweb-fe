@@ -1,25 +1,17 @@
-import $ from 'jquery';
 import './myinput.css';
 import moment from 'moment';
 
 class CheckTimeInput extends React.Component {
   constructor() {
     super();
-    this.updateRef = this.updateRef.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.clickChange = this.clickChange.bind(this);
     this.state = {
       timeClicked: false
     };
   }
-
-  updateRef(ref) {
-    this.dateInput = ref;
-  }
-
   handleChange(e) {
     this.props.onUserDateInput(
-      // e.target.value
       moment(e.target.value).format('YYYY-MM-DD HH:mm:ss')
     );
   }
@@ -27,8 +19,7 @@ class CheckTimeInput extends React.Component {
     this.setState({
       timeClicked: true
     }, function () {
-      $(this.dateInput).trigger('click'); // blur
-      console.log($(this.dateInput));
+      setTimeout(() => this.refs.datetime.click(), 300);
     });
   }
   render() {
@@ -47,9 +38,6 @@ class CheckTimeInput extends React.Component {
         MozAppearance: 'none',
         msProgressAppearance: 'none',
         WebkitAppearance: 'none'
-        // paddingTop: 8,
-        // paddingBottom: 7,
-        // paddingLeft: 1
       },
       timeInput2: {
         fontSize: '0.625rem',
@@ -63,8 +51,6 @@ class CheckTimeInput extends React.Component {
         msProgressAppearance: 'none',
         WebkitAppearance: 'none',
         paddingLeft: '1rem'
-        // paddingBottom: 7,
-        // paddingLeft: 1
       },
       line: {
         height: '0.03125rem',
@@ -81,7 +67,7 @@ class CheckTimeInput extends React.Component {
         <input
           style={styles.timeInput2}
           type="datetime-local"
-          ref={this.updateRef}
+          ref="datetime"
           onChange={this.handleChange}
         />
       );

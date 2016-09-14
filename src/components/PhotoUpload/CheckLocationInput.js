@@ -25,9 +25,6 @@ class CheckLocationInput extends React.Component {
         MozAppearance: 'none',
         msProgressAppearance: 'none',
         WebkitAppearance: 'none'
-        // paddingTop: 8,
-        // paddingBottom: 7,
-        // paddingLeft: 1
       },
       line: {
         height: '0.03125rem',
