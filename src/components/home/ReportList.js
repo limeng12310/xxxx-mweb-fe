@@ -86,7 +86,9 @@ class ReportItem extends React.Component {
   }
   reportDelete(e) {
     const index = parseInt(e.target.getAttribute('data-index'), 10);
-    this.props.onUserReportDelete(index);
+    if (confirm('确定要删除报告吗？')) {
+      this.props.onUserReportDelete(index);
+    }
   }
   render() {
     const data = this.props.data;
