@@ -4,6 +4,33 @@ import headPhoto from './img/photo.jpg';
 import ButtomBar from '../common/ButtomBar';
 
 class UserProfileContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.changePassword = this.changePassword.bind(this);
+    this.bindEmail = this.bindEmail.bind(this);
+    this.changeEmail = this.changeEmail.bind(this);
+    this.bindPhone = this.bindPhone.bind(this);
+    this.changePhone = this.changePhone.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+  changePassword() {
+    segue.performSegue('changePasswordSegue');
+  }
+  bindEmail() {
+    segue.performSegue('bindEmailSegue');
+  }
+  changeEmail() {
+    segue.performSegue('changeEmailSegue');
+  }
+  bindPhone() {
+    segue.performSegue('bindPhoneSegue');
+  }
+  changePhone() {
+    segue.performSegue('changePhoneSegue');
+  }
+  logout() {
+    segue.performSegue('logoutSegue');
+  }
   render() {
     const data = {
       headPhoto: `url(${headPhoto})`,
@@ -63,27 +90,27 @@ class UserProfileContainer extends React.Component {
         </div>
         <div>
           <ul style={styles.lists}>
-            <li style={styles.list}>
+            <li style={styles.list} onClick={this.changePassword}>
               <div>修改密码</div>
             </li>
             <div className="line"></div>
-            <li style={styles.list}>
+            <li style={styles.list} onClick={this.bindEmail}>
               <div>绑定邮箱</div>
             </li>
             <div className="line"></div>
-            <li style={styles.list}>
+            <li style={styles.list} onClick={this.changeEmail}>
               <div>更换邮箱</div>
             </li>
             <div className="line"></div>
-            <li style={styles.list}>
+            <li style={styles.list} onClick={this.bindPhone}>
               <div>绑定手机</div>
             </li>
             <div className="line"></div>
-            <li style={styles.list}>
+            <li style={styles.list} onClick={this.changePhone}>
               <div>更换手机</div>
             </li>
             <div className="line"></div>
-            <li style={styles.list}>
+            <li style={styles.list} onClick={this.logout}>
               <div>退出登陆</div>
             </li>
           </ul>
