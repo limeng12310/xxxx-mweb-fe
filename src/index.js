@@ -7,6 +7,7 @@ import ReportDetailContainer from './components/ReportDetail/ReportDetailContain
 import PhotoUploadContainer from './components/PhotoUpload/PhotoUploadContainer';
 import History from './components/history/History';
 import Enum from './components/Enum/Enum';
+import UserProfileContainer from './components/UserProfile/UserProfileContainer';
 import config from './config/default';
 
 // react router
@@ -43,6 +44,7 @@ ReactDOM.render((
     </Route>
     <Route path="/history" component={History} />
     <Route path="/photo-upload" component={PhotoUploadContainer} />
+    <Route path="/user-profile" component={UserProfileContainer} />
   </Router>
   ),
   document.getElementById('approot')

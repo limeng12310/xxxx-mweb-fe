@@ -1,10 +1,11 @@
-import CheckTimeInput from './CheckTimeInput';
-import CheckLocationInput from './CheckLocationInput';
-import PhotosToUpload from './PhotosToUpload';
 import boxBackground from './img/background.png';
 import foot from './img/foot.png';
 import addImg from './img/add.png';
 import backgroudDelImg from './img/del.png';
+
+import CheckTimeInput from './CheckTimeInput';
+import CheckLocationInput from './CheckLocationInput';
+import PhotosToUpload from './PhotosToUpload';
 import Header from './../common/Header';
 
 import config from '../../config';
