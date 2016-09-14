@@ -41,13 +41,18 @@ class UserProfileContainer extends React.Component {
         color: '#fff',
         marginLeft: '6.6rem'
       },
-      list: {
-        // height: '9rem',
+      lists: {
         width: '100%',
-        background: '#fff',
-        filter: 'alpha(opacity=20)',
-        MozOpacity: 0.2,
-        opacity: 0.2
+        background: 'rgba(255,255,255,0.1)',
+        listStyle: 'none'
+      },
+      list: {
+        height: '1.25rem',
+        color: '#fff',
+        fontSize: '0.5rem',
+        paddingTop: '0.33rem',
+        paddingBottom: '0.33rem',
+        paddingLeft: '1.25rem'
       }
     };
     return(
@@ -56,7 +61,32 @@ class UserProfileContainer extends React.Component {
           <div style={styles.headPhoto}></div>
           <div style={styles.name}>{data.name}</div>
         </div>
-        <div style={styles.list}>
+        <div>
+          <ul style={styles.lists}>
+            <li style={styles.list}>
+              <div>修改密码</div>
+            </li>
+            <div className="line"></div>
+            <li style={styles.list}>
+              <div>绑定邮箱</div>
+            </li>
+            <div className="line"></div>
+            <li style={styles.list}>
+              <div>更换邮箱</div>
+            </li>
+            <div className="line"></div>
+            <li style={styles.list}>
+              <div>绑定手机</div>
+            </li>
+            <div className="line"></div>
+            <li style={styles.list}>
+              <div>更换手机</div>
+            </li>
+            <div className="line"></div>
+            <li style={styles.list}>
+              <div>退出登陆</div>
+            </li>
+          </ul>
         </div>
         <ButtomBar bottombarType="2" />
       </div>
