@@ -15,7 +15,9 @@ class PhotosToUpload extends React.Component {
   }
   clickDeleteImage(e) {
     const index = parseInt(e.target.getAttribute('data-index'), 10);
-    this.props.onUserImageDelete(index);
+    if (confirm('确定要删除这张图片吗？')) {
+      this.props.onUserImageDelete(index);
+    }
   }
   render() {
     const styles = {

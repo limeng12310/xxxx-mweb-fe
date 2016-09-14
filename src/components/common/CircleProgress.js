@@ -12,19 +12,24 @@
       canvas.beginPath();
       canvas.lineWidth = 2;
       canvas.strokeStyle = 'rgba(235,235,235,0.4)';
-      canvas.arc(x + 3, x + 3, x, 0, Math.PI * 2, false);
+      canvas.arc(x + lib.flexible.px2rem(0.04), x + lib.flexible.px2rem(0.04), x - 2, 0, Math.PI * 2, false);
       canvas.stroke();
       canvas.beginPath();
       canvas.lineWidth = 0.06 * x;
       const sR = x - 1 - 0.03 * x;
       canvas.strokeStyle = '#fff';
-      canvas.arc(x + 3, x + 3, sR, -0.5 * Math.PI, endArc, false);
+      canvas.arc(x + lib.flexible.px2rem(0.04), x + lib.flexible.px2rem(0.04), sR - 2, -0.5 * Math.PI, endArc, false);
       canvas.stroke();
     }
     render() {
       const { x } = this.props;
       return (
-        <canvas id="myCanvas" ref="myCanvas" width={2 * x + 6} height={2 * x + 6} />
+        <canvas
+          id="myCanvas"
+          ref="myCanvas"
+          width={2 * x + lib.flexible.px2rem(0.08)}
+          height={2 * x + lib.flexible.px2rem(0.08)}
+        />
       );
     }
 }
