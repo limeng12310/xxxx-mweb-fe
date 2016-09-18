@@ -8,6 +8,10 @@ class CheckLocationInput extends React.Component {
     this.props.onUserLocationInput(
       e.target.value
     );
+    const HEIGHT = $('body').height();
+    $(window).resize(() => {
+      $('body').height(HEIGHT);
+    });
   }
   render() {
     const styles = {
