@@ -89,16 +89,6 @@ class PhotoUploadContainer extends React.Component {
     });
     $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
   }
-  // handleUserImageInput() {
-  //   this.setState({
-  //     items: [
-  //       ...this.state.items,
-  //       ''
-  //     ],
-  //     count: this.state.count + 1
-  //   });
-  // }
-  // handleUserImageUpload = (serverIds) => {
   handleUserImageUpload(serverIds) {
     this.setState({
       server: [
@@ -207,9 +197,9 @@ class PhotoUploadContainer extends React.Component {
         WebkitOverflowScrolling: 'touch'
       },
       add: {
-        position: 'fixed',
-        right: 0,
+        position: 'absolute',
         left: 0,
+        right: 0,
         bottom: '1.01rem',
         margin: '0.1875rem',
         width: '2.24rem',
@@ -220,14 +210,16 @@ class PhotoUploadContainer extends React.Component {
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         zIndex: 2000
+        /* ,
+        marginTop: '14.35rem'*/
       },
       delNone: {
-        position: 'fixed',
+        /* position: 'fixed',
         right: 0,
         left: 0,
         bottom: '3.53rem',
         marginTop: '0.3125rem',
-        marginBottom: '0.1875rem',
+        marginBottom: '0.1875rem', */
         width: '0.7815rem',
         height: '0.77rem',
         marginLeft: 'auto',
@@ -237,10 +229,10 @@ class PhotoUploadContainer extends React.Component {
         backgroundSize: 'cover'
       },
       del: {
-        position: 'fixed',
+        /* position: 'fixed',
         right: 0,
         left: 0,
-        bottom: '3.53rem',
+        bottom: '3.53rem', */
         marginTop: '0.3125rem',
         marginBottom: '0.1875rem',
         width: '0.7815rem',
@@ -252,13 +244,20 @@ class PhotoUploadContainer extends React.Component {
         backgroundSize: 'cover'
       },
       foot: {
-        position: 'fixed',
+        position: 'absolute',
         bottom: 0,
         width: '100%',
         height: '1.5rem',
         backgroundImage: `url(${foot})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover'
+      },
+      addBox: {
+        width: '100%',
+        height: '4.5rem',
+        position: 'absolute',
+        left: 0,
+        bottom: 0
       }
     };
     let add;
@@ -301,9 +300,11 @@ class PhotoUploadContainer extends React.Component {
               onUserImageDelete={this.handleUserImageDelete}
             />
           </div>
-          {del}
-          {add}
-          <div style={styles.foot}></div>
+          <div style={styles.addBox}>
+            {del}
+            {add}
+            <div style={styles.foot}></div>
+          </div>
         </div>
       </div>
     );
