@@ -78,6 +78,10 @@ class PhotoUploadContainer extends React.Component {
   }
   handleUserLocationInput(location) {
     this.setState({ location });
+    const HEIGHT = $('#scroll').height();
+    $(window).resize(() => {
+      $('#scroll').height(HEIGHT);
+    });
   }
   handleUserImageInput(imgIds) {
     this.setState({
