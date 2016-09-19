@@ -16,6 +16,7 @@ class ReportDetailContainer extends React.Component {
       aaStyle: {},
       message: {
         checkTime: '',
+        location: '',
         normal: 0,
         warning: 0,
         danger: 0,

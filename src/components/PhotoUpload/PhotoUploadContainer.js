@@ -50,6 +50,7 @@ class PhotoUploadContainer extends React.Component {
         },
         body: JSON.stringify({
           checkTime: this.state.date, // '2016-04-29 11:37:45'
+          checkAddr: this.state.location,
           reportType: '图片', // '图片'
           reportValues: this.state.server // ['...', ... ] //图片报告为mediaId
         })
