@@ -14,22 +14,22 @@ class UserProfileContainer extends React.Component {
     this.logout = this.logout.bind(this);
   }
   changePassword() {
-    segue.performSegue('changePasswordSegue');
+    // segue.performSegue('changePasswordSegue');
   }
   bindEmail() {
-    segue.performSegue('bindEmailSegue');
+    // segue.performSegue('bindEmailSegue');
   }
   changeEmail() {
-    segue.performSegue('changeEmailSegue');
+    // segue.performSegue('changeEmailSegue');
   }
   bindPhone() {
-    segue.performSegue('bindPhoneSegue');
+    // segue.performSegue('bindPhoneSegue');
   }
   changePhone() {
-    segue.performSegue('changePhoneSegue');
+    // segue.performSegue('changePhoneSegue');
   }
   logout() {
-    segue.performSegue('logoutSegue');
+    // segue.performSegue('logoutSegue');
   }
   render() {
     const data = {
@@ -82,7 +82,7 @@ class UserProfileContainer extends React.Component {
         paddingLeft: '1.25rem'
       }
     };
-    return(
+    return (
       <div style={styles.bg}>
         <div style={styles.user}>
           <div style={styles.headPhoto}></div>
