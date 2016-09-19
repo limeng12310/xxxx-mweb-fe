@@ -38,11 +38,12 @@ class MessageShow extends React.Component {
         display: 'inline-block',
         verticalAlign: 'middle',
         float: 'none',
-        fontSize: '0.7rem',
+        fontSize: '0.6rem',
         marginLeft: '-1.32rem',
-        paddingTop: '0.2rem',
+        // paddingTop: '0.2rem',
         height: '1.33rem',
         width: '1.33rem',
+        lineHeight: '1.33rem',
         textAlign: 'center'
       },
       stan: {
@@ -70,6 +71,14 @@ class MessageShow extends React.Component {
       const sum = this.props.messages.normal + observe;
       const normalPercent = normal / sum;
       const observePercent = observe / sum;
+      let checkAdress;
+      if (this.props.messages.location === null ||
+        typeof (this.props.messages.location) === 'undefined' ||
+        this.props.messages.location === '') {
+        checkAdress = '';
+      } else {
+        checkAdress = this.props.messages.location;
+      }
       messageBox = (
         <div style={styles.box}>
           <div style={styles.boxLeft}>
@@ -85,7 +94,7 @@ class MessageShow extends React.Component {
             </div>
           </div>
           <div style={styles.boxRight}>
-            <div style={styles.location}>中日协和医院</div>
+            <div style={styles.location}>{checkAdress}</div>
             <div style={styles.date}>{this.props.messages.checkTime.substring(0, 10)}</div>
           </div>
         </div>

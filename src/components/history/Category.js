@@ -3,7 +3,7 @@
  */
   const CategoryStyle = {
     box: {
-      overflowX: 'scroll',
+      overflowX: 'auto',
       overflowY: 'hidden',
       WebkitOverflowScrolling: 'touch',
       width: '100%',
@@ -12,12 +12,16 @@
     },
     boxIn: {
       height: '100%',
-      width: '100%'
+      width: '100%',
+      display: 'flex',
+      overflow: 'auto',
+      flexFlow: 'column wrap'
     },
     item: {
-      marginRight: '0.5rem',
-      marginLeft: '0.5rem',
-      float: 'left',
+      paddingRight: '0.5rem',
+      paddingLeft: '0.5rem',
+      height: '100%',
+      // float: 'left',
       fontSize: '0.5rem',
       textDecoration: 'none',
       color: '#FFF',
@@ -29,9 +33,10 @@
       opacity: 0.6
     },
     littleItem: {
-      marginRight: '0.8rem',
-      marginLeft: '0.7rem',
-      float: 'left',
+      paddingRight: '0.5rem',
+      paddingLeft: '0.5rem',
+      height: '100%',
+      // float: 'left',
       fontSize: '0.45rem',
       textDecoration: 'none',
       color: '#FFF',
@@ -54,22 +59,22 @@
       this.clickChangeOne = this.clickChangeOne.bind(this);
       this.clickChangeTwo = this.clickChangeTwo.bind(this);
     }
-    componentWillReceiveProps() {
-      let width = 0;
-      $(this.refs.container).children('a').each(
-        function () {
-          width += (this.offsetWidth + 70);
-        });
-      width = lib.flexible.px2rem(width);
-      $(this.refs.container).css('width', `${width}rem`);
-      let width2 = 0;
-      $(this.refs.container2).children('a').each(
-        function () {
-          width2 += (this.offsetWidth + 80);
-        });
-      width2 = lib.flexible.px2rem(width2);
-      $(this.refs.container2).css('width', `${width2}rem`);
-    }
+    // componentWillReceiveProps() {
+    //   let width = 0;
+    //   $(this.refs.container).children('a').each(
+    //     function () {
+    //       width += (this.offsetWidth + 70);
+    //     });
+    //   width = lib.flexible.px2rem(width);
+    //   $(this.refs.container).css('width', `${width}rem`);
+    //   let width2 = 0;
+    //   $(this.refs.container2).children('a').each(
+    //     function () {
+    //       width2 += (this.offsetWidth + 80);
+    //     });
+    //   width2 = lib.flexible.px2rem(width2);
+    //   $(this.refs.container2).css('width', `${width2}rem`);
+    // }
     clickChangeOne(e) {
       this.setState({
         isChoosenOne: parseInt(e.target.getAttribute('data-index'), 10),
@@ -86,9 +91,6 @@
       );
     }
     render() {
-      // let containerOne;
-      // let containerTwo;
-      // if(this.props.itemListOne)
       return (
         <div>
           <div className="weightLine"></div>

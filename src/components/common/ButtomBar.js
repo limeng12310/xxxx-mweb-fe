@@ -107,7 +107,10 @@ class ButtomBar extends React.Component {
             <img src={history} alt="" style={ButtomBarStyle.icon} />
             <span style={ButtomBarStyle.iconFont}>历史</span>
           </div>
-          <div style={Object.assign({}, ButtomBarStyle.barItem, barItemThree)}>
+          <div
+            style={Object.assign({}, ButtomBarStyle.barItem, barItemThree)}
+            onClick={() => hashHistory.push('/user-profile')}
+          >
             <img src={user} alt="" style={ButtomBarStyle.icon} />
             <span style={ButtomBarStyle.iconFont}>用户</span>
           </div>
