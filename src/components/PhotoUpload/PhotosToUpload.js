@@ -75,8 +75,6 @@ class PhotosToUpload extends React.Component {
             this.props.items.map((imgId, i) => {
               const background = {
                 backgroundImage: `url(${imgId})`
-                // backgroundImage: `url(${backImg})`
-                // display: imgId != null ? 'block' : 'none'
               };
               const displayDel = {
                 display: this.props.isDelete ? 'block' : 'none'

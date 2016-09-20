@@ -97,7 +97,7 @@ class Enum extends React.Component {
         lineHeight: '0.8rem',
         fontSize: '0.5rem',
         color: 'rgb(252,252,252)',
-        paddingTop: '0.1rem',
+        paddingTop: '0.2rem',
         marginBottom: '0.2rem'
       },
       content: {

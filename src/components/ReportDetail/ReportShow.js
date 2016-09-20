@@ -17,7 +17,6 @@ class ReportShow extends React.Component {
   componentDidMount() {
     $('#reportScroll').scroll(() => {
       const reportScrollH = $('#reportScroll').scrollTop();
-      // console.log(reportScrollH);
       if (reportScrollH <= 0) {
         this.props.changeScroll1();
       } else if (reportScrollH > 0) {
@@ -26,7 +25,6 @@ class ReportShow extends React.Component {
     });
     $('#imageScroll').scroll(() => {
       const imageScrollH = $('#imageScroll').scrollTop();
-      // console.log(imageScrollH);
       if (imageScrollH <= 0) {
         this.props.changeScroll1();
       } else if (imageScrollH > 0) {
@@ -43,17 +41,12 @@ class ReportShow extends React.Component {
     });
     $('#tabName1').css({
       filter: 'alpha(opacity=100)',
-      // Firefox私有，透明度50%
       MozOpacity: 1,
-      // 其他，透明度50%
       opacity: 1
     });
     $('#tabName2').css({
-      // IE滤镜，透明度50%
       filter: 'alpha(opacity=60)',
-      // Firefox私有，透明度50%
       MozOpacity: 0.6,
-      // 其他，透明度50%
       opacity: 0.6
     });
   }
@@ -92,7 +85,6 @@ class ReportShow extends React.Component {
   render() {
     const styles = {
       nav: {
-        // position: 'absolute',position: 'fixed',
         display: 'flex',
         fontSize: '0.533333rem',
         height: '0.94rem',
@@ -107,11 +99,8 @@ class ReportShow extends React.Component {
       inactiveMenu: {
         fontSize: '0.666667rem',
         color: '#fff',
-        // IE滤镜，透明度50%
         filter: 'alpha(opacity=60)',
-        // Firefox私有，透明度50%
         MozOpacity: 0.6,
-        // 其他，透明度50%
         opacity: 0.6,
         width: '50%',
         textAlign: 'center'
@@ -122,7 +111,6 @@ class ReportShow extends React.Component {
         minHeight: 'calc(100% - 7.8rem - 0.94rem)',
         // 图片自适应屏幕大小
         position: 'absolute',
-        // backgroundPosition: 'center',
         backgroundSize: 'cover',
         display: 'flex',
         justifyContent: 'center',
@@ -137,7 +125,6 @@ class ReportShow extends React.Component {
         minHeight: 'calc(100% - 7.8rem - 0.94rem)',
         // 图片自适应屏幕大小
         position: 'absolute',
-        // backgroundPosition: 'center',
         backgroundSize: 'cover',
         display: 'flex',
         justifyContent: 'center',
@@ -147,14 +134,9 @@ class ReportShow extends React.Component {
         maxHeight: 'calc(100% - 0.92rem)'
       },
       box: {
-        // height: '100%',
         width: '100%',
-        // backgroundImage: `url(${bottomBackground})`,
         minHeight: 'calc(100% - 7.8rem - 0.94rem)',
         marginTop: '1rem',
-        // 图片自适应屏幕大小
-        // position: 'absolute',
-        // backgroundPosition: 'center',
         display: 'flex',
         justifyContent: 'center',
         overflowY: 'hidden',
@@ -163,7 +145,6 @@ class ReportShow extends React.Component {
       },
       leftBox: {
         width: '30%',
-        // marginTop: '1.333333rem',
         marginLeft: '1.2rem',
         fontSize: '0.533333rem',
         color: '#9C9C9C',
@@ -171,7 +152,6 @@ class ReportShow extends React.Component {
       },
       rightBox: {
         width: '70%',
-        // marginTop: '1.333333rem',
         fontSize: '0.533333rem',
         color: '#9C9C9C',
         listStyle: 'none',
@@ -179,18 +159,12 @@ class ReportShow extends React.Component {
       },
       leftList: {
         marginBottom: '0.8rem'
-        // borderWidth: 2,
-        // borderStyle: 'solid',
-        // borderRadius: 20,
-        // display: 'table'
       },
       rightList: {
         marginBottom: '0.7rem'
       },
       allImage: {
         minHeight: '6.40625rem',
-        // height: '6.40625rem',
-        // overflowY: 'scroll',
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
@@ -207,7 +181,6 @@ class ReportShow extends React.Component {
         borderStyle: 'solid',
         borderColor: '#D7D7D7',
         borderRadius: '0.178125rem',
-        // backgroundImage: `url(${backImg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover'
       }

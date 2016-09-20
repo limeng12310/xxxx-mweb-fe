@@ -150,7 +150,6 @@ class PhotoUploadContainer extends React.Component {
           success: (() => {
             const ctx = this;
             return function (cbkRes) {
-              // console.log(cbkRes.serverId);
               serverIds[j] = cbkRes.serverId;
               if (serverIds.length === res.localIds.length) {
                 ctx.handleUserImageUpload(serverIds);
@@ -212,16 +211,8 @@ class PhotoUploadContainer extends React.Component {
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         zIndex: 2000
-        /* ,
-        marginTop: '14.35rem'*/
       },
       delNone: {
-        /* position: 'fixed',
-        right: 0,
-        left: 0,
-        bottom: '3.53rem',
-        marginTop: '0.3125rem',
-        marginBottom: '0.1875rem', */
         width: '0.7815rem',
         height: '0.77rem',
         marginLeft: 'auto',
@@ -231,10 +222,6 @@ class PhotoUploadContainer extends React.Component {
         backgroundSize: 'cover'
       },
       del: {
-        /* position: 'fixed',
-        right: 0,
-        left: 0,
-        bottom: '3.53rem', */
         marginTop: '0.3125rem',
         marginBottom: '0.1875rem',
         width: '0.7815rem',
