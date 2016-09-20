@@ -38,7 +38,7 @@ class MessageShow extends React.Component {
         display: 'inline-block',
         verticalAlign: 'middle',
         float: 'none',
-        fontSize: '0.7rem',
+        fontSize: '0.6rem',
         marginLeft: '-1.32rem',
         paddingTop: '0.2rem',
         height: '1.33rem',
