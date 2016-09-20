@@ -143,12 +143,12 @@ class PhotoUploadContainer extends React.Component {
       this.handleUserImageInput(res.localIds);
       const serverIds = [];
       for (let i = 0; i < res.localIds.length; i ++) {
+        const j = i;
         wx.uploadImage({
           localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
           isShowProgressTips: 1, // 默认为1，显示进度提示
           success: (() => {
             const ctx = this;
-            const j = i;
             return function (cbkRes) {
               // console.log(cbkRes.serverId);
               serverIds[j] = cbkRes.serverId;
