@@ -122,6 +122,14 @@ class ReportItem extends React.Component {
                 opacity: 0.6
               };
             }
+            let checkAdress;
+            if (item.checkAddr === null ||
+              typeof (item.checkAddr) === 'undefined' ||
+              item.checkAddr === '') {
+              checkAdress = '';
+            } else {
+              checkAdress = item.checkAddr;
+            }
             return (
               <div style={ReportItemStyle.reportItem}>
                 <div style={ReportItemStyle.reportContent}>
@@ -133,7 +141,7 @@ class ReportItem extends React.Component {
                       <span style={ReportItemStyle.diagonal}></span>
                       <b style={ReportItemStyle.month}>{Day}</b>
                     </div>
-                    <span style={ReportItemStyle.hospital}>{item.content}</span>
+                    <span style={ReportItemStyle.hospital}>{checkAdress}</span>
                   </div>
                   <div>
                     <img
