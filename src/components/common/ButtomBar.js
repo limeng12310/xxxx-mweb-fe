@@ -108,7 +108,7 @@ class ButtomBar extends React.Component {
             <span style={ButtomBarStyle.iconFont}>历史</span>
           </div>
           {
-            CORDOVA_ENV === 'true' ? (
+            CORDOVA_ENV === 'true' ? (            // eslint-disable-line
               <div
                 style={Object.assign({}, ButtomBarStyle.barItem, barItemThree)}
                 onClick={() => hashHistory.push('/user-profile')}
