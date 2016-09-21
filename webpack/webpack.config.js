@@ -43,7 +43,8 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      ENV: JSON.stringify('default')
+      ENV: JSON.stringify('default'),
+      CORDOVA_ENV: process.env.CORDOVA_ENV ? JSON.stringify('true') : JSON.stringify('false')
     })
   ],
   module: {
