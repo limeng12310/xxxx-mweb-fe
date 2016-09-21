@@ -14,6 +14,7 @@ class ReportDetailContainer extends React.Component {
     this.handleGoItemReport = this.handleGoItemReport.bind(this);
     this.state = {
       aaStyle: {},
+      location: '',
       message: {
         checkTime: '',
         location: '',
@@ -27,6 +28,9 @@ class ReportDetailContainer extends React.Component {
   }
   componentWillMount() {
     const reportId = this.props.location.state.id;
+    this.setState({
+      location: this.props.location.state.location
+    });
     if (!reportId) {
       return;
     }
@@ -114,7 +118,7 @@ class ReportDetailContainer extends React.Component {
         <div style={styles.container}>
           <Header headerType="1" />
           <div style={styles.scrollBox} id="scroll">
-            <MessageShow messages={this.state.message} />
+            <MessageShow messages={this.state.message} location={this.state.location} />
             <ReportShow
               messages={this.state.message}
               scrollStyle={this.state.aaStyle}

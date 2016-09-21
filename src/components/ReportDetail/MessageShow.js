@@ -72,12 +72,12 @@ class MessageShow extends React.Component {
       const normalPercent = normal / sum;
       const observePercent = observe / sum;
       let checkAdress;
-      if (this.props.messages.location === null ||
-        typeof (this.props.messages.location) === 'undefined' ||
-        this.props.messages.location === '') {
+      if (this.props.location === null ||
+        typeof (this.props.location) === 'undefined' ||
+        this.props.location === '') {
         checkAdress = '';
       } else {
-        checkAdress = this.props.messages.location;
+        checkAdress = this.props.location;
       }
       messageBox = (
         <div style={styles.box}>
@@ -109,7 +109,8 @@ class MessageShow extends React.Component {
 }
 
 MessageShow.propTypes = {
-  messages: React.PropTypes.object
+  messages: React.PropTypes.object,
+  location: React.PropTypes.string
 };
 
 export default MessageShow;

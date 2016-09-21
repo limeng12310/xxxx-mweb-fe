@@ -88,7 +88,7 @@ class HomeContainer extends React.Component {
       })
       .then(json => {
         if (json.retCode === 0) {
-          alert('成功删除一个报告！');
+          // alert('成功删除一个报告！');
         } else {
           alert('请求出错！');
         }
