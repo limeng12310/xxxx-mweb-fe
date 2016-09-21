@@ -17,7 +17,7 @@ module.exports = {
   },
   debug: true,
   output: {
-    path: path.join(__dirname, '../dist'),
+    path: path.join(__dirname, '../build'),
     filename: '[name].[hash:8].js',
     publicPath: '/'
   },
