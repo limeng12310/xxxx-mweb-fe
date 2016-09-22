@@ -17,7 +17,7 @@ class MessageShow extends React.Component {
         paddingLeft: '1.3rem'
       },
       boxRight: {
-        paddingRight: '1.386667rem',
+        paddingRight: '1rem',
         paddingTop: '2.0rem',
         width: '5.4rem'
       },
@@ -40,7 +40,6 @@ class MessageShow extends React.Component {
         float: 'none',
         fontSize: '0.6rem',
         marginLeft: '-1.32rem',
-        // paddingTop: '0.2rem',
         height: '1.33rem',
         width: '1.33rem',
         lineHeight: '1.33rem',
@@ -55,13 +54,18 @@ class MessageShow extends React.Component {
       location: {
         fontSize: '0.43rem',
         color: '#fff',
-        float: 'right'
+        float: 'right',
+        width: '4rem',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis'
       },
       date: {
         fontSize: '0.65rem',
         fontWeight: 700,
         color: '#fff',
-        float: 'right'
+        float: 'right',
+        width: '4rem'
       }
     };
     let messageBox;
