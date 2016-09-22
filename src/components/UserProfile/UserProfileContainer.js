@@ -29,7 +29,7 @@ class UserProfileContainer extends React.Component {
     segue.performSegue('changePhoneSegue');
   }
   logout() {
-    segue.performSegue('logoutSegue');
+    segue.performSegue('unwindToLogin');
   }
   render() {
     const data = {
