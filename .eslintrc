@@ -5,7 +5,8 @@
     "React": true,
     "wx": true,
     "$": true,
-    "lib": true
+    "lib": true,
+    "segue": true
   },
   "rules": {
     "max-len": [ "error", 120 ],
