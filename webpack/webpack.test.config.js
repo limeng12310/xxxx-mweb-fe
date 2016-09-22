@@ -2,6 +2,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -33,9 +34,11 @@ module.exports = {
       filename: 'index.html',
       chunks: ['index']
     }),
+    new CopyWebpackPlugin([
+      { from: './assets/' }
+    ]),
     new webpack.ProvidePlugin({
-      React: 'react',
-      $: 'jquery'
+      React: 'react'
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),

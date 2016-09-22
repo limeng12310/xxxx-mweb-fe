@@ -10,6 +10,8 @@ module.exports = {
     home: [
       'webpack-hot-middleware/client',
       'whatwg-fetch',
+      'zepto/src/zepto',
+      'zepto/src/event',
       './src/index.js'
     ],
     index: [
@@ -40,8 +42,7 @@ module.exports = {
       { from: './assets/' }
     ]),
     new webpack.ProvidePlugin({
-      React: 'react',
-      $: 'jquery'
+      React: 'react'
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
