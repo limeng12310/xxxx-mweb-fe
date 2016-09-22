@@ -27,7 +27,7 @@ test2:
   script:
   - npm install
   - node_modules/.bin/webpack --config webpack/webpack.test.config.js
-  - rsync -avzP dist/ root@test.thorgene.com:/srv/docker/thorgene-mweb-nginx/html/
+  - rsync -avzP build/ root@test.thorgene.com:/srv/docker/thorgene-mweb-nginx/html/
   cache:
     key: "$CI_BUILD_REF_NAME"
     paths:
