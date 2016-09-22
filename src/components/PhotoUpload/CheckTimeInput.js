@@ -19,7 +19,7 @@ class CheckTimeInput extends React.Component {
     this.setState({
       timeClicked: true
     }, function () {
-      setTimeout(() => this.refs.datetime.click(), 300);
+      setTimeout(() => this.refs.datetime.click(), 800);
     });
   }
   render() {
@@ -73,12 +73,18 @@ class CheckTimeInput extends React.Component {
       );
     } else {
       input = (
-        <input
+        // <input
+        //   style={styles.timeInput1}
+        //   type="text"
+        //   placeholder="请选择检查时间"
+        //   onTouchTap={this.clickChange}
+        // />
+        <div
           style={styles.timeInput1}
-          type="text"
-          placeholder="请选择检查时间"
-          onClick={this.clickChange}
-        />
+          onTouchTap={this.clickChange}
+        >
+          请选择检查时间
+        </div>
       );
     }
 

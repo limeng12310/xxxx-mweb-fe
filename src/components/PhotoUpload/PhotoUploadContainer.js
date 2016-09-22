@@ -253,16 +253,16 @@ class PhotoUploadContainer extends React.Component {
     let del;
     if (this.state.count >= 9) {
       add = (
-        <div onClick={this.clickAlert} style={styles.add}></div>
+        <div onTouchTap={this.clickAlert} style={styles.add}></div>
       );
     } else {
       add = (
-        <div onClick={this.clickChange} style={styles.add}></div>
+        <div onTouchTap={this.clickChange} style={styles.add}></div>
       );
     }
     if (this.state.count >= 1) {
       del = (
-        <div onClick={this.clickDelete} style={styles.del}></div>
+        <div onTouchTap={this.clickDelete} style={styles.del}></div>
       );
     } else {
       del = (
