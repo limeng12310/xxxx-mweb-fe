@@ -18,7 +18,7 @@ const ReportItemStyle = {
     width: '100%',
     height: '1.6rem',
     display: 'flex',
-    justifyContent: 'space-around'
+    padding: '0 0.6rem'
   },
   reportItem: {
     width: '100%',
@@ -66,7 +66,13 @@ const ReportItemStyle = {
   },
   hospital: {
     color: '#fcfcfc',
-    fontSize: '0.3rem'
+    fontSize: '0.4rem',
+    display: 'block',
+    width: '3rem',
+    margin: '0 0.3rem',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis'
   },
   Delete: {
     width: '0.6rem',
@@ -108,7 +114,8 @@ class ReportItem extends React.Component {
             let Day = moment(item.checkTime).format('DD');
             let close = {};
             if (data[i].status === '返回用户') {
-              ClickFunction = () => hashHistory.push({ pathname: '/report-detail', state: { id: item.id } });
+              ClickFunction = () => hashHistory.push({ pathname: '/report-detail',
+                state: { id: item.id, location: item.checkAddr } });
               close = {
                 filter: 'alpha(opacity=100)',
                 MozOpacity: 1,
@@ -141,8 +148,8 @@ class ReportItem extends React.Component {
                       <span style={ReportItemStyle.diagonal}></span>
                       <b style={ReportItemStyle.month}>{Day}</b>
                     </div>
-                    <span style={ReportItemStyle.hospital}>{checkAdress}</span>
                   </div>
+                  <span onClick={ClickFunction} style={ReportItemStyle.hospital}>{checkAdress}</span>
                   <div>
                     <img
                       src={DeleteIcon}
