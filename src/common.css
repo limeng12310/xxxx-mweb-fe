@@ -25,3 +25,9 @@ a,input,textarea{
   outline:0;
   text-decoration:none;
 }
+
+.leftSelect{
+  border: 0.026667rem solid;
+  border-radius: 0.026667rem;
+  display: table;
+}

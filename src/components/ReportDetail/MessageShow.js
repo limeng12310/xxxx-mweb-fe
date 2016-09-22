@@ -1,6 +1,27 @@
 import CircleProgress from './../common/CircleProgress';
 
 class MessageShow extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  componentDidMount(){
+    let handleDom = this.refs.handleDom;
+    let handleDomHeight = lib.flexible.rem2px(7.8);
+    $(handleDom).swipeUp(e =>{
+      if($('#scroll').scrollTop()<=handleDomHeight){
+        this.props.changeScrollUp();
+        //$('#reportScroll').css('overflow','auto');
+        //$('#imageScroll').css('overflow','auto');
+      }
+    })
+    $(handleDom).swipeDown(e =>{
+      if($('#scroll').scrollTop()<handleDomHeight){
+        this.props.changeScrollDown();
+        //$('#reportScroll').css('overflow','auto');
+        //$('#imageScroll').css('overflow','auto');
+      }
+    })
+  }
   render() {
     const x = lib.flexible.rem * 0.67;
     const styles = {
@@ -80,7 +101,7 @@ class MessageShow extends React.Component {
         checkAdress = this.props.messages.location;
       }
       messageBox = (
-        <div style={styles.box}>
+        <div style={styles.box} ref="handleDom">
           <div style={styles.boxLeft}>
             <div style={styles.circleBox}>
               <div style={styles.circle}><CircleProgress per={normalPercent} x={x} /></div>
@@ -101,7 +122,7 @@ class MessageShow extends React.Component {
       );
     } else {
       messageBox = (
-        <div style={styles.box}></div>
+        <div style={styles.box} ref="handleDom"></div>
       );
     }
     return messageBox;
@@ -109,7 +130,9 @@ class MessageShow extends React.Component {
 }
 
 MessageShow.propTypes = {
-  messages: React.PropTypes.object
+  messages: React.PropTypes.object,
+  changeScrollUp: React.PropTypes.func.isRequired,
+  changeScrollDown: React.PropTypes.func.isRequired,
 };
 
 export default MessageShow;

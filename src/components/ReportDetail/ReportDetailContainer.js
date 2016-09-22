@@ -10,6 +10,8 @@ class ReportDetailContainer extends React.Component {
   constructor(props) {
     super(props);
     this.handleChangeScroll1 = this.handleChangeScroll1.bind(this);
+    this.handleChangeScrollUp = this.handleChangeScrollUp.bind(this);
+    this.handleChangeScrollDown = this.handleChangeScrollDown.bind(this);
     this.handleChangeScroll2 = this.handleChangeScroll2.bind(this);
     this.handleGoItemReport = this.handleGoItemReport.bind(this);
     this.state = {
@@ -52,24 +54,24 @@ class ReportDetailContainer extends React.Component {
       });
   }
   componentDidMount() {
-    $('#scroll').scroll(() => {
-      const scroH = $('#scroll').scrollTop();
-      // console.log(scroH);
-      if (scroH >= Math.floor(lib.flexible.rem * 7.8)) {
-        this.setState({
-          aaStyle: {
-            overflowY: 'auto',
-            WebkitOverflowScrolling: 'touch'
-          }
-        });
-      } else if (scroH < Math.floor(lib.flexible.rem * 7.8)) {
-        this.setState({
-          aaStyle: {
-            overflowY: 'hidden'
-          }
-        });
-      }
-    });
+    // $('#scroll').scroll(() => {
+    //   const scroH = $('#scroll').scrollTop();
+    //   // console.log(scroH);
+    //   if (scroH >= Math.floor(lib.flexible.rem * 7.8)) {
+    //     this.setState({
+    //       aaStyle: {
+    //         overflowY: 'auto',
+    //         WebkitOverflowScrolling: 'touch'
+    //       }
+    //     });
+    //   } else if (scroH < Math.floor(lib.flexible.rem * 7.8)) {
+    //     this.setState({
+    //       aaStyle: {
+    //         overflowY: 'hidden'
+    //       }
+    //     });
+    //   }
+    // });
   }
   handleChangeScroll1() {
     $('#scroll').css({
@@ -78,6 +80,46 @@ class ReportDetailContainer extends React.Component {
     });
     const t = $('#scroll').scrollTop();
     $('#scroll').animate({ scrollTop: t - 2 }, 100);
+  }
+
+  fx( fn , begin , end ){
+
+  //  渐出特效
+  this.easeOut = (t,b,c,d) =>{
+    return -c *(t /= d)*(t-2) + b;
+  }
+
+  let options = arguments[3] || {};
+  let duration = options.duration || 500;
+  let ease = options.ease || this.easeOut;
+
+  let startTime = new Date().getTime();
+    this.respon = ()=>{
+      let timestamp = new Date().getTime() - startTime;
+      fn( ease( timestamp,begin, ( end - begin),duration) , 'step' );
+
+      if(duration <= timestamp){
+        fn( end , 'end' );
+      }else{
+        setTimeout(this.respon,20);
+      }
+    }
+  (() =>{
+    setTimeout(this.respon,20)
+  })();
+}
+
+  handleChangeScrollUp() {
+      var start = $('#scroll').scrollTop();
+      this.fx( function(now){
+        $('#scroll').scrollTop(now);
+      },start,lib.flexible.rem * 7.8);
+  }
+  handleChangeScrollDown() {
+    var start = $('#scroll').scrollTop();
+    this.fx( function(now){
+      $('#scroll').scrollTop(now);
+    },start,0);
   }
   handleChangeScroll2() {
     $('#scroll').css({
@@ -114,11 +156,17 @@ class ReportDetailContainer extends React.Component {
         <div style={styles.container}>
           <Header headerType="1" />
           <div style={styles.scrollBox} id="scroll">
-            <MessageShow messages={this.state.message} />
+            <MessageShow
+                messages={this.state.message}
+                changeScrollUp={this.handleChangeScrollUp}
+                changeScrollDown={this.handleChangeScrollDown}
+            />
             <ReportShow
               messages={this.state.message}
               scrollStyle={this.state.aaStyle}
               changeScroll1={this.handleChangeScroll1}
+              changeScrollUp={this.handleChangeScrollUp}
+              changeScrollDown={this.handleChangeScrollDown}
               changeScroll2={this.handleChangeScroll2}
               handleGoItemReport={this.handleGoItemReport}
             />

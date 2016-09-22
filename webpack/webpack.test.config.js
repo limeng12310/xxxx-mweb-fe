@@ -34,8 +34,7 @@ module.exports = {
       chunks: ['index']
     }),
     new webpack.ProvidePlugin({
-      React: 'react',
-      $: 'jquery'
+      React: 'react'
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),

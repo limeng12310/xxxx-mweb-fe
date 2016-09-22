@@ -4,11 +4,15 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   entry: {
     home: [
       'webpack-hot-middleware/client',
       'whatwg-fetch',
+      'zepto/src/zepto',
+      'zepto/src/event',
+      'zepto/src/touch',
+      'zepto/src/fx',
       './src/index.js'
     ],
     index: [
@@ -36,8 +40,7 @@ module.exports = {
       chunks: ['index']
     }),
     new webpack.ProvidePlugin({
-      React: 'react',
-      $: 'jquery'
+      React: 'react'
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
