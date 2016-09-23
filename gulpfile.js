@@ -13,7 +13,8 @@ gulp.task('lint', function() {
       '**/*.js',
       '!node_modules/**/*',
       '!build/**/*',
-      '!dist/**/*'
+      '!dist/**/*',
+      '!assets/**/*'
     ])
     .pipe(eslint())
     .pipe(eslint.format())

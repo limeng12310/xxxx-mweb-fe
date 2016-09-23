@@ -1,8 +1,8 @@
 import 'lib-flexible';
 import 'babel-polyfill';
-var injectTapEventPlugin = require("react-tap-event-plugin");
+const injectTapEventPlugin = require('react-tap-event-plugin');
 injectTapEventPlugin({
-  shouldRejectClick: (lastTouchEventTimestamp, clickEventTimestamp) => {
+  shouldRejectClick: () => {
     return false;
   }
 });
