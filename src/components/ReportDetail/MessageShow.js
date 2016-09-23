@@ -1,27 +1,46 @@
 import CircleProgress from './../common/CircleProgress';
 
 class MessageShow extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  componentDidMount(){
-    let handleDom = this.refs.handleDom;
-    let handleDomHeight = lib.flexible.rem2px(7.8);
-    $(handleDom).swipeUp(e =>{
-      if($('#scroll').scrollTop()<=handleDomHeight){
-        this.props.changeScrollUp();
-        //$('#reportScroll').css('overflow','auto');
-        //$('#imageScroll').css('overflow','auto');
+  // constructor(props) {
+  //   super(props);
+  // }
+
+  componentDidMount() {
+    const handleDom = this.refs.handleDom;
+    let touchStartTop = 0;
+    $(handleDom).on('touchstart', e => {
+      e.preventDefault();
+      $('#scroll').removeClass('domMoveAnimition');
+      touchStartTop = e.changedTouches[0].screenY;
+    });
+    $(handleDom).on('touchmove', e => {
+      e.preventDefault();
+      const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
+      const moveDistence = lib.flexible.px2rem(touchNowDis);
+      const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+      if (marginTopNow >= 1.22 && touchNowDis > 0) {
+        touchStartTop = e.changedTouches[0].screenY;
+        return;
       }
-    })
-    $(handleDom).swipeDown(e =>{
-      if($('#scroll').scrollTop()<handleDomHeight){
+      if (marginTopNow <= -6.58 && touchNowDis < 0) {
+        touchStartTop = e.changedTouches[0].screenY;
+        return;
+      }
+      this.props.handleDomMove(moveDistence);
+    });
+    $(handleDom).on('touchend', e => {
+      e.preventDefault();
+      $('#scroll').addClass('domMoveAnimition');
+      const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
+      // console.log(touchNowDis);
+      if (touchNowDis > 0) {
         this.props.changeScrollDown();
-        //$('#reportScroll').css('overflow','auto');
-        //$('#imageScroll').css('overflow','auto');
+      } else if (touchNowDis < 0) {
+        this.props.changeScrollUp();
       }
-    })
+    });
   }
+
   render() {
     const x = lib.flexible.rem * 0.67;
     const styles = {
@@ -133,6 +152,7 @@ MessageShow.propTypes = {
   messages: React.PropTypes.object,
   changeScrollUp: React.PropTypes.func.isRequired,
   changeScrollDown: React.PropTypes.func.isRequired,
+  handleDomMove: React.PropTypes.func.isRequired
 };
 
 export default MessageShow;

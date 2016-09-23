@@ -103,9 +103,9 @@ class ReportItem extends React.Component {
       <div style={ReportItemStyle.reportList}>
         {
           data.map((item, i) => {
-            let Year = moment(item.checkTime).format('YY');
-            let Month = moment(item.checkTime).format('MM');
-            let Day = moment(item.checkTime).format('DD');
+            const Year = moment(item.checkTime).format('YY');
+            const Month = moment(item.checkTime).format('MM');
+            const Day = moment(item.checkTime).format('DD');
             let close = {};
             if (data[i].status === '返回用户') {
               ClickFunction = () => hashHistory.push({ pathname: '/report-detail', state: { id: item.id } });

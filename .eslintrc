@@ -11,6 +11,9 @@
     "max-len": [ "error", 120 ],
     "comma-dangle": [ "error", "never" ],
     "eol-last": [ "off" ],
-    "react/prefer-stateless-function": [ "off" ]
+    "react/prefer-stateless-function": [ "off" ],
+    "object-curly-spacing": [ "off" ],
+    "arrow-body-style": [ "off" ],
+    "newline-per-chained-call": [ "off" ]
   }
 }
