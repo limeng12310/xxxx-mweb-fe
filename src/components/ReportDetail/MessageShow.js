@@ -1,6 +1,46 @@
 import CircleProgress from './../common/CircleProgress';
 
 class MessageShow extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  // }
+
+  componentDidMount() {
+    const handleDom = this.refs.handleDom;
+    let touchStartTop = 0;
+    $(handleDom).on('touchstart', e => {
+      e.preventDefault();
+      $('#scroll').removeClass('domMoveAnimition');
+      touchStartTop = e.changedTouches[0].screenY;
+    });
+    $(handleDom).on('touchmove', e => {
+      e.preventDefault();
+      const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
+      const moveDistence = lib.flexible.px2rem(touchNowDis);
+      const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+      if (marginTopNow >= 1.22 && touchNowDis > 0) {
+        touchStartTop = e.changedTouches[0].screenY;
+        return;
+      }
+      if (marginTopNow <= -6.58 && touchNowDis < 0) {
+        touchStartTop = e.changedTouches[0].screenY;
+        return;
+      }
+      this.props.handleDomMove(moveDistence);
+    });
+    $(handleDom).on('touchend', e => {
+      e.preventDefault();
+      $('#scroll').addClass('domMoveAnimition');
+      const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
+      // console.log(touchNowDis);
+      if (touchNowDis > 0) {
+        this.props.changeScrollDown();
+      } else if (touchNowDis < 0) {
+        this.props.changeScrollUp();
+      }
+    });
+  }
+
   render() {
     const x = lib.flexible.rem * 0.67;
     const styles = {
@@ -84,7 +124,7 @@ class MessageShow extends React.Component {
         checkAdress = this.props.location;
       }
       messageBox = (
-        <div style={styles.box}>
+        <div style={styles.box} ref="handleDom">
           <div style={styles.boxLeft}>
             <div style={styles.circleBox}>
               <div style={styles.circle}><CircleProgress per={normalPercent} x={x} /></div>
@@ -105,7 +145,7 @@ class MessageShow extends React.Component {
       );
     } else {
       messageBox = (
-        <div style={styles.box}></div>
+        <div style={styles.box} ref="handleDom"></div>
       );
     }
     return messageBox;
@@ -114,7 +154,10 @@ class MessageShow extends React.Component {
 
 MessageShow.propTypes = {
   messages: React.PropTypes.object,
-  location: React.PropTypes.string
+  location: React.PropTypes.string,
+  changeScrollUp: React.PropTypes.func.isRequired,
+  changeScrollDown: React.PropTypes.func.isRequired,
+  handleDomMove: React.PropTypes.func.isRequired
 };
 
 export default MessageShow;

@@ -5,13 +5,15 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   entry: {
     home: [
       'webpack-hot-middleware/client',
       'whatwg-fetch',
       'zepto/src/zepto',
       'zepto/src/event',
+      'zepto/src/touch',
+      'zepto/src/fx',
       './src/index.js'
     ],
     index: [

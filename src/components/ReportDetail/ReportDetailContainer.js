@@ -5,12 +5,13 @@ import containerBackground from './img/background1.svg';
 import Header from './../common/Header';
 import config from '../../config';
 
-import { hashHistory } from 'react-router';
+import {hashHistory} from 'react-router';
 class ReportDetailContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.handleChangeScroll1 = this.handleChangeScroll1.bind(this);
-    this.handleChangeScroll2 = this.handleChangeScroll2.bind(this);
+    this.handleChangeScrollUp = this.handleChangeScrollUp.bind(this);
+    this.handleChangeScrollDown = this.handleChangeScrollDown.bind(this);
+    this.handleDomMove = this.handleDomMove.bind(this);
     this.handleGoItemReport = this.handleGoItemReport.bind(this);
     this.state = {
       aaStyle: {},
@@ -26,6 +27,7 @@ class ReportDetailContainer extends React.Component {
       }
     };
   }
+
   componentWillMount() {
     const reportId = this.props.location.state.id;
     this.setState({
@@ -55,45 +57,61 @@ class ReportDetailContainer extends React.Component {
         console.log(error);
       });
   }
+
   componentDidMount() {
-    $('#scroll').scroll(() => {
-      const scroH = $('#scroll').scrollTop();
-      // console.log(scroH);
-      if (scroH >= Math.floor(lib.flexible.rem * 7.8)) {
-        this.setState({
-          aaStyle: {
-            overflowY: 'auto',
-            WebkitOverflowScrolling: 'touch'
-          }
-        });
-      } else if (scroH < Math.floor(lib.flexible.rem * 7.8)) {
-        this.setState({
-          aaStyle: {
-            overflowY: 'hidden'
-          }
-        });
+    // $('body').on('touchmove', e => {
+    //     console.log(e);
+    //     console.log($('#scroll'));
+    //     e.preventDefault();
+    // })
+  }
+
+  fx(fn, begin, end) {
+    //  渐出特效
+    this.easeOut = (t, b, c, d) => {
+      let e = t;
+      return -c * (e /= d) * (e - 2) + b;
+    };
+
+    const duration = 500;
+    const ease = this.easeOut;
+
+    const startTime = new Date().getTime();
+    this.respon = () => {
+      const timestamp = new Date().getTime() - startTime;
+      fn(ease(timestamp, begin, (end - begin), duration), 'step');
+
+      if (duration <= timestamp) {
+        fn(end, 'end');
+      } else {
+        setTimeout(this.respon, 20);
       }
-    });
+    };
+    (() => {
+      setTimeout(this.respon, 20);
+    })();
   }
-  handleChangeScroll1() {
-    $('#scroll').css({
-      overflowY: 'scroll',
-      WebkitOverflowScrolling: 'touch'
-    });
-    const t = $('#scroll').scrollTop();
-    $('#scroll').animate({ scrollTop: t - 2 }, 100);
+
+  handleChangeScrollUp() {
+    $('#scroll').css('margin-top', '-6.58rem');
   }
-  handleChangeScroll2() {
-    $('#scroll').css({
-      overflowY: 'hidden'
-    });
+
+  handleChangeScrollDown() {
+    $('#scroll').css('margin-top', '1.22rem');
   }
+
+  handleDomMove(distent, isCollaps) {
+    const marginNow = isCollaps ? -6.58 : 1.22;
+    $('#scroll').css('margin-top', `${(marginNow + distent)}rem`);
+  }
+
   handleGoItemReport(leftIndex, rightIndex) {
     hashHistory.push({
       pathname: '/item-report',
       state: this.state.message.values[leftIndex].items[rightIndex]
     });
   }
+
   render() {
     const styles = {
       container: {
@@ -102,14 +120,15 @@ class ReportDetailContainer extends React.Component {
         backgroundImage: `url(${containerBackground})`,
         position: 'absolute',
         backgroundPosition: 'center',
-        backgroundSize: 'cover'
+        backgroundSize: 'cover',
+        overflowY: 'hidden'
       },
       scrollBox: {
         position: 'absolute',
         width: '100%',
-        height: 'calc(100% - 1.22rem)',
+        height: 'calc(100% - 1.22rem + 7.8rem)',
         marginTop: '1.22rem',
-        overflowY: 'auto',
+        overflowY: 'hidden',
         WebkitOverflowScrolling: 'touch'
       }
     };
@@ -117,13 +136,20 @@ class ReportDetailContainer extends React.Component {
       <div>
         <div style={styles.container}>
           <Header headerType="1" />
-          <div style={styles.scrollBox} id="scroll">
-            <MessageShow messages={this.state.message} location={this.state.location} />
+          <div style={styles.scrollBox} id="scroll" className="domMoveAnimition">
+            <MessageShow
+              messages={this.state.message}
+              location={this.state.location}
+              changeScrollUp={this.handleChangeScrollUp}
+              changeScrollDown={this.handleChangeScrollDown}
+              handleDomMove={this.handleDomMove}
+            />
             <ReportShow
               messages={this.state.message}
               scrollStyle={this.state.aaStyle}
-              changeScroll1={this.handleChangeScroll1}
-              changeScroll2={this.handleChangeScroll2}
+              changeScrollUp={this.handleChangeScrollUp}
+              changeScrollDown={this.handleChangeScrollDown}
+              handleDomMove={this.handleDomMove}
               handleGoItemReport={this.handleGoItemReport}
             />
           </div>

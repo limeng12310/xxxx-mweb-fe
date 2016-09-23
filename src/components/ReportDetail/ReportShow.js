@@ -14,24 +14,269 @@ class ReportShow extends React.Component {
     this.clickPreview = this.clickPreview.bind(this);
     this.goItemReport = this.goItemReport.bind(this);
   }
+
   componentDidMount() {
-    $('#reportScroll').scroll(() => {
-      const reportScrollH = $('#reportScroll').scrollTop();
-      if (reportScrollH <= 0) {
-        this.props.changeScroll1();
-      } else if (reportScrollH > 0) {
-        this.props.changeScroll2();
+    let touchStartTop = 0;
+    let isCollaps = false;
+    // TAB标签事件监听
+    $('#scrollBox').on('touchstart', e => {
+      $('#scroll').removeClass('domMoveAnimition');
+      isCollaps = !(parseFloat($('#scroll').css('margin-top')) >= 1.22);
+      touchStartTop = e.changedTouches[0].screenY;
+    });
+    $('#scrollBox').on('touchmove', e => {
+      e.preventDefault();
+      const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
+      const moveDistence = lib.flexible.px2rem(touchNowDis);
+      const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+      if (marginTopNow >= 1.22 && touchNowDis > 0) {
+        touchStartTop = e.changedTouches[0].screenY;
+        return;
+      }
+      if (marginTopNow <= -6.58 && touchNowDis < 0) {
+        touchStartTop = e.changedTouches[0].screenY;
+        return;
+      }
+      this.props.handleDomMove(moveDistence, isCollaps);
+    });
+    $('#scrollBox').on('touchend', e => {
+      $('#scroll').addClass('domMoveAnimition');
+      const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
+      console.log(touchNowDis);
+      if (touchNowDis > 0) {
+        this.props.changeScrollDown();
+      } else if (touchNowDis < 0) {
+        this.props.changeScrollUp();
       }
     });
-    $('#imageScroll').scroll(() => {
-      const imageScrollH = $('#imageScroll').scrollTop();
-      if (imageScrollH <= 0) {
-        this.props.changeScroll1();
-      } else if (imageScrollH > 0) {
-        this.props.changeScroll2();
+    // $('#reportScroll').swipeUp(e => {
+    //     if ($('#scroll').scrollTop() <= handleDomHeight) {
+    //         this.props.changeScrollUp();
+    //         //$('#reportScroll').css('overflow','auto');
+    //         //$('#imageScroll').css('overflow','auto');
+    //     }
+    // });
+    // $('#imageScroll').swipeDown(e => {
+    //     if ($('#scroll').scrollTop() <= (handleDomHeight - 20) && $('#scroll').scrollTop() > 20) {
+    //         this.props.changeScrollDown();
+    //         //$('#reportScroll').css('overflow','auto');
+    //         //$('#imageScroll').css('overflow','auto');
+    //     }
+    // });
+  }
+
+  componentDidUpdate() {
+    const leftSelectContent = this.refs.leftSelectContent;
+    const rightSelectContent = this.refs.rightSelectContent;
+    const leftSelectOffsetArr = [];
+    const rightSelectOffsetArr = [];
+    let isCollaps = false;
+    let touchStartTop = 0;
+    const leftSelectEles = $(leftSelectContent).find('li');
+    const rightSelectEles = $('.categoryContent');
+    for (let i = 0; i < leftSelectEles.length; i++) {
+      leftSelectOffsetArr.push(leftSelectEles[i].offsetTop - 64);
+    }
+    const contentHeight = $(window).height() - lib.flexible.rem * 2.2;
+    this.props.messages.values.map((firstItem, i) => {
+      return rightSelectOffsetArr.push(rightSelectEles[i].offsetTop - 64);
+    });
+    $(leftSelectContent).find('li').eq(0).addClass('leftSelect');
+    $(rightSelectContent).scroll(() => {
+      const top = $(rightSelectContent).scrollTop();
+      for (let i = 1; i <= rightSelectOffsetArr.length; i++) {
+        if (top >= rightSelectOffsetArr[i - 1] && top < rightSelectOffsetArr[i]) {
+          $(leftSelectContent).find('li').removeClass('leftSelect');
+          $(leftSelectContent).find('li').eq(i - 1).addClass('leftSelect');
+          if ($('#rightSelectContent').hasClass('stopScrollMove')) {
+            return;
+          }
+          if ($(leftSelectContent).scrollTop() > leftSelectOffsetArr[i - 1]) {
+            const end = leftSelectOffsetArr[i - 1];
+            const start = $(leftSelectContent).scrollTop();
+            this.fx(now => {
+              $(leftSelectContent).scrollTop(now);
+            }, start, end);
+          } else if (leftSelectOffsetArr[i - 1] - $(leftSelectContent).scrollTop() > contentHeight -
+            lib.flexible.rem * 2) {
+            const end = $(leftSelectContent).scrollTop() + lib.flexible.rem * 3;
+            const start = $(leftSelectContent).scrollTop();
+            this.fx(now => {
+              $(leftSelectContent).scrollTop(now);
+            }, start, end);
+          }
+          return;
+        }
+      }
+    });
+
+    // 文字报告事件监听
+    // 左侧
+    $(leftSelectContent).on('touchstart', e => {
+      $('#scroll').removeClass('domMoveAnimition');
+      isCollaps = !(parseFloat($('#scroll').css('margin-top')) >= 1.22);
+      console.log(isCollaps);
+      touchStartTop = e.changedTouches[0].screenY;
+    });
+    $(leftSelectContent).on('touchmove', e => {
+      const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
+      if (isCollaps === true && $(leftSelectContent).scrollTop() <= 0) {
+        if (touchNowDis > 0) {
+          e.preventDefault();
+          const moveDistence = lib.flexible.px2rem(touchNowDis);
+          const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+          if (marginTopNow >= 1.22 && touchNowDis > 0) {
+            touchStartTop = e.changedTouches[0].screenY;
+            return;
+          }
+          if (marginTopNow <= -6.58 && touchNowDis < 0) {
+            touchStartTop = e.changedTouches[0].screenY;
+            return;
+          }
+          this.props.handleDomMove(moveDistence, isCollaps);
+        }
+        return;
+      } else if (touchNowDis < 0 && isCollaps === false) {
+        e.preventDefault();
+        const moveDistence = lib.flexible.px2rem(touchNowDis);
+        const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+        if (marginTopNow >= 1.22 && touchNowDis > 0) {
+          touchStartTop = e.changedTouches[0].screenY;
+          return;
+        }
+        if (marginTopNow <= -6.58 && touchNowDis < 0) {
+          touchStartTop = e.changedTouches[0].screenY;
+          return;
+        }
+        this.props.handleDomMove(moveDistence, isCollaps);
+      }
+    });
+    $(leftSelectContent).on('touchend', e => {
+      $('#scroll').addClass('domMoveAnimition');
+      if (isCollaps === true && $(leftSelectContent).scrollTop() > 0) {
+        return;
+      }
+      const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
+      console.log(touchNowDis);
+      if (touchNowDis > 0) {
+        this.props.changeScrollDown();
+      } else if (touchNowDis < 0) {
+        this.props.changeScrollUp();
+      }
+    });
+
+    // 右侧
+    $(rightSelectContent).on('touchstart', e => {
+      if ($('#rightSelectContent').hasClass('stopScrollMove')) {
+        $('#rightSelectContent').removeClass('stopScrollMove');
+      }
+      $('#scroll').removeClass('domMoveAnimition');
+      isCollaps = !(parseFloat($('#scroll').css('margin-top')) >= 1.22);
+      console.log(isCollaps);
+      touchStartTop = e.changedTouches[0].screenY;
+    });
+    $(rightSelectContent).on('touchmove', e => {
+      const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
+      if (isCollaps === true && $(rightSelectContent).scrollTop() <= 0) {
+        if (touchNowDis > 0) {
+          e.preventDefault();
+          const moveDistence = lib.flexible.px2rem(touchNowDis);
+          const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+          if (marginTopNow >= 1.22 && touchNowDis > 0) {
+            touchStartTop = e.changedTouches[0].screenY;
+            return;
+          }
+          if (marginTopNow <= -6.58 && touchNowDis < 0) {
+            touchStartTop = e.changedTouches[0].screenY;
+            return;
+          }
+          this.props.handleDomMove(moveDistence, isCollaps);
+        }
+        return;
+      } else if (touchNowDis < 0 && isCollaps === false) {
+        e.preventDefault();
+        const moveDistence = lib.flexible.px2rem(touchNowDis);
+        const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+        if (marginTopNow >= 1.22 && touchNowDis > 0) {
+          touchStartTop = e.changedTouches[0].screenY;
+          return;
+        }
+        if (marginTopNow <= -6.58 && touchNowDis < 0) {
+          touchStartTop = e.changedTouches[0].screenY;
+          return;
+        }
+        this.props.handleDomMove(moveDistence, isCollaps);
+      }
+    });
+    $(rightSelectContent).on('touchend', e => {
+      $('#scroll').addClass('domMoveAnimition');
+      if (isCollaps === true && $(rightSelectContent).scrollTop() > 0) {
+        return;
+      }
+      const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
+      console.log(touchNowDis);
+      if (touchNowDis > 0) {
+        this.props.changeScrollDown();
+      } else if (touchNowDis < 0) {
+        this.props.changeScrollUp();
+      }
+    });
+
+    // 图片报告事件监听
+    $('#imageScroll').on('touchstart', e => {
+      $('#scroll').removeClass('domMoveAnimition');
+      isCollaps = !(parseFloat($('#scroll').css('margin-top')) >= 1.22);
+      console.log(isCollaps);
+      touchStartTop = e.changedTouches[0].screenY;
+    });
+    $('#imageScroll').on('touchmove', e => {
+      const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
+      if (isCollaps === true && $('#imageScroll').scrollTop() <= 0) {
+        if (touchNowDis > 0) {
+          e.preventDefault();
+          const moveDistence = lib.flexible.px2rem(touchNowDis);
+          const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+          if (marginTopNow >= 1.22 && touchNowDis > 0) {
+            touchStartTop = e.changedTouches[0].screenY;
+            return;
+          }
+          if (marginTopNow <= -6.58 && touchNowDis < 0) {
+            touchStartTop = e.changedTouches[0].screenY;
+            return;
+          }
+          this.props.handleDomMove(moveDistence, isCollaps);
+        }
+        return;
+      } else if (touchNowDis < 0 && isCollaps === false) {
+        e.preventDefault();
+        const moveDistence = lib.flexible.px2rem(touchNowDis);
+        const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+        if (marginTopNow >= 1.22 && touchNowDis > 0) {
+          touchStartTop = e.changedTouches[0].screenY;
+          return;
+        }
+        if (marginTopNow <= -6.58 && touchNowDis < 0) {
+          touchStartTop = e.changedTouches[0].screenY;
+          return;
+        }
+        this.props.handleDomMove(moveDistence, isCollaps);
+      }
+    });
+    $('#imageScroll').on('touchend', e => {
+      $('#scroll').addClass('domMoveAnimition');
+      if (isCollaps === true && $('#imageScroll').scrollTop() > 0) {
+        return;
+      }
+      const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
+      console.log(touchNowDis);
+      if (touchNowDis > 0) {
+        this.props.changeScrollDown();
+      } else if (touchNowDis < 0) {
+        this.props.changeScrollUp();
       }
     });
   }
+
   setTab1() {
     $('#report').css({
       width: '100%'
@@ -50,6 +295,7 @@ class ReportShow extends React.Component {
       opacity: 0.6
     });
   }
+
   setTab2() {
     $('#image').css({
       width: '100%'
@@ -68,20 +314,58 @@ class ReportShow extends React.Component {
       opacity: 1
     });
   }
-  clickChange(e) {
-    this.setState({
-      isChoosen: parseInt(e.target.getAttribute('data-index'), 10)
-    });
+
+  fx(fn, begin, end) {
+    //  渐出特效
+    this.easeOut = (t, b, c, d) => {
+      let e = t;
+      return -c * (e /= d) * (e - 2) + b;
+    };
+    const duration = 400;
+    const ease = this.easeOut;
+
+    const startTime = new Date().getTime();
+    this.respon = () => {
+      const timestamp = new Date().getTime() - startTime;
+      fn(ease(timestamp, begin, (end - begin), duration), 'step');
+
+      if (duration <= timestamp) {
+        fn(end, 'end');
+      } else {
+        setTimeout(this.respon, 20);
+      }
+    };
+    (() => {
+      setTimeout(this.respon, 20);
+    })();
   }
+
+  clickChange(e) {
+    const rightSelectOffsetArr = [];
+    const rightSelectEles = $('.categoryContent');
+    this.props.messages.values.map((firstItem, i) => {
+      return rightSelectOffsetArr.push(rightSelectEles[i].offsetTop - 64);
+    });
+    const end = rightSelectOffsetArr[e.target.getAttribute('data-index') - 0] + 10;
+    const start = $('#rightSelectContent').scrollTop();
+    $('#rightSelectContent').addClass('stopScrollMove');
+    this.fx(now => {
+      $('#rightSelectContent').scrollTop(now);
+    }, start, end);
+  }
+
   clickPreview(e) {
     wx.previewImage({
       current: e.target.getAttribute('data-url'), // 当前显示图片的http链接
       urls: this.props.messages.imgs.map(img => `${config.cdnPrefix}/${img}`) // 需要预览的图片http链接列表
     });
   }
+
   goItemReport(e) {
-    this.props.handleGoItemReport(this.state.isChoosen, parseInt(e.target.getAttribute('data-rightIndex'), 10));
+    this.props.handleGoItemReport(parseInt(e.target.getAttribute('data-leftIndex'), 10),
+      parseInt(e.target.getAttribute('data-rightIndex'), 10));
   }
+
   render() {
     const styles = {
       nav: {
@@ -117,7 +401,7 @@ class ReportShow extends React.Component {
         backgroundRepeat: 'no-repeat',
         overflowY: 'hidden',
         WebkitOverflowScrolling: 'touch',
-        maxHeight: 'calc(100% - 0.92rem)'
+        height: 'calc(100% - 0.92rem)'
       },
       boxOut2: {
         width: 0,
@@ -131,31 +415,45 @@ class ReportShow extends React.Component {
         backgroundRepeat: 'no-repeat',
         overflowY: 'hidden',
         WebkitOverflowScrolling: 'touch',
-        maxHeight: 'calc(100% - 0.92rem)'
+        height: 'calc(100% - 0.92rem)'
       },
       box: {
         width: '100%',
         minHeight: 'calc(100% - 7.8rem - 0.94rem)',
-        marginTop: '1rem',
+        paddingTop: '1rem',
         display: 'flex',
         justifyContent: 'center',
         overflowY: 'hidden',
         WebkitOverflowScrolling: 'touch',
-        maxHeight: 'calc(100% - 0.92rem)'
+        height: 'calc(100% - 8.1rem)'
+      },
+      imgBox: {
+        width: '100%',
+        minHeight: 'calc(100% - 7.8rem - 0.94rem)',
+        paddingTop: '1rem',
+        display: 'flex',
+        justifyContent: 'center',
+        overflowY: 'auto',
+        WebkitOverflowScrolling: 'touch',
+        height: 'calc(100% - 8.1rem)'
       },
       leftBox: {
         width: '30%',
         marginLeft: '1.2rem',
         fontSize: '0.533333rem',
         color: '#9C9C9C',
-        listStyle: 'none'
+        listStyle: 'none',
+        overflowY: 'auto',
+        height: '100%'
       },
       rightBox: {
         width: '70%',
         fontSize: '0.533333rem',
         color: '#9C9C9C',
         listStyle: 'none',
-        marginLeft: '0.8rem'
+        marginLeft: '0.8rem',
+        overflowY: 'auto',
+        height: '100%'
       },
       leftList: {
         marginBottom: '0.8rem'
@@ -190,18 +488,18 @@ class ReportShow extends React.Component {
     if (this.props.messages.values.length !== 0) {
       reportScrollBox = (
         <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="reportScroll">
-          <ul style={styles.leftBox}>
+          <ul style={styles.leftBox} ref="leftSelectContent" id="leftSelectContent">
             {
               this.props.messages.values.map((item, i) => {
-                let circleBorder = {};
-                if (this.state.isChoosen === i) {
-                  circleBorder = {
-                    borderWidth: '0.026667rem',
-                    borderStyle: 'solid',
-                    borderRadius: '0.266667rem',
-                    display: 'table'
-                  };
-                }
+                const circleBorder = {};
+                // if (this.state.isChoosen === i) {
+                //  circleBorder = {
+                //    borderWidth: '0.026667rem',
+                //    borderStyle: 'solid',
+                //    borderRadius: '0.266667rem',
+                //    display: 'table'
+                //  };
+                // }
                 return (
                   <li
                     key={i}
@@ -215,27 +513,42 @@ class ReportShow extends React.Component {
               })
             }
           </ul>
-          <ul style={styles.rightBox}>
+          <ul style={styles.rightBox} ref="rightSelectContent" id="rightSelectContent">
             {
-              this.props.messages.values[this.state.isChoosen].items.map((item, i) => (
-                <li
-                  data-rightIndex={i}
-                  key={i}
-                  style={styles.rightList}
-                  onTouchTap={this.goItemReport}
-                >{item.name}</li>
-              ))
+              this.props.messages.values.map((firstItem, i) => {
+                return (
+                  <div className="categoryContent">
+                    {
+                      this.props.messages.values[i].items.map((item, j) => (
+                        <li
+                          data-rightIndex={j}
+                          data-leftIndex={i}
+                          key={j}
+                          style={styles.rightList}
+                          onTouchTap={this.goItemReport}
+                        >{item.name}</li>
+                      ))
+                    }
+                    <div className="weightLineBlack"></div>
+                  </div>
+                );
+              })
+
             }
+            <li style={{height: 'calc(100% - 1.3rem)'}}></li>
           </ul>
         </div>
       );
     } else {
       reportScrollBox = (
-        <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="reportScroll"></div>
+        <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="reportScroll">
+          <ul style={styles.leftBox} ref="leftSelectContent"></ul>
+          <ul style={styles.rightBox} ref="rightSelectContent"></ul>
+        </div>
       );
     }
-    imageScrollBox = (
-      <div style={Object.assign({}, styles.box, this.props.scrollStyle)} id="imageScroll">
+    imageScrollBox = (          // eslint-disable-line
+      <div style={Object.assign({}, styles.imgBox, this.props.scrollStyle)} id="imageScroll">
         <div style={styles.allImage}>
           {
             this.props.messages.imgs.map((imgId, i) => {
@@ -276,8 +589,9 @@ class ReportShow extends React.Component {
 ReportShow.propTypes = {
   messages: React.PropTypes.object,
   scrollStyle: React.PropTypes.object,
-  changeScroll1: React.PropTypes.func.isRequired,
-  changeScroll2: React.PropTypes.func.isRequired,
+  changeScrollUp: React.PropTypes.func.isRequired,
+  changeScrollDown: React.PropTypes.func.isRequired,
+  handleDomMove: React.PropTypes.func.isRequired,
   handleGoItemReport: React.PropTypes.func
 };
 
