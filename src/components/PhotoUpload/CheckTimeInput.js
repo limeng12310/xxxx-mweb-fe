@@ -19,7 +19,7 @@ class CheckTimeInput extends React.Component {
     this.setState({
       timeClicked: true
     }, function () {
-      setTimeout(() => this.refs.datetime.click(), 800);
+      this.refs.datetime.click();
     });
   }
   render() {

@@ -36,7 +36,7 @@ class PhotoUploadContainer extends React.Component {
   }
   componentWillMount() {
     // 初始化alioss client (CORDOVA环境)
-    this.client = client;
+    // this.client = client;
   }
   photoSubmit() {
     if (this.state.date === '') {
