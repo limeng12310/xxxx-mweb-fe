@@ -101,11 +101,8 @@
                   let colorChoosen = {};
                   if (this.state.isChoosenOne === i) {
                     colorChoosen = {
-                      // IE滤镜，透明度50%
                       filter: 'alpha(opacity=100)',
-                      // Firefox私有，透明度50%
                       MozOpacity: 1,
-                      // 其他，透明度50%
                       opacity: 1
                     };
                   }
@@ -130,11 +127,8 @@
                   let circleChoosen = {};
                   if (this.state.isChoosenTwo === i) {
                     circleChoosen = {
-                      // IE滤镜，透明度50%
                       filter: 'alpha(opacity=100)',
-                      // Firefox私有，透明度50%
                       MozOpacity: 1,
-                      // 其他，透明度50%
                       opacity: 1
                     };
                   }

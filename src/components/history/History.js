@@ -7,6 +7,9 @@
   import Category from './Category';
   import HistoryEcharts from './HistoryEcharts';
   import config from '../../config';
+
+  import { hashHistory } from 'react-router';
+
   const HistoryStyle = {
     history: {
       width: '100%',
@@ -101,6 +104,12 @@
               });
           }
         });
+    }
+    componentDidUpdate() {
+      if (this.state.dataOne.length === 0) {
+        alert('您还未添加有效的报告!');
+        hashHistory.push('/');
+      }
     }
     getMaxAndMin() {
       let maxValue = '0';
@@ -236,33 +245,6 @@
       });
     }
     render() {
-      // const data1 = [
-      //   { id: 1, name: 'adf', iconFontCode: '' },
-      //   { id: 2, name: 'sdf', iconFontCode: '' },
-      //   { id: 3, name: 'adf', iconFontCode: '' },
-      //   { id: 4, name: 'df4', iconFontCode: '' },
-      //   { id: 5, name: 'adf', iconFontCode: '' },
-      //   { id: 6, name: '6sf', iconFontCode: '' },
-      //   { id: 7, name: 'sf7', iconFontCode: '' },
-      //   { id: 8, name: 'f8', iconFontCode: '' },
-      //   { id: 9, name: 'sd9', iconFontCode: '' }
-      // ];
-      // const data2 = [
-      //   { id: 1, name: 'as', unit: 'mg/L' },
-      //   { id: 1, name: 'sdfsaf', unit: 'g/L' },
-      //   { id: 2, name: 'dfa', unit: 'g/L' },
-      //   { id: 3, name: 'sdf', unit: 'mg/L' },
-      //   { id: 4, name: 'sdf', unit: 'g/L' },
-      //   { id: 5, name: '0sdf5', unit: 'g/L' },
-      //   { id: 6, name: '0adf6', unit: 'mg/L' },
-      //   { id: 7, name: 'adf', unit: 'g/L' },
-      //   { id: 8, name: 'ad', unit: 'g/L' }
-      // ];
-      // const data3 = [
-      //   { checkTime: '2016/4/29 14:15:00', value: 123.4 },
-      //   { checkTime: '2016/4/29 15:15:00', value: 164.4 },
-      //   { checkTime: '2016/4/29 19:15:00', value: 135.4 }
-      // ];
       let name;
       if (this.state.dataTwo.length !== 0) {
         name = (
