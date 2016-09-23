@@ -34,6 +34,10 @@ class PhotoUploadContainer extends React.Component {
       i: true
     };
   }
+  componentWillMount() {
+    // 初始化alioss client (CORDOVA环境)
+    this.client = client;
+  }
   photoSubmit() {
     if (this.state.date === '') {
       alert('检查时间不能为空！');
