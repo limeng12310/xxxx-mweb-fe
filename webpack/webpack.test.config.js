@@ -9,6 +9,10 @@ module.exports = {
   entry: {
     home: [
       'whatwg-fetch',
+      'zepto/src/zepto',
+      'zepto/src/event',
+      'zepto/src/touch',
+      'zepto/src/fx',
       './src/index.js'
     ],
     index: [
@@ -63,7 +67,6 @@ module.exports = {
       {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
       {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
       {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'},
-      {test: /\.jpg$/, loader: 'url'},
       {test: /\.(jpg|png)$/, loader: 'url'}
     ]
   }
