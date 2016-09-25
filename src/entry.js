@@ -37,6 +37,9 @@ fetch(`${config.apiPrefix}/isNewUser`, {
 })
 .then(json => {
   if (json.retCode === 0) {
+    // old user
+    window.location.replace('app-home.html');
+  } else {
     // new user
     fetch(`${config.apiPrefix}/users`, {
       method: 'POST',
@@ -69,9 +72,6 @@ fetch(`${config.apiPrefix}/isNewUser`, {
         alert('出错了,请稍候重试');
         throw err;
       });
-  } else {
-    // old user
-    window.location.replace('app-home.html');
   }
 })
 .catch(err => {
