@@ -62,7 +62,7 @@ fetch(`${config.apiPrefix}/isNewUser`, {
       })
       .then(json => {                 // eslint-disable-line no-shadow
         if (json.retCode === 0) {
-          // window.location.replace('app-home.html');
+          window.location.replace('app-home.html');
         } else {
           throw new Error();
         }
