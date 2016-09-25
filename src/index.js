@@ -3,7 +3,7 @@ import 'babel-polyfill';
 const injectTapEventPlugin = require('react-tap-event-plugin');
 injectTapEventPlugin({
   shouldRejectClick: () => {
-    return false;
+    return true;
   }
 });
 
