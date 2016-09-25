@@ -39,7 +39,9 @@ class Enum extends React.Component {
   }
   itemChart() {
     return new Promise((resolve, reject) => {
-      fetch(`${config.apiPrefix}/user-check-items/3652?unit=U/L`)
+      fetch(`${config.apiPrefix}/user-check-items/3652?unit=U/L`, {
+        credentials: 'include'
+      })
         .then(response => {
           if (response.status === 200) {
             return response.json();

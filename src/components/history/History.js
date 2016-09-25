@@ -130,7 +130,9 @@
     }
     dataRequestOne() {
       return new Promise((resolve, reject) => {
-        fetch(`${config.apiPrefix}/user-check-classifies`)
+        fetch(`${config.apiPrefix}/user-check-classifies`, {
+          credentials: 'include'
+        })
           .then(response => {
             if (response.status === 200) {
               return response.json();
@@ -157,7 +159,9 @@
     }
     dataRequestTwo() {
       return new Promise((resolve, reject) => {
-        fetch(`${config.apiPrefix}/user-check-classifies/${this.state.dataOne[this.state.idOne].id}/check-items`)
+        fetch(`${config.apiPrefix}/user-check-classifies/${this.state.dataOne[this.state.idOne].id}/check-items`, {
+          credentials: 'include'
+        })
           .then(response => {
             if (response.status === 200) {
               return response.json();
@@ -186,7 +190,9 @@
       return new Promise((resolve, reject) => {
         fetch(`${config.apiPrefix}` +
         '/user-check-items' +
-        `/${this.state.dataTwo[this.state.idTwo].id}?unit=${this.state.dataTwo[this.state.idTwo].unit}`)
+        `/${this.state.dataTwo[this.state.idTwo].id}?unit=${this.state.dataTwo[this.state.idTwo].unit}`, {
+          credentials: 'include'
+        })
           .then(response => {
             if (response.status === 200) {
               return response.json();

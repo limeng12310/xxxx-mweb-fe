@@ -57,7 +57,8 @@ class PhotoUploadContainer extends React.Component {
           checkAddr: this.state.location,
           reportType: '图片', // '图片'
           reportValues: this.state.server // ['...', ... ] //图片报告为mediaId
-        })
+        }),
+        credentials: 'include'
       })
       .then(response => {
         if (response.status === 200) {

@@ -36,7 +36,9 @@ class ReportDetailContainer extends React.Component {
     if (!reportId) {
       return;
     }
-    fetch(`${config.apiPrefix}/reports/${reportId}`)
+    fetch(`${config.apiPrefix}/reports/${reportId}`, {
+      credentials: 'include'
+    })
       .then(response => {
         if (response.status === 200) {
           return response.json();

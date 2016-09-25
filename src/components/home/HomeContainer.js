@@ -78,7 +78,8 @@ class HomeContainer extends React.Component {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include'
     })
       .then(response => {
         if (response.status === 200) {
@@ -100,7 +101,9 @@ class HomeContainer extends React.Component {
   }
   amount() {
     return new Promise((resolve, reject) => {
-      fetch(`${config.apiPrefix}/report-aggregation`)
+      fetch(`${config.apiPrefix}/report-aggregation`, {
+        credentials: 'include'
+      })
         .then(response => {
           if (response.status === 200) {
             return response.json();
@@ -127,7 +130,9 @@ class HomeContainer extends React.Component {
   }
   reportList() {
     return new Promise((resolve, reject) => {
-      fetch(`${config.apiPrefix}/reports?_limit=99999&_offset=0`)
+      fetch(`${config.apiPrefix}/reports?_limit=99999&_offset=0`, {
+        credentials: 'include'
+      })
         .then(response => {
           if (response.status === 200) {
             return response.json();
