@@ -30,7 +30,9 @@ fetch(`${config.apiPrefix}/users`, {
     nickName: nickName ? Base64.decode(nickName) : '',
     gender,
     headImg: headImgUrl || ''
-  })
+  }),
+  // send cookies
+  credentials: 'same-origin'
 })
   .then(response => {
     if (response.status === 200) {
