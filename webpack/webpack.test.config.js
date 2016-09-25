@@ -18,6 +18,10 @@ module.exports = {
     index: [
       'whatwg-fetch',
       './src/entry.js'
+    ],
+    profile: [
+      'whatwg-fetch',
+      './src/profile.js'
     ]
   },
   debug: true,
@@ -37,6 +41,11 @@ module.exports = {
       title: 'Thorgene',
       filename: 'index.html',
       chunks: ['index']
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Thorgene',
+      filename: 'init-profile.html',
+      chunks: ['profile']
     }),
     new CopyWebpackPlugin([
       { from: './assets/' }
