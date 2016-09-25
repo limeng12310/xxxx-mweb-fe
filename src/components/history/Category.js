@@ -114,7 +114,7 @@
                       key={i}
                       data-index={i}
                       style={Object.assign({}, CategoryStyle.item, colorChoosen)}
-                      onTouchTap={this.clickChangeOne}
+                      onClick={this.clickChangeOne}
                     >
                       {item.name}
                     </a>
@@ -143,7 +143,7 @@
                       key={i}
                       data-index={i}
                       style={Object.assign({}, CategoryStyle.littleItem, circleChoosen)}
-                      onTouchTap={this.clickChangeTwo}
+                      onClick={this.clickChangeTwo}
                     >
                       {item.name}
                     </a>

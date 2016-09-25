@@ -96,13 +96,13 @@ class ButtomBar extends React.Component {
       <div style={ButtomBarStyle.bottomBarBox}>
         <div className="weightLine"></div>
         <div style={ButtomBarStyle.bottomBar}>
-          <div style={Object.assign({}, ButtomBarStyle.barItem, barItemOne)} onTouchTap={() => hashHistory.push('/')}>
+          <div style={Object.assign({}, ButtomBarStyle.barItem, barItemOne)} onClick={() => hashHistory.push('/')}>
             <img src={State} alt="" style={ButtomBarStyle.icon} />
             <span style={ButtomBarStyle.iconFont}>动态</span>
           </div>
           <div
             style={Object.assign({}, ButtomBarStyle.barItem, barItemTwo)}
-            onTouchTap={() => hashHistory.push('/history')}
+            onClick={() => hashHistory.push('/history')}
           >
             <img src={history} alt="" style={ButtomBarStyle.icon} />
             <span style={ButtomBarStyle.iconFont}>历史</span>
@@ -111,7 +111,7 @@ class ButtomBar extends React.Component {
             CORDOVA_ENV === 'true' ? (            // eslint-disable-line
               <div
                 style={Object.assign({}, ButtomBarStyle.barItem, barItemThree)}
-                onTouchTap={() => hashHistory.push('/user-profile')}
+                onClick={() => hashHistory.push('/user-profile')}
               >
                 <img src={user} alt="" style={ButtomBarStyle.icon} />
                 <span style={ButtomBarStyle.iconFont}>用户</span>

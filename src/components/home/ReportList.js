@@ -140,7 +140,7 @@ class ReportItem extends React.Component {
             return (
               <div style={ReportItemStyle.reportItem}>
                 <div style={ReportItemStyle.reportContent}>
-                  <div onTouchTap={ClickFunction} style={Object.assign({}, ReportItemStyle.report, close)}>
+                  <div onClick={ClickFunction} style={Object.assign({}, ReportItemStyle.report, close)}>
                     <img src={ReportTu} alt="" style={ReportItemStyle.reportKpi} />
                     <b style={ReportItemStyle.year}>{Year}</b>
                     <div style={ReportItemStyle.Date}>
@@ -149,14 +149,14 @@ class ReportItem extends React.Component {
                       <b style={ReportItemStyle.month}>{Day}</b>
                     </div>
                   </div>
-                  <span onTouchTap={ClickFunction} style={ReportItemStyle.hospital}>{checkAdress}</span>
+                  <span onClick={ClickFunction} style={ReportItemStyle.hospital}>{checkAdress}</span>
                   <div>
                     <img
                       src={DeleteIcon}
                       data-index={i}
                       alt=""
                       style={ReportItemStyle.Delete}
-                      onTouchTap={this.reportDelete}
+                      onClick={this.reportDelete}
                     />
                   </div>
                 </div>

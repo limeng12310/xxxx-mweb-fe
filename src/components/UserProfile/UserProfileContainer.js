@@ -90,27 +90,27 @@ class UserProfileContainer extends React.Component {
         </div>
         <div>
           <ul style={styles.lists}>
-            <li style={styles.list} onTouchTap={this.changePassword}>
+            <li style={styles.list} onClick={this.changePassword}>
               <div>修改密码</div>
             </li>
             <div className="line"></div>
-            <li style={styles.list} onTouchTap={this.bindEmail}>
+            <li style={styles.list} onClick={this.bindEmail}>
               <div>绑定邮箱</div>
             </li>
             <div className="line"></div>
-            <li style={styles.list} onTouchTap={this.changeEmail}>
+            <li style={styles.list} onClick={this.changeEmail}>
               <div>更换邮箱</div>
             </li>
             <div className="line"></div>
-            <li style={styles.list} onTouchTap={this.bindPhone}>
+            <li style={styles.list} onClick={this.bindPhone}>
               <div>绑定手机</div>
             </li>
             <div className="line"></div>
-            <li style={styles.list} onTouchTap={this.changePhone}>
+            <li style={styles.list} onClick={this.changePhone}>
               <div>更换手机</div>
             </li>
             <div className="line"></div>
-            <li style={styles.list} onTouchTap={this.logout}>
+            <li style={styles.list} onClick={this.logout}>
               <div>退出登陆</div>
             </li>
           </ul>

@@ -85,13 +85,13 @@ class PhotosToUpload extends React.Component {
                     data-url={imgId}
                     key={i}
                     style={Object.assign({}, styles.img, background)}
-                    onTouchTap={this.clickPreview}
+                    onClick={this.clickPreview}
                   >
                   </div>
                   <div
                     data-index={i}
                     style={Object.assign({}, styles.imgDel, displayDel)}
-                    onTouchTap={this.clickDeleteImage}
+                    onClick={this.clickDeleteImage}
                   >
                   </div>
                 </div>
