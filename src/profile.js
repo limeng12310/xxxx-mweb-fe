@@ -40,7 +40,7 @@ fetch(`${config.apiPrefix}/users`, {
   })
   .then(json => {
     if (json.retCode === 0) {
-      window.location.replace('app-home.html');
+      // window.location.replace('app-home.html');
     }
 
     throw new Error();
