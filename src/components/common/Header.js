@@ -73,8 +73,8 @@ class Header extends React.Component {
           return (
             <div style={HeaderStyle.Header}>
               <div style={HeaderStyle.HeaderBox}>
-                <img src={back} alt="" style={HeaderStyle.backStyle} onClick={() => hashHistory.goBack()} />
-                <img src={ok} alt="" style={HeaderStyle.okStyle} onClick={onSubmit} />
+                <img src={back} alt="" style={HeaderStyle.backStyle} onTouchTap={() => hashHistory.goBack()} />
+                <img src={ok} alt="" style={HeaderStyle.okStyle} onTouchTap={onSubmit} />
               </div>
               <div className="weightLine"></div>
             </div>
@@ -83,8 +83,8 @@ class Header extends React.Component {
         return (
           <div style={HeaderStyle.Header}>
             <div style={HeaderStyle.HeaderBox}>
-              <img src={back} alt="" style={HeaderStyle.backStyle} onClick={() => hashHistory.goBack()} />
-              <img src={ok} alt="" style={HeaderStyle.okStyle} onClick={this.EmptyOnClick} />
+              <img src={back} alt="" style={HeaderStyle.backStyle} onTouchTap={() => hashHistory.goBack()} />
+              <img src={ok} alt="" style={HeaderStyle.okStyle} onTouchTap={this.EmptyOnClick} />
             </div>
             <div className="weightLine"></div>
           </div>
@@ -93,7 +93,7 @@ class Header extends React.Component {
       return (
         <div style={HeaderStyle.Header}>
           <div style={HeaderStyle.HeaderBox}>
-            <img src={back} alt="" style={HeaderStyle.backStyle} onClick={() => hashHistory.goBack()} />
+            <img src={back} alt="" style={HeaderStyle.backStyle} onTouchTap={() => hashHistory.goBack()} />
           </div>
           <div className="weightLine"></div>
         </div>

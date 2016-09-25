@@ -1,11 +1,11 @@
 import 'lib-flexible';
 import 'babel-polyfill';
-// const injectTapEventPlugin = require('react-tap-event-plugin');
-// injectTapEventPlugin({
-//   shouldRejectClick: () => {
-//     return true;
-//   }
-// });
+const injectTapEventPlugin = require('react-tap-event-plugin');
+injectTapEventPlugin({
+  shouldRejectClick: () => {
+    return true;
+  }
+});
 
 import ReactDOM from 'react-dom';
 import HomeContainer from './components/home/HomeContainer';

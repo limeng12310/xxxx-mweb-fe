@@ -77,11 +77,11 @@ class CheckTimeInput extends React.Component {
         //   style={styles.timeInput1}
         //   type="text"
         //   placeholder="请选择检查时间"
-        //   onClick={this.clickChange}
+        //   onTouchTap={this.clickChange}
         // />
         <div
           style={styles.timeInput1}
-          onClick={this.clickChange}
+          onTouchTap={this.clickChange}
         >
           请选择检查时间
         </div>

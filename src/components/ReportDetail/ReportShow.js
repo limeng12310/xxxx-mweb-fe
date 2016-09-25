@@ -505,7 +505,7 @@ class ReportShow extends React.Component {
                     key={i}
                     data-index={i}
                     style={Object.assign({}, styles.leftList, circleBorder)}
-                    onClick={this.clickChange}
+                    onTouchTap={this.clickChange}
                   >
                     {item.classify}
                   </li>
@@ -525,7 +525,7 @@ class ReportShow extends React.Component {
                           data-leftIndex={i}
                           key={j}
                           style={styles.rightList}
-                          onClick={this.goItemReport}
+                          onTouchTap={this.goItemReport}
                         >{item.name}</li>
                       ))
                     }
@@ -560,7 +560,7 @@ class ReportShow extends React.Component {
                   data-url={`${config.cdnPrefix}/${imgId}`}
                   key={i}
                   style={Object.assign({}, styles.img, background)}
-                  onClick={this.clickPreview}
+                  onTouchTap={this.clickPreview}
                 >
                 </div>
               );
@@ -572,8 +572,8 @@ class ReportShow extends React.Component {
     return (
       <div>
         <div style={styles.nav} id="scrollBox">
-          <div style={styles.activeMenu} onClick={this.setTab1} id="tabName1">看报告</div>
-          <div style={styles.inactiveMenu} onClick={this.setTab2} id="tabName2">看图片</div>
+          <div style={styles.activeMenu} onTouchTap={this.setTab1} id="tabName1">看报告</div>
+          <div style={styles.inactiveMenu} onTouchTap={this.setTab2} id="tabName2">看图片</div>
         </div>
         <div style={styles.boxOut1} id="report">
           {reportScrollBox}
