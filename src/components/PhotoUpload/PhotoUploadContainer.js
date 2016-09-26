@@ -154,6 +154,7 @@ class PhotoUploadContainer extends React.Component {
           isShowProgressTips: 1, // 默认为1，显示进度提示
           success: (() => {
             const ctx = this;
+            console.log(j);
             return function (cbkRes) {
               serverIds[j] = cbkRes.serverId;
               if (serverIds.length === res.localIds.length) {
