@@ -97,6 +97,8 @@ class PhotoUploadContainer extends React.Component {
     $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
   }
   handleUserImageUpload(serverIds) {
+    console.log(this.state.server);
+    console.log(serverIds);
     this.setState({
       server: [
         ...this.state.server,
