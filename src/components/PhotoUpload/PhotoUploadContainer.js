@@ -147,6 +147,7 @@ class PhotoUploadContainer extends React.Component {
     } else {
       this.handleUserImageInput(res.localIds);
       const serverIds = [];
+      console.log(res.localIds);
       for (let i = 0; i < res.localIds.length; i ++) {
         const j = i;
         wx.uploadImage({
