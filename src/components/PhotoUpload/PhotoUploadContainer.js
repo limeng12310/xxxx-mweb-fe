@@ -97,14 +97,12 @@ class PhotoUploadContainer extends React.Component {
     $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
   }
   handleUserImageUpload(serverIds) {
-    console.log(this.state.server);
-    console.log(serverIds);
     this.setState({
       server: [
         ...this.state.server,
         ...serverIds
       ]
-    }, () => console.log(this.state.server));
+    });
   }
   handleUserImageDelete(index) {
     const newItems = [];
@@ -154,16 +152,23 @@ class PhotoUploadContainer extends React.Component {
         wx.uploadImage({
           localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
           isShowProgressTips: 1, // 默认为1，显示进度提示
-          success: (() => {
-            const ctx = this;
+          // success: (() => {
+          //   const ctx = this;
+          //   return function (cbkRes) {
+          //     console.log(j);
+          //     serverIds[j] = cbkRes.serverId;
+          //     if (serverIds.length === res.localIds.length) {
+          //       ctx.handleUserImageUpload(serverIds);
+          //     }
+          //   };
+          // })(),
+          success: (cbkRes) => {
             console.log(j);
-            return function (cbkRes) {
-              serverIds[j] = cbkRes.serverId;
-              if (serverIds.length === res.localIds.length) {
-                ctx.handleUserImageUpload(serverIds);
-              }
-            };
-          })()
+            serverIds[j] = cbkRes.serverId;
+            if (serverIds.length === res.localIds.length) {
+              this.handleUserImageUpload(serverIds);
+            }
+          }
         });
       }
     }
