@@ -102,7 +102,7 @@ class PhotoUploadContainer extends React.Component {
         ...this.state.server,
         ...serverIds
       ]
-    });
+    }, () => console.log(this.state.server));
   }
   handleUserImageDelete(index) {
     const newItems = [];
