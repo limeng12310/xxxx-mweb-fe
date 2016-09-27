@@ -159,32 +159,39 @@ class PhotoUploadContainer extends React.Component {
     } else {
       this.handleUserImageInput(res.localIds);
       const serverIds = [];
-      console.log(res.localIds);
-      for (let i = 0; i < res.localIds.length; i ++) {
-        const j = i;
-        wx.uploadImage({
-          localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
-          isShowProgressTips: 1, // 默认为1，显示进度提示
-          // success: (() => {
-          //   const ctx = this;
-          //   return function (cbkRes) {
-          //     console.log(j);
-          //     serverIds[j] = cbkRes.serverId;
-          //     if (serverIds.length === res.localIds.length) {
-          //       ctx.handleUserImageUpload(serverIds);
-          //     }
-          //   };
-          // })(),
-          success: (cbkRes) => {
-            console.log(j);
-            serverIds[j] = cbkRes.serverId;
-            if (serverIds.length === res.localIds.length) {
-              this.handleUserImageUpload(serverIds);
-            }
-          }
-        });
-      }
+      // for (let i = 0; i < res.localIds.length; i ++) {
+      //   const j = i;
+      //   wx.uploadImage({
+      //     localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
+      //     isShowProgressTips: 1, // 默认为1，显示进度提示
+      //     success: (cbkRes) => {
+      //       serverIds[j] = cbkRes.serverId;
+      //       if (serverIds.length === res.localIds.length) {
+      //         this.handleUserImageUpload(serverIds);
+      //       }
+      //     }
+      //   });
+      // }
+      const tmpLocalIds = [...res.localIds];
+      this.wxUploadSync(tmpLocalIds, serverIds);
     }
+  }
+  wxUploadSync(localIds, serverIds) {
+    const localId = localIds.pop();
+    wx.uploadImage({
+      localId,
+      isShowProgressTips: 1,
+      success: (cbkRes) => {
+        serverIds.push(cbkRes.serverId);
+        if (localIds.length === 0) {
+          // 所有图片已经上传完毕
+          this.handleUserImageUpload(serverIds);
+        } else {
+          // 继续上传图片
+          this.wxUploadSync(localIds, serverIds);
+        }
+      }
+    });
   }
   handleUserImageInputCordova(imgIds) {
     this.setState({
