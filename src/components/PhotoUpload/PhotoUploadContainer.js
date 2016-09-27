@@ -167,13 +167,10 @@ class PhotoUploadContainer extends React.Component {
   wxUploadSync(localIds, serverIds) {
     const localId = localIds.pop();
     wx.uploadImage({
-      localId: localId,
+      localId,
       isShowProgressTips: 1,
       success: (cbkRes) => {
         serverIds.push(cbkRes.serverId);
-        if (serverIds.length === res.localIds.length) {
-          this.handleUserImageUpload(serverIds);
-        }
         if (localIds.length === 0) {
           // 所有图片已经上传完毕
           this.handleUserImageUpload(serverIds);
@@ -183,7 +180,6 @@ class PhotoUploadContainer extends React.Component {
         }
       }
     });
-
   }
   clickDelete() {
     if (this.state.i) {
