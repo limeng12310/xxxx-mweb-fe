@@ -42,27 +42,12 @@ class ReportShow extends React.Component {
     $('#scrollBox').on('touchend', e => {
       $('#scroll').addClass('domMoveAnimition');
       const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
-      console.log(touchNowDis);
       if (touchNowDis > 0) {
         this.props.changeScrollDown();
       } else if (touchNowDis < 0) {
         this.props.changeScrollUp();
       }
     });
-    // $('#reportScroll').swipeUp(e => {
-    //     if ($('#scroll').scrollTop() <= handleDomHeight) {
-    //         this.props.changeScrollUp();
-    //         //$('#reportScroll').css('overflow','auto');
-    //         //$('#imageScroll').css('overflow','auto');
-    //     }
-    // });
-    // $('#imageScroll').swipeDown(e => {
-    //     if ($('#scroll').scrollTop() <= (handleDomHeight - 20) && $('#scroll').scrollTop() > 20) {
-    //         this.props.changeScrollDown();
-    //         //$('#reportScroll').css('overflow','auto');
-    //         //$('#imageScroll').css('overflow','auto');
-    //     }
-    // });
   }
 
   componentDidUpdate() {
@@ -75,12 +60,13 @@ class ReportShow extends React.Component {
     const leftSelectEles = $(leftSelectContent).find('li');
     const rightSelectEles = $('.categoryContent');
     for (let i = 0; i < leftSelectEles.length; i++) {
-      leftSelectOffsetArr.push(leftSelectEles[i].offsetTop - 64);
+      leftSelectOffsetArr.push(leftSelectEles[i].offsetTop - lib.flexible.rem * 1);
     }
     const contentHeight = $(window).height() - lib.flexible.rem * 2.2;
-    this.props.messages.values.map((firstItem, i) => {
-      return rightSelectOffsetArr.push(rightSelectEles[i].offsetTop - 64);
-    });
+    for (let i = 0; i < rightSelectEles.length; i++) {
+      rightSelectOffsetArr.push(rightSelectEles[i].offsetTop - lib.flexible.rem * 1);
+    }
+    console.log(rightSelectOffsetArr);
     $(leftSelectContent).find('li').eq(0).addClass('leftSelect');
     $(rightSelectContent).scroll(() => {
       const top = $(rightSelectContent).scrollTop();
@@ -115,7 +101,6 @@ class ReportShow extends React.Component {
     $(leftSelectContent).on('touchstart', e => {
       $('#scroll').removeClass('domMoveAnimition');
       isCollaps = !(parseFloat($('#scroll').css('transform').slice(11).slice(0, -4)) >= 1.22);
-      console.log(isCollaps);
       touchStartTop = e.changedTouches[0].screenY;
     });
     $(leftSelectContent).on('touchmove', e => {
@@ -157,7 +142,6 @@ class ReportShow extends React.Component {
         return;
       }
       const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
-      console.log(touchNowDis);
       if (touchNowDis > 0) {
         this.props.changeScrollDown();
       } else if (touchNowDis < 0) {
@@ -172,7 +156,6 @@ class ReportShow extends React.Component {
       }
       $('#scroll').removeClass('domMoveAnimition');
       isCollaps = !(parseFloat($('#scroll').css('transform').slice(11).slice(0, -4)) >= 1.22);
-      console.log(isCollaps);
       touchStartTop = e.changedTouches[0].screenY;
     });
     $(rightSelectContent).on('touchmove', e => {
@@ -214,7 +197,6 @@ class ReportShow extends React.Component {
         return;
       }
       const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
-      console.log(touchNowDis);
       if (touchNowDis > 0) {
         this.props.changeScrollDown();
       } else if (touchNowDis < 0) {
@@ -226,7 +208,6 @@ class ReportShow extends React.Component {
     $('#imageScroll').on('touchstart', e => {
       $('#scroll').removeClass('domMoveAnimition');
       isCollaps = !(parseFloat($('#scroll').css('transform').slice(11).slice(0, -4)) >= 1.22);
-      console.log(isCollaps);
       touchStartTop = e.changedTouches[0].screenY;
     });
     $('#imageScroll').on('touchmove', e => {
@@ -268,7 +249,6 @@ class ReportShow extends React.Component {
         return;
       }
       const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
-      console.log(touchNowDis);
       if (touchNowDis > 0) {
         this.props.changeScrollDown();
       } else if (touchNowDis < 0) {
@@ -343,9 +323,9 @@ class ReportShow extends React.Component {
   clickChange(e) {
     const rightSelectOffsetArr = [];
     const rightSelectEles = $('.categoryContent');
-    this.props.messages.values.map((firstItem, i) => {
-      return rightSelectOffsetArr.push(rightSelectEles[i].offsetTop - 64);
-    });
+    for (let i = 0; i < rightSelectEles.length; i++) {
+      rightSelectOffsetArr.push(rightSelectEles[i].offsetTop - lib.flexible.rem * 1);
+    }
     const end = rightSelectOffsetArr[e.target.getAttribute('data-index') - 0] + 10;
     const start = $('#rightSelectContent').scrollTop();
     $('#rightSelectContent').addClass('stopScrollMove');
@@ -535,7 +515,8 @@ class ReportShow extends React.Component {
               })
 
             }
-            <li style={{height: 'calc(100% - 1.3rem)'}}></li>
+            <div className="categoryContent" style={{height: 'calc(100% - 1.3rem)'}}>
+            </div>
           </ul>
         </div>
       );

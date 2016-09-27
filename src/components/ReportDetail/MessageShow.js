@@ -18,7 +18,6 @@ class MessageShow extends React.Component {
       const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
       const moveDistence = lib.flexible.px2rem(touchNowDis);
       const marginTopNow = parseFloat($('#scroll').css('transform').slice(11).slice(0, -4));
-      console.log(marginTopNow);
       if (marginTopNow >= 1.22 && touchNowDis > 0) {
         touchStartTop = e.changedTouches[0].screenY;
         return;
@@ -33,7 +32,6 @@ class MessageShow extends React.Component {
       e.preventDefault();
       $('#scroll').addClass('domMoveAnimition');
       const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
-      // console.log(touchNowDis);
       if (touchNowDis > 0) {
         this.props.changeScrollDown();
       } else if (touchNowDis < 0) {
