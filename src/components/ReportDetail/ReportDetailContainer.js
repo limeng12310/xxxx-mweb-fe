@@ -89,16 +89,16 @@ class ReportDetailContainer extends React.Component {
   }
 
   handleChangeScrollUp() {
-    $('#scroll').css('margin-top', '-6.58rem');
+    $('#scroll').css('transform', 'translateY(-6.58rem)');
   }
 
   handleChangeScrollDown() {
-    $('#scroll').css('margin-top', '1.22rem');
+    $('#scroll').css('transform', 'translateY(1.22rem)');
   }
 
   handleDomMove(distent, isCollaps) {
     const marginNow = isCollaps ? -6.58 : 1.22;
-    $('#scroll').css('margin-top', `${(marginNow + distent)}rem`);
+    $('#scroll').css('transform', `translateY(${(marginNow + distent)}rem)`);
   }
 
   handleGoItemReport(leftIndex, rightIndex) {
@@ -123,7 +123,8 @@ class ReportDetailContainer extends React.Component {
         position: 'absolute',
         width: '100%',
         height: 'calc(100% - 1.22rem + 7.8rem)',
-        marginTop: '1.22rem',
+        //marginTop: '1.22rem',
+        transform: 'translateY(1.22rem)',
         overflowY: 'hidden',
         WebkitOverflowScrolling: 'touch'
       }
