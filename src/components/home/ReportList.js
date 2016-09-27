@@ -82,6 +82,14 @@ const ReportItemStyle = {
     filter: 'alpha(opacity=100)',
     MozOpacity: 1,
     opacity: 1
+  },
+  reportListNone: {
+    fontSize: '0.5rem',
+    color: '#fff',
+    width: '80%',
+    height: '4.8rem',
+    lineHeight: '4.8rem',
+    textAlign: 'center'
   }
 };
 
@@ -105,68 +113,74 @@ class ReportItem extends React.Component {
     } else {
       ReportTu = Photo;
     }
-    return (
-      <div style={ReportItemStyle.reportList}>
-        {
-          data.map((item, i) => {
-            const Year = moment(item.checkTime).format('YY');
-            const Month = moment(item.checkTime).format('MM');
-            const Day = moment(item.checkTime).format('DD');
-            let close = {};
-            if (data[i].status === '返回用户') {
-              ClickFunction = () => hashHistory.push({ pathname: '/report-detail',
-                state: { id: item.id, location: item.checkAddr } });
-              close = {
-                filter: 'alpha(opacity=100)',
-                MozOpacity: 1,
-                opacity: 1
-              };
-            } else {
-              ClickFunction = () => { alert('报告正在解读中'); };
-              close = {
-                filter: 'alpha(opacity=60)',
-                MozOpacity: 0.6,
-                opacity: 0.6
-              };
-            }
-            let checkAdress;
-            if (item.checkAddr === null ||
-              typeof (item.checkAddr) === 'undefined' ||
-              item.checkAddr === '') {
-              checkAdress = '';
-            } else {
-              checkAdress = item.checkAddr;
-            }
-            return (
-              <div style={ReportItemStyle.reportItem}>
-                <div style={ReportItemStyle.reportContent}>
-                  <div onTouchTap={ClickFunction} style={Object.assign({}, ReportItemStyle.report, close)}>
-                    <img src={ReportTu} alt="" style={ReportItemStyle.reportKpi} />
-                    <b style={ReportItemStyle.year}>{Year}</b>
-                    <div style={ReportItemStyle.Date}>
-                      <b style={ReportItemStyle.day}>{Month}</b>
-                      <span style={ReportItemStyle.diagonal}></span>
-                      <b style={ReportItemStyle.month}>{Day}</b>
+    if (data.length !== 0) {
+      return (
+        <div style={ReportItemStyle.reportList}>
+          {
+            data.map((item, i) => {
+              const Year = moment(item.checkTime).format('YY');
+              const Month = moment(item.checkTime).format('MM');
+              const Day = moment(item.checkTime).format('DD');
+              let close = {};
+              if (data[i].status === '返回用户') {
+                ClickFunction = () => hashHistory.push({ pathname: '/report-detail',
+                  state: { id: item.id, location: item.checkAddr } });
+                close = {
+                  filter: 'alpha(opacity=100)',
+                  MozOpacity: 1,
+                  opacity: 1
+                };
+              } else {
+                ClickFunction = () => { alert('报告正在解读中'); };
+                close = {
+                  filter: 'alpha(opacity=60)',
+                  MozOpacity: 0.6,
+                  opacity: 0.6
+                };
+              }
+              let checkAdress;
+              if (item.checkAddr === null ||
+                typeof (item.checkAddr) === 'undefined' ||
+                item.checkAddr === '') {
+                checkAdress = '';
+              } else {
+                checkAdress = item.checkAddr;
+              }
+              return (
+                <div style={ReportItemStyle.reportItem}>
+                  <div style={ReportItemStyle.reportContent}>
+                    <div onTouchTap={ClickFunction} style={Object.assign({}, ReportItemStyle.report, close)}>
+                      <img src={ReportTu} alt="" style={ReportItemStyle.reportKpi} />
+                      <b style={ReportItemStyle.year}>{Year}</b>
+                      <div style={ReportItemStyle.Date}>
+                        <b style={ReportItemStyle.day}>{Month}</b>
+                        <span style={ReportItemStyle.diagonal}></span>
+                        <b style={ReportItemStyle.month}>{Day}</b>
+                      </div>
+                    </div>
+                    <span onTouchTap={ClickFunction} style={ReportItemStyle.hospital}>{checkAdress}</span>
+                    <div>
+                      <img
+                        src={DeleteIcon}
+                        data-index={i}
+                        alt=""
+                        style={ReportItemStyle.Delete}
+                        onTouchTap={this.reportDelete}
+                      />
                     </div>
                   </div>
-                  <span onTouchTap={ClickFunction} style={ReportItemStyle.hospital}>{checkAdress}</span>
-                  <div>
-                    <img
-                      src={DeleteIcon}
-                      data-index={i}
-                      alt=""
-                      style={ReportItemStyle.Delete}
-                      onTouchTap={this.reportDelete}
-                    />
-                  </div>
+                  <div className="line"></div>
                 </div>
-                <div className="line"></div>
-              </div>
-            );
-          })
-        }
-      </div>
-    );
+              );
+            })
+          }
+        </div>
+      );
+    } else {
+      return (
+        <div style={ReportItemStyle.reportListNone}>点击右侧按钮上传报告</div>
+      );
+    }
   }
 }
 ReportItem.propTypes = {

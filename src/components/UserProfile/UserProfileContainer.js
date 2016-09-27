@@ -12,6 +12,8 @@ class UserProfileContainer extends React.Component {
     this.bindPhone = this.bindPhone.bind(this);
     this.changePhone = this.changePhone.bind(this);
     this.logout = this.logout.bind(this);
+    this.success = this.success.bind(this);
+    this.failure = this.failure.bind(this);
   }
   changePassword() {
     segue.performSegue('changePasswordSegue');
@@ -30,6 +32,13 @@ class UserProfileContainer extends React.Component {
   }
   logout() {
     segue.performSegue('unwindToLogin');
+    LogoutPlugin.logout(this.success, this.failure);
+  }
+  success() {
+    alert('退出成功');
+  }
+  failure() {
+    alert('退出失败');
   }
   render() {
     const data = {

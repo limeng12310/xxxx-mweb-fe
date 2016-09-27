@@ -24,6 +24,9 @@ class PhotoUploadContainer extends React.Component {
     this.clickChange = this.clickChange.bind(this);
     this.clickDelete = this.clickDelete.bind(this);
     this.wxChooseImgSuccess = this.wxChooseImgSuccess.bind(this);
+    this.successFunction = this.successFunction.bind(this);
+    this.failFunction = this.failFunction.bind(this);
+    this.handleUserImageInputCordova = this.handleUserImageInputCordova.bind(this);
     this.state = {
       date: '',
       location: '',
@@ -127,19 +130,27 @@ class PhotoUploadContainer extends React.Component {
     alert('最多只能添加九张图片！');
   }
   clickChange() {
-    this.setState({
-      isDelete: false,
-      i: true
-    });
-    wx.chooseImage({
-      count: 9,
-      sizeType: ['original'],
-      sourceType: ['album', 'camera'],
-      success: this.wxChooseImgSuccess,
-      error() {
-        alert('图片选择失败');
-      }
-    });
+    if (CORDOVA_ENV === 'false') {
+      this.setState({
+        isDelete: false,
+        i: true
+      });
+      wx.chooseImage({
+        count: 9,
+        sizeType: ['original'],
+        sourceType: ['album', 'camera'],
+        success: this.wxChooseImgSuccess,
+        error() {
+          alert('图片选择失败');
+        }
+      });
+    } else {
+      this.setState({
+        isDelete: false,
+        i: true
+      });
+      SelectImagePlugin.selectImage(this.successFunction, this.failFunction);
+    }
   }
   wxChooseImgSuccess(res) {
     if ((this.state.count + res.localIds.length) > 9) {
@@ -173,6 +184,26 @@ class PhotoUploadContainer extends React.Component {
         });
       }
     }
+  }
+  handleUserImageInputCordova(imgIds) {
+    this.setState({
+      items: [
+        ...this.state.items,
+        ...imgIds
+      ],
+      count: this.state.count + 1
+    });
+    $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
+  }
+  successFunction(text) {
+    if ((this.state.count + 1) > 9) {
+      alert('最多只能添加九张图片！');
+    } else {
+      this.handleUserImageInputCordova(text);
+    }
+  }
+  failFunction() {
+    alert('fail:' + message);
   }
   clickDelete() {
     if (this.state.i) {
