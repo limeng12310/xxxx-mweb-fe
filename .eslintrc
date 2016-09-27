@@ -6,7 +6,11 @@
     "wx": true,
     "$": true,
     "lib": true,
-    "segue": true
+    "segue": true,
+    "SelectImagePlugin": true,
+    "FullScreenImage": true,
+    "LogoutPlugin": true,
+    "CORDOVA_ENV": true
   },
   "rules": {
     "max-len": [ "error", 120 ],

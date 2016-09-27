@@ -25,7 +25,6 @@ class PhotoUploadContainer extends React.Component {
     this.clickDelete = this.clickDelete.bind(this);
     this.wxChooseImgSuccess = this.wxChooseImgSuccess.bind(this);
     this.successFunction = this.successFunction.bind(this);
-    this.failFunction = this.failFunction.bind(this);
     this.handleUserImageInputCordova = this.handleUserImageInputCordova.bind(this);
     this.state = {
       date: '',
@@ -149,7 +148,9 @@ class PhotoUploadContainer extends React.Component {
         isDelete: false,
         i: true
       });
-      SelectImagePlugin.selectImage(this.successFunction, this.failFunction);
+      SelectImagePlugin.selectImage(this.successFunction, () => {
+        alert('图片选择失败');
+      });
     }
   }
   wxChooseImgSuccess(res) {
@@ -201,9 +202,6 @@ class PhotoUploadContainer extends React.Component {
     } else {
       this.handleUserImageInputCordova(text);
     }
-  }
-  failFunction() {
-    alert('fail:' + message);
   }
   clickDelete() {
     if (this.state.i) {

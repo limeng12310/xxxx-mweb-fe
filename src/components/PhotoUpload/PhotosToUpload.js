@@ -14,7 +14,7 @@ class PhotosToUpload extends React.Component {
         urls: this.props.items // 需要预览的图片http链接列表
       });
     } else {
-      FullScreenImage.showImageURL('file://' + e.target.getAttribute('data-url'));
+      FullScreenImage.showImageURL(`file://${e.target.getAttribute('data-url')}`);
     }
   }
   clickDeleteImage(e) {

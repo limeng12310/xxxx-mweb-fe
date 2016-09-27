@@ -176,11 +176,11 @@ class ReportItem extends React.Component {
           }
         </div>
       );
-    } else {
-      return (
-        <div style={ReportItemStyle.reportListNone}>点击右侧按钮上传报告</div>
-      );
     }
+
+    return (
+      <div style={ReportItemStyle.reportListNone}>点击右侧按钮上传报告</div>
+    );
   }
 }
 ReportItem.propTypes = {
