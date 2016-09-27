@@ -42,6 +42,6 @@ a, input, textarea {
 }
 
 .domMoveAnimition {
-    transition: margin-top 300ms ease;
-    -webkit-transition: margin-top 300ms ease;
+    transition: transform 300ms ease;
+    -webkit-transition: transform 300ms ease;
 }

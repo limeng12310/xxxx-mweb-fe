@@ -21,14 +21,14 @@ class ReportShow extends React.Component {
     // TAB标签事件监听
     $('#scrollBox').on('touchstart', e => {
       $('#scroll').removeClass('domMoveAnimition');
-      isCollaps = !(parseFloat($('#scroll').css('margin-top')) >= 1.22);
+      isCollaps = !(parseFloat($('#scroll').css('transform').slice(11).slice(0, -4)) >= 1.22);
       touchStartTop = e.changedTouches[0].screenY;
     });
     $('#scrollBox').on('touchmove', e => {
       e.preventDefault();
       const touchNowDis = e.changedTouches[0].screenY - touchStartTop;
       const moveDistence = lib.flexible.px2rem(touchNowDis);
-      const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+      const marginTopNow = parseFloat($('#scroll').css('transform').slice(11).slice(0, -4));
       if (marginTopNow >= 1.22 && touchNowDis > 0) {
         touchStartTop = e.changedTouches[0].screenY;
         return;
@@ -114,7 +114,7 @@ class ReportShow extends React.Component {
     // 左侧
     $(leftSelectContent).on('touchstart', e => {
       $('#scroll').removeClass('domMoveAnimition');
-      isCollaps = !(parseFloat($('#scroll').css('margin-top')) >= 1.22);
+      isCollaps = !(parseFloat($('#scroll').css('transform').slice(11).slice(0, -4)) >= 1.22);
       console.log(isCollaps);
       touchStartTop = e.changedTouches[0].screenY;
     });
@@ -124,7 +124,7 @@ class ReportShow extends React.Component {
         if (touchNowDis > 0) {
           e.preventDefault();
           const moveDistence = lib.flexible.px2rem(touchNowDis);
-          const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+          const marginTopNow = parseFloat($('#scroll').css('transform').slice(11).slice(0, -4));
           if (marginTopNow >= 1.22 && touchNowDis > 0) {
             touchStartTop = e.changedTouches[0].screenY;
             return;
@@ -139,7 +139,7 @@ class ReportShow extends React.Component {
       } else if (touchNowDis < 0 && isCollaps === false) {
         e.preventDefault();
         const moveDistence = lib.flexible.px2rem(touchNowDis);
-        const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+        const marginTopNow = parseFloat($('#scroll').css('transform').slice(11).slice(0, -4));
         if (marginTopNow >= 1.22 && touchNowDis > 0) {
           touchStartTop = e.changedTouches[0].screenY;
           return;
@@ -171,7 +171,7 @@ class ReportShow extends React.Component {
         $('#rightSelectContent').removeClass('stopScrollMove');
       }
       $('#scroll').removeClass('domMoveAnimition');
-      isCollaps = !(parseFloat($('#scroll').css('margin-top')) >= 1.22);
+      isCollaps = !(parseFloat($('#scroll').css('transform').slice(11).slice(0, -4)) >= 1.22);
       console.log(isCollaps);
       touchStartTop = e.changedTouches[0].screenY;
     });
@@ -181,7 +181,7 @@ class ReportShow extends React.Component {
         if (touchNowDis > 0) {
           e.preventDefault();
           const moveDistence = lib.flexible.px2rem(touchNowDis);
-          const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+          const marginTopNow = parseFloat($('#scroll').css('transform').slice(11).slice(0, -4));
           if (marginTopNow >= 1.22 && touchNowDis > 0) {
             touchStartTop = e.changedTouches[0].screenY;
             return;
@@ -196,7 +196,7 @@ class ReportShow extends React.Component {
       } else if (touchNowDis < 0 && isCollaps === false) {
         e.preventDefault();
         const moveDistence = lib.flexible.px2rem(touchNowDis);
-        const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+        const marginTopNow = parseFloat($('#scroll').css('transform').slice(11).slice(0, -4));
         if (marginTopNow >= 1.22 && touchNowDis > 0) {
           touchStartTop = e.changedTouches[0].screenY;
           return;
@@ -225,7 +225,7 @@ class ReportShow extends React.Component {
     // 图片报告事件监听
     $('#imageScroll').on('touchstart', e => {
       $('#scroll').removeClass('domMoveAnimition');
-      isCollaps = !(parseFloat($('#scroll').css('margin-top')) >= 1.22);
+      isCollaps = !(parseFloat($('#scroll').css('transform').slice(11).slice(0, -4)) >= 1.22);
       console.log(isCollaps);
       touchStartTop = e.changedTouches[0].screenY;
     });
@@ -235,7 +235,7 @@ class ReportShow extends React.Component {
         if (touchNowDis > 0) {
           e.preventDefault();
           const moveDistence = lib.flexible.px2rem(touchNowDis);
-          const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+          const marginTopNow = parseFloat($('#scroll').css('transform').slice(11).slice(0, -4));
           if (marginTopNow >= 1.22 && touchNowDis > 0) {
             touchStartTop = e.changedTouches[0].screenY;
             return;
@@ -250,7 +250,7 @@ class ReportShow extends React.Component {
       } else if (touchNowDis < 0 && isCollaps === false) {
         e.preventDefault();
         const moveDistence = lib.flexible.px2rem(touchNowDis);
-        const marginTopNow = parseFloat($('#scroll').css('margin-top'));
+        const marginTopNow = parseFloat($('#scroll').css('transform').slice(11).slice(0, -4));
         if (marginTopNow >= 1.22 && touchNowDis > 0) {
           touchStartTop = e.changedTouches[0].screenY;
           return;
