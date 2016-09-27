@@ -36,9 +36,9 @@ a, input, textarea {
 }
 
 .leftSelect {
-    border: 0.026667rem solid;
     border-radius: 0.026667rem;
     display: table;
+    border: 0.026667rem solid rgb(156, 156, 156);
 }
 
 .domMoveAnimition {
