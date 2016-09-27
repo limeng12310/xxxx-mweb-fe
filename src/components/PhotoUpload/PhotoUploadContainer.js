@@ -185,9 +185,11 @@ class PhotoUploadContainer extends React.Component {
       box: {
         position: 'absolute',
         height: '100%',
-        width: '100%'
+        width: '100%',
+        minHeight: '13rem'
       },
       container: {
+        zIndex: '999',
         position: 'absolute',
         width: '100%',
         height: 'calc(100% - 2.4rem - 5rem)',
@@ -210,7 +212,7 @@ class PhotoUploadContainer extends React.Component {
         backgroundImage: `url(${addImg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
-        zIndex: 2000
+        zIndex: 100
       },
       delNone: {
         width: '0.7815rem',
@@ -246,7 +248,8 @@ class PhotoUploadContainer extends React.Component {
         height: '4.5rem',
         position: 'absolute',
         left: 0,
-        bottom: 0
+        top: 'calc(100% - 4.5rem)',
+        zIndex: '99'
       }
     };
     let add;

@@ -123,7 +123,6 @@ class ReportDetailContainer extends React.Component {
         position: 'absolute',
         width: '100%',
         height: 'calc(100% - 1.22rem + 7.8rem)',
-        //marginTop: '1.22rem',
         transform: 'translateY(1.22rem)',
         overflowY: 'hidden',
         WebkitOverflowScrolling: 'touch'
