@@ -11,6 +11,13 @@ import Header from './../common/Header';
 import config from '../../config';
 import { hashHistory } from 'react-router';
 
+const ossClient = new OSS.Wrapper({
+  region: config.aliOss.accessKeyId,
+  accessKeyId: config.aliOss.accessKeyId,
+  accessKeySecret: config.aliOss.accessKeySecret,
+  bucket: config.aliOss.bucket
+});
+
 class PhotoUploadContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -24,22 +31,22 @@ class PhotoUploadContainer extends React.Component {
     this.clickChange = this.clickChange.bind(this);
     this.clickDelete = this.clickDelete.bind(this);
     this.wxChooseImgSuccess = this.wxChooseImgSuccess.bind(this);
-    this.successFunction = this.successFunction.bind(this);
-    this.handleUserImageInputCordova = this.handleUserImageInputCordova.bind(this);
+    // this.successFunction = this.successFunction.bind(this);
+    // this.failFunction = this.failFunction.bind(this);
+    this.handleUserImageUploadCordova = this.handleUserImageUploadCordova.bind(this);
     this.state = {
       date: '',
       location: '',
       items: [],
-      count: 0,
-      server: [],
-      isDelete: false,
-      i: true
+      isDelete: false // 小删除按钮是否显示
     };
+    this.bigDelete = true; // true表示点击大删除按钮时小删除按钮出现，false表示点击大删除按钮时小删除按钮消失
+    this.server = [];
+    this.count = 0;
+    this.promiseItems = [];
+    this.imgUrl = 'file:///C:/Users/zhao/Desktop/imgUrl.jpg';
   }
-  componentWillMount() {
-    // 初始化alioss client (CORDOVA环境)
-    // this.client = client;
-  }
+
   photoSubmit() {
     if (this.state.date === '') {
       alert('检查时间不能为空！');
@@ -48,38 +55,40 @@ class PhotoUploadContainer extends React.Component {
     } else if (this.state.items.length === 0) {
       alert('您还未添加图片！');
     } else {
-      fetch(`${config.apiPrefix}/reports`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          checkTime: this.state.date, // '2016-04-29 11:37:45'
-          checkAddr: this.state.location,
-          reportType: '图片', // '图片'
-          reportValues: this.state.server // ['...', ... ] //图片报告为mediaId
-        }),
-        credentials: 'include'
-      })
-      .then(response => {
-        if (response.status === 200) {
-          return response.json();
-        }
-        throw new Error;
-      })
-      .then(json => {
-        if (json.retCode === 0) {
-          alert('照片上传成功！');
-          hashHistory.goBack();
-        } else {
-          alert('请求出错！');
-        }
-      })
-      .catch(error => {
-        alert('照片上传失败！');
-        console.log(error);
-      });
+      Promise.all(this.promiseItems)
+        .then(() => {
+          fetch(`${config.apiPrefix}/reports`, {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              checkTime: this.state.date, // '2016-04-29 11:37:45'
+              checkAddr: this.state.location,
+              reportType: '图片', // '图片'
+              reportValues: this.server // ['...', ... ] //图片报告为mediaId
+            })
+          });
+        })
+        .then(response => {
+          if (response.status === 200) {
+            return response.json();
+          }
+          throw new Error();
+        })
+        .then(json => {
+          if (json.retCode === 0) {
+            alert('报告上传成功！');
+            hashHistory.goBack();
+          } else {
+            alert('请求出错！');
+          }
+        })
+        .catch(error => {
+          alert('报告上传失败！');
+          throw error;
+        });
     }
   }
   handleUserDateInput(date) {
@@ -89,21 +98,46 @@ class PhotoUploadContainer extends React.Component {
     this.setState({ location });
   }
   handleUserImageInput(imgIds) {
-    this.setState({
-      items: [
-        ...this.state.items,
-        ...imgIds
-      ],
-      count: this.state.count + imgIds.length
-    });
+    if (CORDOVA_ENV === 'false') {
+      this.setState({
+        items: [
+          ...this.state.items,
+          ...imgIds
+        ]
+      });
+      this.count = this.count + imgIds.length;
+    } else {
+      this.setState({
+        items: [
+          ...this.state.items,
+          ...imgIds
+        ]
+      });
+      this.count = this.count + 1;
+    }
     $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
   }
   handleUserImageUpload(serverIds) {
-    this.setState({
-      server: [
-        ...this.state.server,
-        ...serverIds
-      ]
+    this.server = [
+      ...this.server,
+      ...serverIds
+    ];
+  }
+  handleUserImageUploadCordova(imgUrl, imgIndex) {
+    return new Promise((resolve, reject) => {
+      const putKey = `/report/${new Date().getTime()}.jpeg`;
+      ossClient.put(putKey, `${imgUrl}`)
+        .then(result => {
+          console.log(result);
+          // TODO 出错时处理
+
+          this.server[imgIndex] = `${config.aliOss.ossPrefix}${putKey}`;
+          resolve();
+        })
+        .catch(error => {
+          alert('出错啦！');
+          reject(error);
+        });
     });
   }
   handleUserImageDelete(index) {
@@ -114,26 +148,36 @@ class PhotoUploadContainer extends React.Component {
       }
     }
     const newSever = [];
-    for (let i = 0; i < this.state.server.length; i ++) {
+    for (let i = 0; i < this.server.length; i ++) {
       if (i !== index) {
-        newSever.push(this.state.server[i]);
+        newSever.push(this.server[i]);
       }
     }
     this.setState({
-      items: newItems,
-      server: newSever,
-      count: this.state.count - 1
+      items: newItems
     });
+    this.server = newSever;
+    this.count = this.count - 1;
+    if (CORDOVA_ENV === 'true') {
+      const newPromiseItems = [];
+      for (let i = 0; i < this.server.length; i ++) {
+        if (i !== index) {
+          newPromiseItems.push(this.promiseItems[i]);
+        }
+      }
+      this.promiseItems = newPromiseItems;
+    }
   }
   clickAlert() {
     alert('最多只能添加九张图片！');
   }
-  clickChange() {
+  clickChange(event) {
+    event.preventDefault();
     if (CORDOVA_ENV === 'false') {
       this.setState({
-        isDelete: false,
-        i: true
+        isDelete: false
       });
+      this.bigDelete = true;
       wx.chooseImage({
         count: 9,
         sizeType: ['original'],
@@ -145,75 +189,68 @@ class PhotoUploadContainer extends React.Component {
       });
     } else {
       this.setState({
-        isDelete: false,
-        i: true
+        isDelete: false
       });
+      this.bigDelete = true;
       SelectImagePlugin.selectImage(this.successFunction, () => {
-        alert('图片选择失败');
+        alert('图片选择失败！');
       });
+
+      this.handleUserImageInput([this.imgUrl]);
+      // 当前图片的下标，因为在handleUserImageInput里加1了，所以这里要减1
+      const imgIndex = this.count - 1;
+      this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(this.imgUrl, imgIndex);
     }
   }
   wxChooseImgSuccess(res) {
-    if ((this.state.count + res.localIds.length) > 9) {
+    if ((this.count + res.localIds.length) > 9) {
       alert('最多只能添加九张图片！');
     } else {
       this.handleUserImageInput(res.localIds);
       const serverIds = [];
-      console.log(res.localIds);
       for (let i = 0; i < res.localIds.length; i ++) {
         const j = i;
         wx.uploadImage({
           localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
           isShowProgressTips: 1, // 默认为1，显示进度提示
-          // success: (() => {
-          //   const ctx = this;
-          //   return function (cbkRes) {
-          //     console.log(j);
-          //     serverIds[j] = cbkRes.serverId;
-          //     if (serverIds.length === res.localIds.length) {
-          //       ctx.handleUserImageUpload(serverIds);
-          //     }
-          //   };
-          // })(),
-          success: (cbkRes) => {
-            console.log(j);
-            serverIds[j] = cbkRes.serverId;
-            if (serverIds.length === res.localIds.length) {
-              this.handleUserImageUpload(serverIds);
-            }
-          }
+          success: (() => {
+            const ctx = this;
+            return function (cbkRes) {
+              serverIds[j] = cbkRes.serverId;
+              if (serverIds.length === res.localIds.length) {
+                ctx.handleUserImageUpload(serverIds);
+              }
+            };
+          })()
         });
       }
     }
   }
-  handleUserImageInputCordova(imgIds) {
-    this.setState({
-      items: [
-        ...this.state.items,
-        ...imgIds
-      ],
-      count: this.state.count + 1
-    });
-    $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
-  }
-  successFunction(text) {
-    if ((this.state.count + 1) > 9) {
-      alert('最多只能添加九张图片！');
-    } else {
-      this.handleUserImageInputCordova(text);
-    }
-  }
-  clickDelete() {
-    if (this.state.i) {
+  // successFunction(imgUrl) {
+  //   if ((this.count + 1) > 9) {
+  //     alert('最多只能添加九张图片！');
+  //   } else {
+  //     this.handleUserImageInput(imgUrl);
+  //     // 当前图片的下标，因为在handleUserImageInput里加1了，所以这里要减1
+  //     const imgIndex = this.count - 1;
+  //     this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(imgUrl, imgIndex);
+  //   }
+  // }
+  // failFunction() {
+  //   alert('fail:' + message);
+  // }
+  clickDelete(event) {
+    event.preventDefault();
+    if (this.bigDelete) {
       this.setState({
-        isDelete: true,
-        i: false
+        isDelete: true
       });
+      this.bigDelete = false;
     } else {
       this.setState({
-        isDelete: false,
-        i: true
+        isDelete: false
       });
+      this.bigDelete = true;
     }
   }
   render() {
@@ -228,11 +265,9 @@ class PhotoUploadContainer extends React.Component {
       box: {
         position: 'absolute',
         height: '100%',
-        width: '100%',
-        minHeight: '13rem'
+        width: '100%'
       },
       container: {
-        zIndex: '999',
         position: 'absolute',
         width: '100%',
         height: 'calc(100% - 2.4rem - 5rem)',
@@ -255,7 +290,7 @@ class PhotoUploadContainer extends React.Component {
         backgroundImage: `url(${addImg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
-        zIndex: 100
+        zIndex: 2000
       },
       delNone: {
         width: '0.7815rem',
@@ -291,24 +326,23 @@ class PhotoUploadContainer extends React.Component {
         height: '4.5rem',
         position: 'absolute',
         left: 0,
-        top: 'calc(100% - 4.5rem)',
-        zIndex: '99'
+        bottom: 0
       }
     };
     let add;
     let del;
-    if (this.state.count >= 9) {
+    if (this.count >= 9) {
       add = (
-        <div onTouchTap={this.clickAlert} style={styles.add}></div>
+        <div onClick={this.clickAlert} style={styles.add}></div>
       );
     } else {
       add = (
-        <div onTouchTap={this.clickChange} style={styles.add}></div>
+        <div onClick={this.clickChange} style={styles.add}></div>
       );
     }
-    if (this.state.count >= 1) {
+    if (this.count >= 1) {
       del = (
-        <div onTouchTap={this.clickDelete} style={styles.del}></div>
+        <div onClick={this.clickDelete} style={styles.del}></div>
       );
     } else {
       del = (

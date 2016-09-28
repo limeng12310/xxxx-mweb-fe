@@ -31,11 +31,11 @@ class UserProfileContainer extends React.Component {
     segue.performSegue('changePhoneSegue');
   }
   logout() {
-    segue.performSegue('unwindToLogin');
+    // segue.performSegue('unwindToLogin');
     LogoutPlugin.logout(this.success, this.failure);
   }
   success() {
-    alert('退出成功');
+    segue.performSegue('unwindToLogin');
   }
   failure() {
     alert('退出失败');

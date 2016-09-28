@@ -10,7 +10,8 @@
     "SelectImagePlugin": true,
     "FullScreenImage": true,
     "LogoutPlugin": true,
-    "CORDOVA_ENV": true
+    "CORDOVA_ENV": true,
+    "OSS": true
   },
   "rules": {
     "max-len": [ "error", 120 ],
