@@ -198,23 +198,45 @@ class PhotoUploadContainer extends React.Component {
     } else {
       this.handleUserImageInput(res.localIds);
       const serverIds = [];
-      for (let i = 0; i < res.localIds.length; i ++) {
-        const j = i;
-        wx.uploadImage({
-          localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
-          isShowProgressTips: 1, // 默认为1，显示进度提示
-          success: (() => {
-            const ctx = this;
-            return function (cbkRes) {
-              serverIds[j] = cbkRes.serverId;
-              if (serverIds.length === res.localIds.length) {
-                ctx.handleUserImageUpload(serverIds);
-              }
-            };
-          })()
-        });
-      }
+      // for (let i = 0; i < res.localIds.length; i ++) {
+      //   const j = i;
+      //   wx.uploadImage({
+      //     localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
+      //     isShowProgressTips: 1, // 默认为1，显示进度提示
+      //     success: (() => {
+      //       const ctx = this;
+      //       return function (cbkRes) {
+      //         serverIds[j] = cbkRes.serverId;
+      //         if (serverIds.length === res.localIds.length) {
+      //           ctx.handleUserImageUpload(serverIds);
+      //         }
+      //       };
+      //     })()
+      //   });
+      // }
+      const tmpLocalIds = [...res.localIds];
+      this.wxUploadSync(tmpLocalIds, serverIds);
     }
+  }
+  wxUploadSync(localIds, serverIds) {
+    const localId = localIds.pop();
+    wx.uploadImage({
+      localId,
+      isShowProgressTips: 1,
+      success: (cbkRes) => {
+        serverIds.push(cbkRes.serverId);
+        if (serverIds.length === localIds.length) {
+          this.handleUserImageUpload(serverIds);
+        }
+        if (localIds.length === 0) {
+          // 所有图片上传完毕
+          this.handleUserImageUpload(serverIds);
+        } else {
+          // 继续上传图片
+          this.wxUploadSync(localIds, serverIds);
+        }
+      }
+    });
   }
   // successFunction(imgUrl) {
   //   if ((this.state.count + 1) > 9) {
