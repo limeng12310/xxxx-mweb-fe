@@ -98,23 +98,13 @@ class PhotoUploadContainer extends React.Component {
     this.setState({ location });
   }
   handleUserImageInput(imgIds) {
-    if (CORDOVA_ENV === 'false') {
-      this.setState({
-        items: [
-          ...this.state.items,
-          ...imgIds
-        ]
-      });
-      this.count = this.count + imgIds.length;
-    } else {
-      this.setState({
-        items: [
-          ...this.state.items,
-          ...imgIds
-        ]
-      });
-      this.count = this.count + 1;
-    }
+    this.setState({
+      items: [
+        ...this.state.items,
+        ...imgIds
+      ]
+    });
+    this.count = this.count + imgIds.length;
     $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
   }
   handleUserImageUpload(serverIds) {
@@ -226,23 +216,13 @@ class PhotoUploadContainer extends React.Component {
       }
     }
   }
-  handleUserImageInputCordova(imgIds) {
-    this.setState({
-      items: [
-        ...this.state.items,
-        ...imgIds
-      ],
-      count: this.state.count + 1
-    });
-    $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
-  }
-  successFunction(text) {
-    if ((this.state.count + 1) > 9) {
-      alert('最多只能添加九张图片！');
-    } else {
-      this.handleUserImageInputCordova(text);
-    }
-  }
+  // successFunction(text) {
+  //   if ((this.state.count + 1) > 9) {
+  //     alert('最多只能添加九张图片！');
+  //   } else {
+  //     this.handleUserImageInput(text);
+  //   }
+  // }
   clickDelete() {
     if (this.state.i) {
       this.setState({
