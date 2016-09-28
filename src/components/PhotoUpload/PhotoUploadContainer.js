@@ -57,7 +57,7 @@ class PhotoUploadContainer extends React.Component {
     } else {
       Promise.all(this.promiseItems)
         .then(() => {
-          fetch(`${config.apiPrefix}/reports`, {
+          return fetch(`${config.apiPrefix}/reports`, {
             method: 'POST',
             headers: {
               Accept: 'application/json',
