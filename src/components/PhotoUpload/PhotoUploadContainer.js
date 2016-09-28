@@ -192,9 +192,9 @@ class PhotoUploadContainer extends React.Component {
         isDelete: false
       });
       this.bigDelete = true;
-      SelectImagePlugin.selectImage(this.successFunction, () => {
-        alert('图片选择失败！');
-      });
+      // SelectImagePlugin.selectImage(this.successFunction, () => {
+      //   alert('图片选择失败！');
+      // });
 
       this.handleUserImageInput([this.imgUrl]);
       // 当前图片的下标，因为在handleUserImageInput里加1了，所以这里要减1
