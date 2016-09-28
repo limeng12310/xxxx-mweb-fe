@@ -225,9 +225,6 @@ class PhotoUploadContainer extends React.Component {
       isShowProgressTips: 1,
       success: (cbkRes) => {
         serverIds.push(cbkRes.serverId);
-        if (serverIds.length === localIds.length) {
-          this.handleUserImageUpload(serverIds);
-        }
         if (localIds.length === 0) {
           // 所有图片上传完毕
           this.handleUserImageUpload(serverIds);
