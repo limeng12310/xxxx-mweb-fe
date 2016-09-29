@@ -1,4 +1,4 @@
-import background from './img/background.jpg';
+import background from './img/background.png';
 import headPhoto from './img/photo.jpg';
 
 import ButtomBar from '../common/ButtomBar';

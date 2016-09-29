@@ -31,7 +31,7 @@ class PhotoUploadContainer extends React.Component {
     this.clickChange = this.clickChange.bind(this);
     this.clickDelete = this.clickDelete.bind(this);
     this.wxChooseImgSuccess = this.wxChooseImgSuccess.bind(this);
-    // this.successFunction = this.successFunction.bind(this);
+    this.successFunction = this.successFunction.bind(this);
     // this.failFunction = this.failFunction.bind(this);
     this.handleUserImageUploadCordova = this.handleUserImageUploadCordova.bind(this);
     this.state = {
@@ -44,7 +44,7 @@ class PhotoUploadContainer extends React.Component {
     this.server = [];
     this.count = 0;
     this.promiseItems = [];
-    this.imgUrl = 'file:///C:/Users/zhao/Desktop/imgUrl.jpg';
+    // this.imgUrl = 'file:///C:/Users/zhao/Desktop/imgUrl.jpg';
   }
 
   photoSubmit() {
@@ -182,14 +182,14 @@ class PhotoUploadContainer extends React.Component {
         isDelete: false
       });
       this.bigDelete = true;
-      // SelectImagePlugin.selectImage(this.successFunction, () => {
-      //   alert('图片选择失败！');
-      // });
+      SelectImagePlugin.selectImage(this.successFunction, () => {
+        alert('图片选择失败！');
+      });
 
-      this.handleUserImageInput([this.imgUrl]);
-      // 当前图片的下标，因为在handleUserImageInput里加1了，所以这里要减1
-      const imgIndex = this.count - 1;
-      this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(this.imgUrl, imgIndex);
+      // this.handleUserImageInput([this.imgUrl]);
+      // // 当前图片的下标，因为在handleUserImageInput里加1了，所以这里要减1
+      // const imgIndex = this.count - 1;
+      // this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(this.imgUrl, imgIndex);
     }
   }
   wxChooseImgSuccess(res) {
@@ -235,16 +235,16 @@ class PhotoUploadContainer extends React.Component {
       }
     });
   }
-  // successFunction(imgUrl) {
-  //   if ((this.state.count + 1) > 9) {
-  //     alert('最多只能添加九张图片！');
-  //   } else {
-  //     this.handleUserImageInput([imgUrl]);
-  //     // 当前图片的下标，因为在handleUserImageInput里加1了，所以这里要减1
-  //     const imgIndex = this.count - 1;
-  //     this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(this.imgUrl, imgIndex);
-  //   }
-  // }
+  successFunction(imgUrl) {
+    if ((this.state.count + 1) > 9) {
+      alert('最多只能添加九张图片！');
+    } else {
+      this.handleUserImageInput([imgUrl]);
+      // 当前图片的下标，因为在handleUserImageInput里加1了，所以这里要减1
+      const imgIndex = this.count - 1;
+      this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(imgUrl, imgIndex);
+    }
+  }
   clickDelete() {
     if (this.state.i) {
       this.setState({
