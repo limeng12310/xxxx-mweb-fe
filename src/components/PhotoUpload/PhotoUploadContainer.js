@@ -10,9 +10,10 @@ import Header from './../common/Header';
 
 import config from '../../config';
 import { hashHistory } from 'react-router';
+import moment from 'moment';
 
 const ossClient = new OSS.Wrapper({
-  region: config.aliOss.accessKeyId,
+  region: config.aliOss.region,
   accessKeyId: config.aliOss.accessKeyId,
   accessKeySecret: config.aliOss.accessKeySecret,
   bucket: config.aliOss.bucket
@@ -38,13 +39,13 @@ class PhotoUploadContainer extends React.Component {
       date: '',
       location: '',
       items: [],
-      isDelete: false // 小删除按钮是否显示
+      isDelete: false // 是否处于delete状态 ——周列淳
     };
-    this.bigDelete = true; // true表示点击大删除按钮时小删除按钮出现，false表示点击大删除按钮时小删除按钮消失
+    //  只需要isDelete这一个状态即可 ——周列淳
+    // this.bigDelete = true; // true表示点击大删除按钮时小删除按钮出现，false表示点击大删除按钮时小删除按钮消失
     this.server = [];
     this.count = 0;
     this.promiseItems = [];
-    // this.imgUrl = 'file:///C:/Users/zhao/Desktop/imgUrl.jpg';
   }
 
   photoSubmit() {
@@ -113,22 +114,31 @@ class PhotoUploadContainer extends React.Component {
       ...serverIds
     ];
   }
-  handleUserImageUploadCordova(imgUrl, imgIndex) {
-    return new Promise((resolve, reject) => {
-      const putKey = `/report/${new Date().getTime()}.jpeg`;
-      ossClient.put(putKey, `${imgUrl}`)
-        .then(result => {
-          console.log(result);
-          // TODO 出错时处理
-
-          this.server[imgIndex] = `${config.aliOss.ossPrefix}${putKey}`;
-          resolve();
-        })
-        .catch(error => {
-          alert('出错啦！');
-          reject(error);
+  handleUserImageUploadCordova(imgUrl, dataUrl, imgIndex) {
+    const putKey = `/report/${moment().format('YYYY-MM-DD-HH-mm-ss')}.jpeg`;
+    return fetch(dataUrl)
+      .then(res => res.arrayBuffer())
+      .then(buf => {
+        const mimeType = dataUrl.split(';')[0].split(':')[1];
+        return ossClient.multipartUpload(putKey, new File([buf], undefined, { type: mimeType }), {
+          progress: p => {
+            return function (done) {
+              // TODO 显示上传进度
+              console.log(p);
+              done();
+            };
+          }
         });
-    });
+      })
+      .then(result => {
+        // TODO 出错时处理
+        console.log(result);
+
+        this.server[imgIndex] = `${config.aliOss.ossPrefix}${putKey}`;
+      })
+      .catch(() => {
+        alert('图片上传失败，请稍后重试');
+      });
   }
   handleUserImageDelete(index) {
     const newItems = [];
@@ -167,7 +177,6 @@ class PhotoUploadContainer extends React.Component {
       this.setState({
         isDelete: false
       });
-      this.bigDelete = true;
       wx.chooseImage({
         count: 9,
         sizeType: ['original'],
@@ -181,15 +190,11 @@ class PhotoUploadContainer extends React.Component {
       this.setState({
         isDelete: false
       });
-      this.bigDelete = true;
       SelectImagePlugin.selectImage(this.successFunction, () => {
         alert('图片选择失败！');
       });
 
-      // this.handleUserImageInput([this.imgUrl]);
-      // // 当前图片的下标，因为在handleUserImageInput里加1了，所以这里要减1
-      // const imgIndex = this.count - 1;
-      // this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(this.imgUrl, imgIndex);
+      // this.successFunction('useless', this.dataUrl);
     }
   }
   wxChooseImgSuccess(res) {
@@ -198,22 +203,6 @@ class PhotoUploadContainer extends React.Component {
     } else {
       this.handleUserImageInput(res.localIds);
       const serverIds = [];
-      // for (let i = 0; i < res.localIds.length; i ++) {
-      //   const j = i;
-      //   wx.uploadImage({
-      //     localId: res.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
-      //     isShowProgressTips: 1, // 默认为1，显示进度提示
-      //     success: (() => {
-      //       const ctx = this;
-      //       return function (cbkRes) {
-      //         serverIds[j] = cbkRes.serverId;
-      //         if (serverIds.length === res.localIds.length) {
-      //           ctx.handleUserImageUpload(serverIds);
-      //         }
-      //       };
-      //     })()
-      //   });
-      // }
       const tmpLocalIds = [...res.localIds];
       this.wxUploadSync(tmpLocalIds, serverIds);
     }
@@ -235,23 +224,21 @@ class PhotoUploadContainer extends React.Component {
       }
     });
   }
-  successFunction(imgUrl) {
+  successFunction(imgUrl, dataUrl) {
     if ((this.state.count + 1) > 9) {
       alert('最多只能添加九张图片！');
     } else {
-      this.handleUserImageInput([imgUrl]);
+      this.handleUserImageInput([dataUrl]);
       // 当前图片的下标，因为在handleUserImageInput里加1了，所以这里要减1
       const imgIndex = this.count - 1;
-      this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(imgUrl, imgIndex);
+      this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(imgUrl, dataUrl, imgIndex);
     }
   }
   clickDelete() {
-    if (this.state.i) {
-      this.setState({
-        isDelete: false
-      });
-      this.bigDelete = true;
-    }
+    // 切换删除状态，如果处于删除状态，则改为非删除状态，反之亦然  ——周列淳
+    this.setState({
+      isDelete: !this.state.isDelete
+    });
   }
   render() {
     const styles = {
