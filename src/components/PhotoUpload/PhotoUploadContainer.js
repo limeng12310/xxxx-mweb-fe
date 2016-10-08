@@ -224,14 +224,14 @@ class PhotoUploadContainer extends React.Component {
       }
     });
   }
-  successFunction(imgUrl, dataUrl) {
+  successFunction(imgUrl) {
     if ((this.state.count + 1) > 9) {
       alert('最多只能添加九张图片！');
     } else {
-      this.handleUserImageInput([dataUrl]);
+      this.handleUserImageInput([imgUrl[0]]);
       // 当前图片的下标，因为在handleUserImageInput里加1了，所以这里要减1
       const imgIndex = this.count - 1;
-      this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(imgUrl, dataUrl, imgIndex);
+      this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(imgUrl[0], imgUrl[1], imgIndex);
     }
   }
   clickDelete() {
