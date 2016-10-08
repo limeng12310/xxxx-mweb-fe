@@ -114,30 +114,62 @@ class PhotoUploadContainer extends React.Component {
       ...serverIds
     ];
   }
+  dataURItoArray = (dataURI) => {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    let byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0) {
+      byteString = atob(dataURI.split(',')[1]);
+    } else {
+      byteString = unescape(dataURI.split(',')[1]);
+    }
+
+    // separate out the mime component
+    // var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    const ia = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    return ia;
+  }
   handleUserImageUploadCordova(imgUrl, dataUrl, imgIndex) {
     const putKey = `/report/${moment().format('YYYY-MM-DD-HH-mm-ss')}.jpeg`;
-    return fetch(dataUrl)
-      .then(res => res.arrayBuffer())
-      .then(buf => {
-        const mimeType = dataUrl.split(';')[0].split(':')[1];
-        return ossClient.multipartUpload(putKey, new File([buf], undefined, { type: mimeType }), {
-          progress: p => {
-            return function (done) {
-              // TODO 显示上传进度
-              console.log(p);
-              done();
-            };
-          }
-        });
-      })
+    // return fetch(dataUrl)
+    //   .then(res => res.arrayBuffer())
+    //   .then(buf => {
+    //     const mimeType = dataUrl.split(';')[0].split(':')[1];
+    //     return ossClient.multipartUpload(putKey, new File([buf], undefined, { type: mimeType }), {
+    //       progress: p => {
+    //         return function (done) {
+    //           // TODO 显示上传进度
+    //           console.log(p);
+    //           done();
+    //         };
+    //       }
+    //     });
+    //   })
+    //   .then(result => {
+    //     // TODO 出错时处理
+    //     console.log(result);
+    //
+    //     this.server[imgIndex] = `${config.aliOss.ossPrefix}${putKey}`;
+    //   })
+    //   .catch(() => {
+    //     alert('图片上传失败，请稍后重试');
+    //   });
+    const arr = this.dataURItoArray(dataUrl);
+    return ossClient.put(putKey, OSS.Buffer(arr))    // eslint-disable-line new-cap
       .then(result => {
         // TODO 出错时处理
         console.log(result);
 
         this.server[imgIndex] = `${config.aliOss.ossPrefix}${putKey}`;
       })
-      .catch(() => {
+      .catch((err) => {
         alert('图片上传失败，请稍后重试');
+        throw err;
       });
   }
   handleUserImageDelete(index) {
@@ -224,14 +256,16 @@ class PhotoUploadContainer extends React.Component {
       }
     });
   }
-  successFunction(imgUrl) {
+  successFunction(res) {
+    const imgUrl = res[0];
+    const dataUrl = res[1];
     if ((this.state.count + 1) > 9) {
       alert('最多只能添加九张图片！');
     } else {
-      this.handleUserImageInput([imgUrl[0]]);
+      this.handleUserImageInput([imgUrl]);
       // 当前图片的下标，因为在handleUserImageInput里加1了，所以这里要减1
       const imgIndex = this.count - 1;
-      this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(imgUrl[0], imgUrl[1], imgIndex);
+      this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(imgUrl, dataUrl, imgIndex);
     }
   }
   clickDelete() {
