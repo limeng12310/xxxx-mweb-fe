@@ -1,0 +1,1 @@
+export reportDetail from './reportDetail';

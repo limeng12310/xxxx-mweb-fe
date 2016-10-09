@@ -1,5 +1,9 @@
 import 'lib-flexible';
 import 'babel-polyfill';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import * as reducers from './reducers';
+
 const injectTapEventPlugin = require('react-tap-event-plugin');
 injectTapEventPlugin({
   shouldRejectClick: () => {
@@ -41,17 +45,27 @@ fetch(`${config.apiPrefix}/test-signature`)
     });
   });
 
+const reducer = combineReducers({
+  ...reducers
+});
+export const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()   // eslint-disable-line
+);
+
 ReactDOM.render((
-  <Router history={hashHistory}>
-    <Route path="/" component={HomeContainer} >
-      <Route path="/report-detail" component={ReportDetailContainer} >
-        <Route path="/item-report" component={Enum} />
+  <Provider store={store}>
+    <Router history={hashHistory}>
+      <Route path="/" component={HomeContainer} >
+        <Route path="/report-detail" component={ReportDetailContainer} >
+          <Route path="/item-report" component={Enum} />
+        </Route>
       </Route>
-    </Route>
-    <Route path="/history" component={History} />
-    <Route path="/photo-upload" component={PhotoUploadContainer} />
-    <Route path="/user-profile" component={UserProfileContainer} />
-  </Router>
+      <Route path="/history" component={History} />
+      <Route path="/photo-upload" component={PhotoUploadContainer} />
+      <Route path="/user-profile" component={UserProfileContainer} />
+    </Router>
+  </Provider>
   ),
   document.getElementById('approot')
 );

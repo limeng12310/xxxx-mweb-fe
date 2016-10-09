@@ -1,3 +1,5 @@
+import { connect } from 'react-redux';
+import { refreshReport } from '../../actions/reports';
 import MessageShow from './MessageShow';
 import ReportShow from './ReportShow';
 import containerBackground from './img/background1.svg';
@@ -28,11 +30,11 @@ class ReportDetailContainer extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const reportId = this.props.location.state.id;
-    this.setState({
-      location: this.props.location.state.location
-    });
+    // this.setState({
+    //   location: this.props.location.state.location
+    // });
     if (!reportId) {
       return;
     }
@@ -48,6 +50,7 @@ class ReportDetailContainer extends React.Component {
       .then(json => {
         if (json.retCode === 0) {
           this.setState({
+            location: this.props.location.state.location,
             message: json.data
           });
         } else {
@@ -58,14 +61,6 @@ class ReportDetailContainer extends React.Component {
         alert('出错啦！');
         console.log(error);
       });
-  }
-
-  componentDidMount() {
-    // $('body').on('touchmove', e => {
-    //     console.log(e);
-    //     console.log($('#scroll'));
-    //     e.preventDefault();
-    // })
   }
 
   fx(fn, begin, end) {
@@ -166,4 +161,10 @@ ReportDetailContainer.propTypes = {
   location: React.PropTypes.object,
   children: React.PropTypes.element
 };
-export default ReportDetailContainer;
+
+export default connect(
+  state => ({
+    reports: state.reportDetail.reports
+  }),
+  { disRefreshReport: refreshReport }
+)(ReportDetailContainer);
