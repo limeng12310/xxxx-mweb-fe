@@ -12,8 +12,6 @@ class UserProfileContainer extends React.Component {
     this.bindPhone = this.bindPhone.bind(this);
     this.changePhone = this.changePhone.bind(this);
     this.logout = this.logout.bind(this);
-    this.success = this.success.bind(this);
-    this.failure = this.failure.bind(this);
   }
   changePassword() {
     segue.performSegue('changePasswordSegue');
