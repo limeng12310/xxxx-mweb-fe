@@ -66,7 +66,6 @@ class ReportShow extends React.Component {
     for (let i = 0; i < rightSelectEles.length; i++) {
       rightSelectOffsetArr.push(rightSelectEles[i].offsetTop - lib.flexible.rem * 1);
     }
-    console.log(rightSelectOffsetArr);
     $(leftSelectContent).find('li').eq(0).addClass('leftSelect');
     $(rightSelectContent).scroll(() => {
       const top = $(rightSelectContent).scrollTop();
