@@ -31,14 +31,15 @@ class UserProfileContainer extends React.Component {
     segue.performSegue('changePhoneSegue');
   }
   logout() {
-    // segue.performSegue('unwindToLogin');
-    LogoutPlugin.logout(this.success, this.failure);
-  }
-  success() {
-    segue.performSegue('unwindToLogin');
-  }
-  failure() {
-    alert('退出失败');
+    LogoutPlugin.logout(() => {
+      cookieMaster.clearCookies(() => {
+        segue.performSegue('unwindToLogin');
+      }, () => {
+        alert('退出登陆失败');
+      });
+    }, () => {
+      alert('退出登陆失败');
+    });
   }
   render() {
     const data = {
