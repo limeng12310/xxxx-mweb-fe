@@ -30,29 +30,8 @@ class ReportDetailContainer extends React.Component {
     };
   }
 
-  componentWillMount() {
-    const reportId = this.props.location.state.id;
-    const testData = this.props.reports[reportId.toString()];
-    if (testData != null) {
-      return;
-    }
-    const reportData = {
-      checkTime: '',
-      location: '',
-      normal: 0,
-      warning: 0,
-      danger: 0,
-      imgs: [],
-      values: []
-    };
-    this.props.disRefreshReport(reportId, reportData);
-  }
-
   componentDidMount() {
     const reportId = this.props.location.state.id;
-    // this.setState({
-    //   location: this.props.location.state.location
-    // });
     if (!reportId) {
       return;
     }
@@ -73,10 +52,6 @@ class ReportDetailContainer extends React.Component {
       .then(json => {
         if (json.retCode === 0) {
           this.props.disRefreshReport(reportId, json.data);
-          // this.setState({
-          //   location: this.props.location.state.location,
-          //   message: json.data
-          // });
         } else {
           alert('请求出错！');
         }
@@ -135,7 +110,23 @@ class ReportDetailContainer extends React.Component {
   }
 
   render() {
-    const reportData = this.props.reports[this.props.location.state.id.toString()].reportData;
+    let reportData;
+    const report = this.props.reports[this.props.location.state.id.toString()];
+    console.log(report);
+    if (!report) {
+      reportData = {
+        checkTime: '',
+        location: '',
+        normal: 0,
+        warning: 0,
+        danger: 0,
+        imgs: [],
+        values: []
+      };
+    } else {
+      reportData = report.reportData;
+    }
+
     const styles = {
       container: {
         height: '100%',
@@ -187,7 +178,7 @@ ReportDetailContainer.propTypes = {
   location: React.PropTypes.object,
   children: React.PropTypes.element,
   reports: React.PropTypes.object,
-  disRefreshReport: React.propTypes.func
+  disRefreshReport: React.PropTypes.func
 };
 
 export default connect(
