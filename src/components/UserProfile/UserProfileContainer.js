@@ -32,7 +32,7 @@ class UserProfileContainer extends React.Component {
   }
   logout() {
     LogoutPlugin.logout(() => {
-      cookieMaster.clearCookies(() => {
+      window.cookieMaster.clearCookies(() => {
         segue.performSegue('unwindToLogin');
       }, () => {
         alert('退出登陆失败');
