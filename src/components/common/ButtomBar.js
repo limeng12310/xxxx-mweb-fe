@@ -19,15 +19,16 @@ const ButtomBarStyle = {
     width: '100%',
     height: '1.4rem',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-around'
+    alignItems: 'center'
   },
   barItem: {
-    textAlign: 'center'
+    textAlign: 'center',
+    flex: 1
   },
   icon: {
     display: 'block',
-    width: '0.7rem'
+    width: '0.7rem',
+    margin: '0 auto'
   },
   iconFont: {
     color: '#fff',

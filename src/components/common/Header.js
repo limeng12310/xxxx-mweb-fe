@@ -32,15 +32,17 @@ const HeaderStyle = {
     color: 'rgb(252, 252, 252)'
   },
   backStyle: {
-    width: '0.4rem',
+    width: '1.2rem',
+    height: '1.2rem',
     verticalAlign: 'middle',
-    marginLeft: '0.4rem'
+    paddingLeft: '0.4rem',
+    paddingRight: '0.4rem'
   },
   okStyle: {
-    width: '0.8rem',
-    marginRight: '0.4rem',
-    float: 'right',
-    marginTop: '0.3rem'
+    width: '1.2rem',
+    height: '1.2rem',
+    paddingRight: '0.4rem',
+    float: 'right'
   }
 };
 

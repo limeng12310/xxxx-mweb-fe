@@ -22,10 +22,10 @@ const UploadStyle = {
 
   },
   icon: {
-    width: '1rem'
+    width: '1.6rem',
+    padding: '0.4rem 0.3rem'
   }
 };
-
 class Upload extends React.Component {
   render() {
     return (
