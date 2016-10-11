@@ -7,6 +7,10 @@ import ReportList from './ReportList';
 import Summary from './Summary';
 import homeBG from './img/homeBG.png';
 import config from '../../config';
+import moment from 'moment';
+
+import { connect } from 'react-redux';
+import { refreshAggregation, refreshreportList } from '../../actions/refreshHome';
 
 const HomeContainerStyle = {
   ReportListBox: {
@@ -54,10 +58,6 @@ class HomeContainer extends React.Component {
     this.reportList = this.reportList.bind(this);
     this.amount = this.amount.bind(this);
     this.onUserReportDelete = this.onUserReportDelete.bind(this);
-    this.state = {
-      reportList: [],
-      aggregation: {}
-    };
   }
   componentDidMount() {
     this.reportList();
@@ -100,69 +100,63 @@ class HomeContainer extends React.Component {
       });
   }
   amount() {
-    return new Promise((resolve, reject) => {
-      fetch(`${config.apiPrefix}/report-aggregation`, {
-        credentials: 'include'
+    const timeDiff = moment().diff(this.props.updateTime, 'minutes');
+    if (!this.props.aggregation && timeDiff < 10) {
+      return;
+    }
+    fetch(`${config.apiPrefix}/report-aggregation`, {
+      credentials: 'include'
+    })
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        }
+        throw new Error;
       })
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          }
-          throw new Error;
-        })
-        .then(json => {
-          if (json.retCode === 0) {
-            this.setState({
-              aggregation: json.data
-            }, () => {
-              resolve();
-            });
-          } else {
-            alert('请求出错！');
-          }
-        })
-        .catch(error => {
-          alert('出错啦！');
-          console.log(error);
-          reject(error);
-        });
-    });
+      .then(json => {
+        if (json.retCode === 0) {
+          this.props.disRefreshAggregation(json.data);
+        } else {
+          alert('请求出错！');
+        }
+      })
+      .catch(error => {
+        alert('出错啦！');
+        console.log(error);
+      });
   }
   reportList() {
-    return new Promise((resolve, reject) => {
-      fetch(`${config.apiPrefix}/reports?_limit=99999&_offset=0`, {
-        credentials: 'include'
+    const timeDiff = moment().diff(this.props.updateTime, 'minutes');
+    if (this.props.reportList.length > 0 && timeDiff < 10) {
+      return;
+    }
+    fetch(`${config.apiPrefix}/reports?_limit=99999&_offset=0`, {
+      credentials: 'include'
+    })
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        }
+        throw new Error;
       })
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          }
-          throw new Error;
-        })
-        .then(json => {
-          if (json.retCode === 0) {
-            this.setState({
-              reportList: json.data
-            }, () => {
-              resolve();
-            });
-          } else {
-            alert('请求出错！');
-          }
-        })
-        .catch(error => {
-          alert('出错啦！');
-          console.log(error);
-          reject(error);
-        });
-    });
+      .then(json => {
+        if (json.retCode === 0) {
+          this.props.disRefreshReportList(json.data);
+        } else {
+          alert('请求出错！');
+        }
+      })
+      .catch(error => {
+        alert('出错啦！');
+        console.log(error);
+      });
   }
   render() {
     return (
       <div>
         <div style={HomeContainerStyle.HomeBox}>
           <div style={HomeContainerStyle.Center}>
-            <Summary cnt={this.state.aggregation} />
+            <Summary cnt={this.props.aggregation} />
           </div>
           <div style={HomeContainerStyle.Report}>
             <div style={HomeContainerStyle.Filter}>
@@ -171,7 +165,7 @@ class HomeContainer extends React.Component {
             </div>
             <div className="weightLine"></div>
             <div style={HomeContainerStyle.ReportListBox}>
-              <ReportList data={this.state.reportList} onUserReportDelete={this.onUserReportDelete} />
+              <ReportList data={this.props.reportList} onUserReportDelete={this.onUserReportDelete} />
               <Upload />
             </div>
           </div>
@@ -187,7 +181,22 @@ HomeContainer.propTypes = {
   headerType: React.PropTypes.number,
   hasSubmitButton: React.PropTypes.bool,
   onSubmit: React.PropTypes.func,
-  children: React.PropTypes.element
+  children: React.PropTypes.element,
+  updateTime: React.PropTypes.string,
+  disRefreshReportList: React.PropTypes.func,
+  disRefreshAggregation: React.PropTypes.func,
+  aggregation: React.PropTypes.object,
+  reportList: React.PropTypes.array
 };
 
-export default HomeContainer;
+export default connect(
+  state => ({
+    aggregation: state.refreshHome.aggregation,
+    reportList: state.refreshHome.reportList,
+    updateTime: state.refreshHome.updateTime
+  }),
+  {
+    disRefreshAggregation: refreshAggregation,
+    disRefreshReportList: refreshreportList
+  }
+)(HomeContainer);
