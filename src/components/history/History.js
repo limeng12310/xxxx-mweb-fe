@@ -1,7 +1,10 @@
 /**
  * Created by zc on 2016/8/16.
  */
-  import Header from '../common/Header';
+  import { connect } from 'react-redux';
+  import { refreshCheckClassifies, refreshCheckItems, refreshCheckItemValues } from '../../actions/reportHistory';
+  // import Header from '../common/Header';
+  import moment from 'moment';
   import ButtomBar from '../common/ButtomBar';
   import historyBg from './historyBg.png';
   import Category from './Category';
@@ -76,185 +79,240 @@
       super(props);
       this.ChangeDataOne = this.ChangeDataOne.bind(this);
       this.ChangeDataTwo = this.ChangeDataTwo.bind(this);
-      this.dataRequestOne = this.dataRequestOne.bind(this);
-      this.dataRequestTwo = this.dataRequestTwo.bind(this);
-      this.dataRequestThree = this.dataRequestThree.bind(this);
-      this.getMaxAndMin = this.getMaxAndMin.bind(this);
-      this.state = {
-        dataOne: [],
-        dataTwo: [],
-        dataThree: [],
-        idOne: 0,
-        idTwo: 0,
-        max: '0',
-        min: '0',
-        dataX: [],
-        dataY: []
-      };
+      this.fetchClassifies = this.fetchClassifies.bind(this);
+      this.fetchItems = this.fetchItems.bind(this);
+      this.fetchItemValues = this.fetchItemValues.bind(this);
     }
-    componentWillMount() {
-      this.dataRequestOne()
-        .then(() => {
-          if (this.state.dataOne.length !== 0) {
-            this.dataRequestTwo()
-              .then(() => {
-                if (this.state.dataTwo.length !== 0) {
-                  this.dataRequestThree();
-                }
-              });
-          }
+    componentDidMount() {
+      let dataClassifies;
+      let dataItems;
+      let dataItemValues;
+
+      if (this.props.checkClassifies.dataClassifies.length > 0) {
+        const timeDiff = moment().diff(this.props.checkClassifies.lastUpdateTime, 'minutes');
+        if (timeDiff < 10) {
+          return;
+        }
+      }
+      this.fetchClassifies()
+        .then(classifies => {
+          dataClassifies = classifies;
+          // 获取了所有的分类
+          // 获取第一个分类的id
+          const classifyId = classifies[0].id;
+          return this.fetchItems(classifyId);
+        })
+        .then(items => {
+          dataItems = items;
+          // 获取了第一个分类的所有项
+          // 获取第一个分类的id和unit
+          const itemId = items[0].id;
+          const unit = items[0].unit;
+          return this.fetchItemValues(itemId, unit);
+        })
+        .then(itemValues => {
+          dataItemValues = itemValues;
+          // 至此，获取了所有需要显示的数据
+          // dispatch action
+          // this.getMaxAndMin(itemValues);
+          this.props.disRefreshCheckClassifies(dataClassifies, dataItems, dataItemValues);
+        })
+        .catch(error => {
+          alert('出错了，请稍后重试');
+          console.log(error);
         });
     }
     componentDidUpdate() {
-      if (this.state.dataOne.length === 0) {
+      if (this.props.checkClassifies.dataClassifies.length === 0) {
         alert('您还未添加有效的报告!');
         hashHistory.push('/');
       }
     }
-    getMaxAndMin() {
-      let maxValue = '0';
-      let minValue = '0';
-      const x = [];
-      const y = [];
-      if (this.state.dataThree.length !== 0) {
-        maxValue = this.state.dataThree[0].value;
-        minValue = this.state.dataThree[0].value;
-        for (let i = 0; i < this.state.dataThree.length; i ++) {
-          if (this.state.dataThree[i].value > maxValue) {
-            maxValue = this.state.dataThree[i].value;
+    fetchClassifies() {
+      return fetch(`${config.apiPrefix}/user-check-classifies`, {
+        credentials: 'include'
+      })
+        .then(response => {
+          if (response.status === 200) {
+            return response.json();
           }
-          if (this.state.dataThree[i].value < minValue) {
-            minValue = this.state.dataThree[i].value;
+          throw new Error;
+        })
+        .then(json => {
+          if (json.retCode === 0) {
+            return json.data;
           }
-          x.push(this.state.dataThree[i].checkTime.substring(0, 10));
-          y.push(this.state.dataThree[i].value);
+          alert('请求出错！');
+          return true;
+        })
+        .catch(error => {
+          alert('出错啦！');
+          console.log(error);
+        });
+    }
+    fetchItems(classifyId) {
+      return fetch(`${config.apiPrefix}/user-check-classifies/${classifyId}/check-items`, {
+        credentials: 'include'
+      })
+        .then(response => {
+          if (response.status === 200) {
+            return response.json();
+          }
+          throw new Error;
+        })
+        .then(json => {
+          if (json.retCode === 0) {
+            return json.data;
+          }
+          alert('请求出错！');
+          return true;
+        })
+        .catch(error => {
+          alert('出错啦！');
+          console.log(error);
+        });
+    }
+    fetchItemValues(itemId, unit) {
+      return fetch(`${config.apiPrefix}/user-check-items/${itemId}?unit=${unit}`, {
+        credentials: 'include'
+      })
+        .then(response => {
+          if (response.status === 200) {
+            return response.json();
+          }
+          throw new Error;
+        })
+        .then(json => {
+          if (json.retCode === 0) {
+            return json.data;
+          }
+          alert('请求出错！');
+          return true;
+        })
+        .catch(error => {
+          alert('出错啦！');
+          console.log(error);
+        });
+    }
+    // getMaxAndMin(itemValues) {
+    //   if (itemValues.length !== 0) {
+    //     this.maxValue = itemValues[0].value;
+    //     this.minValue = itemValues[0].value;
+    //     for (let i = 0; i < itemValues.length; i ++) {
+    //       if (itemValues[i].value > this.maxValue) {
+    //         this.maxValue = itemValues[i].value;
+    //       }
+    //       if (itemValues[i].value < this.minValue) {
+    //         this.minValue = itemValues[i].value;
+    //       }
+    //       this.dataX.push(itemValues[i].checkTime.substring(0, 10));
+    //       this.dataY.push(itemValues[i].value);
+    //     }
+    //   }
+    // }
+    ChangeDataOne(idOne) {
+      let dataItems;
+      let dataItemValues;
+      // 获取该分类的id
+      const classifyId = this.props.checkClassifies.dataClassifies[idOne].id;
+
+      if (this.props.checkItems[classifyId] !== undefined) {
+        const timeDiff = moment().diff(this.props.checkItems[classifyId].lastUpdateTime, 'minutes');
+        if (timeDiff < 10) {
+          console.log(this.props);
+          this.props.disRefreshCheckItems(idOne, classifyId, this.props.checkItems[classifyId].dataItems,
+            this.props.checkItemValues[this.props.checkItems[classifyId].dataItems[0].id
+            + this.props.checkItems[classifyId].dataItems[0].unit].dataItemValues);
+          return;
         }
       }
-      this.setState({
-        max: maxValue,
-        min: minValue,
-        dataX: x,
-        dataY: y
-      });
-    }
-    dataRequestOne() {
-      return new Promise((resolve, reject) => {
-        fetch(`${config.apiPrefix}/user-check-classifies`, {
-          credentials: 'include'
+      this.fetchItems(classifyId)
+        .then(items => {
+          dataItems = items;
+          // 获取了该分类的所有项
+          // 获取第一个分类的id和unit
+          const itemId = items[0].id;
+          const unit = items[0].unit;
+          return this.fetchItemValues(itemId, unit);
         })
-          .then(response => {
-            if (response.status === 200) {
-              return response.json();
-            }
-            throw new Error;
-          })
-          .then(json => {
-            if (json.retCode === 0) {
-              this.setState({
-                dataOne: json.data
-              }, () => {
-                resolve();
-              });
-            } else {
-              alert('请求出错！');
-            }
-          })
-          .catch(error => {
-            alert('出错啦！');
-            console.log(error);
-            reject(error);
-          });
-      });
-    }
-    dataRequestTwo() {
-      return new Promise((resolve, reject) => {
-        fetch(`${config.apiPrefix}/user-check-classifies/${this.state.dataOne[this.state.idOne].id}/check-items`, {
-          credentials: 'include'
+        .then(itemValues => {
+          dataItemValues = itemValues;
+          // 至此，获取了所有需要显示的数据
+          // dispatch action
+          // this.getMaxAndMin(itemValues);
+          this.props.disRefreshCheckItems(idOne, classifyId, dataItems, dataItemValues);
         })
-          .then(response => {
-            if (response.status === 200) {
-              return response.json();
-            }
-            throw new Error;
-          })
-          .then(json => {
-            if (json.retCode === 0) {
-              this.setState({
-                dataTwo: json.data
-              }, () => {
-                resolve();
-              });
-            } else {
-              alert('请求出错！');
-            }
-          })
-          .catch(error => {
-            alert('出错啦！');
-            console.log(error);
-            reject(error);
-          });
-      });
-    }
-    dataRequestThree() {
-      return new Promise((resolve, reject) => {
-        fetch(`${config.apiPrefix}` +
-        '/user-check-items' +
-        `/${this.state.dataTwo[this.state.idTwo].id}?unit=${this.state.dataTwo[this.state.idTwo].unit}`, {
-          credentials: 'include'
-        })
-          .then(response => {
-            if (response.status === 200) {
-              return response.json();
-            }
-            throw new Error;
-          })
-          .then(json => {
-            if (json.retCode === 0) {
-              this.setState({
-                dataThree: json.data
-              }, () => {
-                this.getMaxAndMin();
-              });
-            } else {
-              alert('请求出错！');
-            }
-          })
-          .catch(error => {
-            alert('出错啦！');
-            console.log(error);
-            reject(error);
-          });
-      });
-    }
-    ChangeDataOne(idOne) {
-      this.setState({
-        idOne,
-        idTwo: 0
-      }, () => {
-        if (this.state.dataTwo.length !== 0) {
-          this.dataRequestTwo()
-            .then(() => {
-              if (this.state.dataTwo.length !== 0) {
-                this.dataRequestThree();
-              }
-            });
-        }
-      });
+        .catch(error => {
+          alert('出错了，请稍后重试');
+          console.log(error);
+        });
     }
     ChangeDataTwo(idTwo) {
-      this.setState({
-        idTwo
-      }, () => {
-        if (this.state.dataTwo.length !== 0) {
-          this.dataRequestThree();
+      let dataItemValues;
+      const itemId = this.props.checkItems[this.props.checkClassifies.
+        dataClassifies[this.props.indexIsChoosen.idOne].id].dataItems[idTwo].id;
+      const unit = this.props.checkItems[this.props.checkClassifies.
+        dataClassifies[this.props.indexIsChoosen.idOne].id].dataItems[idTwo].unit;
+
+      if (this.props.checkItemValues[itemId + unit] !== undefined) {
+        const timeDiff = moment().diff(this.props.checkItemValues[itemId + unit].lastUpdateTime, 'minutes');
+        if (timeDiff < 10) {
+          this.props.disRefreshCheckItemValues(idTwo, itemId, unit,
+            this.props.checkItemValues[itemId + unit].dataItemValues);
+          return;
         }
-      });
+      }
+      this.fetchItemValues(itemId, unit)
+        .then(itemValues => {
+          dataItemValues = itemValues;
+          // 至此，获取了所有需要显示的数据
+          // dispatch action
+          // this.getMaxAndMin(itemValues);
+          this.props.disRefreshCheckItemValues(idTwo, itemId, unit, dataItemValues);
+        })
+        .catch(error => {
+          alert('出错了，请稍后重试');
+          console.log(error);
+        });
     }
     render() {
       let name;
-      if (this.state.dataTwo.length !== 0) {
+      let classifyId;
+      let itemName;
+      let itemId;
+      let itemUnit;
+      const dataX = [];
+      const dataY = [];
+      let maxValue = '0';
+      let minValue = '0';
+      let dataItemValues;
+      if (this.props.checkClassifies.dataClassifies.length !== 0) {
+        classifyId = this.props.checkClassifies.dataClassifies[this.props.indexIsChoosen.idOne].id;
+        itemName = this.props.checkItems[classifyId].dataItems[this.props.indexIsChoosen.idTwo].name;
+        itemId = this.props.checkItems[classifyId].dataItems[this.props.indexIsChoosen.idTwo].id;
+        itemUnit = this.props.checkItems[classifyId].dataItems[this.props.indexIsChoosen.idTwo].unit;
+        console.log(this.props.checkItemValues);
+        dataItemValues = this.props.checkItemValues[itemId + itemUnit].dataItemValues;
+        maxValue = dataItemValues[0].value;
+        minValue = dataItemValues[0].value;
+        for (let i = 0; i < dataItemValues.length; i ++) {
+          if (dataItemValues[i].value > maxValue) {
+            maxValue = dataItemValues[i].value;
+          }
+          if (dataItemValues[i].value < minValue) {
+            minValue = dataItemValues[i].value;
+          }
+          dataX.push(dataItemValues[i].checkTime.substring(0, 10));
+          dataY.push(dataItemValues[i].value);
+        }
+      } else {
+        return (
+          <div></div>
+        );
+      }
+      if (this.props.checkClassifies.dataClassifies.length !== 0) {
         name = (
-          <div style={HistoryStyle.Title}>{this.state.dataTwo[this.state.idTwo].name}</div>
+          <div style={HistoryStyle.Title}>{itemName}</div>
         );
       } else {
         name = (
@@ -263,24 +321,25 @@
       }
       return (
         <div style={HistoryStyle.history}>
-          <Header headerType="1" />
           <div style={HistoryStyle.Main}>
             <div style={HistoryStyle.Title}>{name}</div>
-            <HistoryEcharts style={HistoryStyle.tuBiao} dataX={this.state.dataX} dataY={this.state.dataY} />
+            <HistoryEcharts style={HistoryStyle.tuBiao} dataX={dataX} dataY={dataY} />
             <Category
               style={HistoryStyle.Category}
-              itemListOne={this.state.dataOne}
-              itemListTwo={this.state.dataTwo}
+              itemListOne={this.props.checkClassifies.dataClassifies}
+              itemListTwo={this.props.checkItems[classifyId].dataItems}
+              isChoosenOne={this.props.indexIsChoosen.idOne}
+              isChoosenTwo={this.props.indexIsChoosen.idTwo}
               handleChangeDataOne={this.ChangeDataOne}
               handleChangeDataTwo={this.ChangeDataTwo}
             />
             <div style={HistoryStyle.Range}>
               <dl>
-                <dt style={HistoryStyle.Circle}>{this.state.max}</dt>
+                <dt style={HistoryStyle.Circle}>{maxValue}</dt>
                 <dd style={HistoryStyle.MaxMin}>最高</dd>
               </dl>
               <dl>
-                <dt style={HistoryStyle.Circle}>{this.state.min}</dt>
+                <dt style={HistoryStyle.Circle}>{minValue}</dt>
                 <dd style={HistoryStyle.MaxMin}>最低</dd>
               </dl>
             </div>
@@ -292,6 +351,26 @@
   }
   History.propTypes = {
     maxCnt: React.PropTypes.number,
-    minCnt: React.PropTypes.number
+    minCnt: React.PropTypes.number,
+    checkClassifies: React.PropTypes.object,
+    checkItems: React.PropTypes.object,
+    checkItemValues: React.PropTypes.object,
+    indexIsChoosen: React.PropTypes.object,
+    disRefreshCheckClassifies: React.PropTypes.func,
+    disRefreshCheckItems: React.PropTypes.func,
+    disRefreshCheckItemValues: React.PropTypes.func
   };
-  export default History;
+
+  export default connect(
+    state => ({
+      checkClassifies: state.reportHistory.checkClassifies,
+      checkItems: state.reportHistory.checkItems,
+      checkItemValues: state.reportHistory.checkItemValues,
+      indexIsChoosen: state.reportHistory.indexIsChoosen
+    }),
+    {
+      disRefreshCheckClassifies: refreshCheckClassifies,
+      disRefreshCheckItems: refreshCheckItems,
+      disRefreshCheckItemValues: refreshCheckItemValues
+    }
+  )(History);

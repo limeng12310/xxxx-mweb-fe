@@ -52,10 +52,10 @@
   class Category extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {
-        isChoosenOne: 0,
-        isChoosenTwo: 0
-      };
+      // this.state = {
+      //   isChoosenOne: 0,
+      //   isChoosenTwo: 0
+      // };
       this.clickChangeOne = this.clickChangeOne.bind(this);
       this.clickChangeTwo = this.clickChangeTwo.bind(this);
     }
@@ -76,16 +76,16 @@
     //   $(this.refs.container2).css('width', `${width2}rem`);
     // }
     clickChangeOne(e) {
-      this.setState({
-        isChoosenOne: parseInt(e.target.getAttribute('data-index'), 10),
-        isChoosenTwo: 0
-      });
+      // this.setState({
+      //   isChoosenOne: parseInt(e.target.getAttribute('data-index'), 10),
+      //   isChoosenTwo: 0
+      // });
       this.props.handleChangeDataOne(parseInt(e.target.getAttribute('data-index'), 10));
     }
     clickChangeTwo(e) {
-      this.setState({
-        isChoosenTwo: parseInt(e.target.getAttribute('data-index'), 10)
-      });
+      // this.setState({
+      //   isChoosenTwo: parseInt(e.target.getAttribute('data-index'), 10)
+      // });
       this.props.handleChangeDataTwo(
         parseInt(e.target.getAttribute('data-index'), 10)
       );
@@ -99,7 +99,7 @@
               {
                 this.props.itemListOne.map((item, i) => {
                   let colorChoosen = {};
-                  if (this.state.isChoosenOne === i) {
+                  if (this.props.isChoosenOne === i) {
                     colorChoosen = {
                       filter: 'alpha(opacity=100)',
                       MozOpacity: 1,
@@ -125,7 +125,7 @@
               {
                 this.props.itemListTwo.map((item, i) => {
                   let circleChoosen = {};
-                  if (this.state.isChoosenTwo === i) {
+                  if (this.props.isChoosenTwo === i) {
                     circleChoosen = {
                       filter: 'alpha(opacity=100)',
                       MozOpacity: 1,
@@ -154,6 +154,8 @@
   Category.propTypes = {
     itemListOne: React.PropTypes.array,
     itemListTwo: React.PropTypes.array,
+    isChoosenOne: React.PropTypes.number,
+    isChoosenTwo: React.PropTypes.number,
     handleChangeDataOne: React.PropTypes.func,
     handleChangeDataTwo: React.PropTypes.func
   };
