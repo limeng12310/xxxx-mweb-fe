@@ -78,6 +78,10 @@ const ReportItemStyle = {
     width: '0.6rem',
     marginTop: '0.6rem'
   },
+  DeleteBox: {
+    width: '0.6rem',
+    height: '1.6rem'
+  },
   report: {
     filter: 'alpha(opacity=100)',
     MozOpacity: 1,
@@ -159,13 +163,12 @@ class ReportItem extends React.Component {
                       </div>
                     </div>
                     <span onTouchTap={ClickFunction} style={ReportItemStyle.hospital}>{checkAdress}</span>
-                    <div>
+                    <div style={ReportItemStyle.DeleteBox} onTouchTap={this.reportDelete}>
                       <img
                         src={DeleteIcon}
                         data-index={i}
                         alt=""
                         style={ReportItemStyle.Delete}
-                        onTouchTap={this.reportDelete}
                       />
                     </div>
                   </div>

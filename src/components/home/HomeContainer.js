@@ -152,6 +152,7 @@ class HomeContainer extends React.Component {
       });
   }
   render() {
+    console.log(this.props);
     return (
       <div>
         <div style={HomeContainerStyle.HomeBox}>
