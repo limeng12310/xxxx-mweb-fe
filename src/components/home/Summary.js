@@ -57,8 +57,9 @@ const SummaryStyle = {
 };
 class Summary extends React.Component {
   render() {
-    const { normal, warning } = this.props.cnt;
-    const sum = normal + warning;
+    const { normal, warning, worst } = this.props.cnt;
+    const Warning = warning + worst;
+    const sum = normal + Warning;
     let normalPercent;
     let warningPercent;
     if (sum === 0) {
@@ -66,7 +67,7 @@ class Summary extends React.Component {
       warningPercent = 0;
     } else {
       normalPercent = normal / sum;
-      warningPercent = warning / sum;
+      warningPercent = Warning / sum;
     }
     return (
       <dl style={SummaryStyle.SummaryBox}>
@@ -82,7 +83,7 @@ class Summary extends React.Component {
             <span style={SummaryStyle.SummaryKpiItemZi}>正常指标</span>
           </p>
           <p style={SummaryStyle.SummaryKpiItem}>
-            <div style={SummaryStyle.SummaryKpiItemCut}>{warning}</div>
+            <div style={SummaryStyle.SummaryKpiItemCut}>{Warning}</div>
             <div style={SummaryStyle.SummeryKpiCircle}>
               <CircleProgress per={warningPercent} x={x} />
             </div>
