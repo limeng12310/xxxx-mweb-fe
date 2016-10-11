@@ -3,9 +3,11 @@ import {refreshReport} from '../../actions/reports';
 import MessageShow from './MessageShow';
 import ReportShow from './ReportShow';
 import containerBackground from './img/background1.svg';
+import moment from 'moment';
 // import example from './img/example.jpg';
 import Header from './../common/Header';
 import config from '../../config';
+
 
 import {hashHistory} from 'react-router';
 class ReportDetailContainer extends React.Component {
@@ -37,7 +39,10 @@ class ReportDetailContainer extends React.Component {
     }
     const reportData = this.props.reports[reportId.toString()];
     if (reportData != null) {
-      return;
+      const timeDiff = moment().diff(reportData.lastUpdateTime, 'minutes');
+      if (timeDiff < 10) {
+        return;
+      }
     }
 
     fetch(`${config.apiPrefix}/reports/${reportId}`, {
