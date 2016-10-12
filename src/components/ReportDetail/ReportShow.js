@@ -344,7 +344,7 @@ class ReportShow extends React.Component {
       const dataUrl = e.target.getAttribute('data-url');
       // const base64 = dataUrl.split(',')[1];
       // const type = dataUrl.split(';')[0].split('/')[1];
-      FullScreenImage.showImageUrl(dataUrl);
+      FullScreenImage.showImageURL(dataUrl);
     }
   }
 
