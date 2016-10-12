@@ -135,7 +135,14 @@ class PhotoUploadContainer extends React.Component {
     return ia;
   }
   handleUserImageUploadCordova(fileUrl, dataUrl, imgIndex) {
-    const putKey = `/report/${moment().format('YYYY-MM-DD-HH-mm-ss')}.jpeg`;
+    const len = 10;
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ0123456789';
+    const maxPos = chars.length;
+    let randomString = '';
+    for (let i = 0; i < len; i++) {
+      randomString += chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    const putKey = `/report/${moment().format('YYYY-MM-DD-HH-mm-ss-S')}/${randomString}.jpeg`; // 时间取到毫秒
     // return fetch(dataUrl)
     //   .then(res => res.arrayBuffer())
     //   .then(buf => {
