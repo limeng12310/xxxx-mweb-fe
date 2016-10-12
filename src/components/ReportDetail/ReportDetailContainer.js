@@ -1,11 +1,13 @@
-import { connect } from 'react-redux';
-import { refreshReport } from '../../actions/reports';
+import {connect} from 'react-redux';
+import {refreshReport} from '../../actions/reports';
 import MessageShow from './MessageShow';
 import ReportShow from './ReportShow';
 import containerBackground from './img/background1.svg';
+import moment from 'moment';
 // import example from './img/example.jpg';
 import Header from './../common/Header';
 import config from '../../config';
+
 
 import {hashHistory} from 'react-router';
 class ReportDetailContainer extends React.Component {
@@ -32,12 +34,17 @@ class ReportDetailContainer extends React.Component {
 
   componentDidMount() {
     const reportId = this.props.location.state.id;
-    // this.setState({
-    //   location: this.props.location.state.location
-    // });
     if (!reportId) {
       return;
     }
+    const reportData = this.props.reports[reportId.toString()];
+    if (reportData != null) {
+      const timeDiff = moment().diff(reportData.lastUpdateTime, 'minutes');
+      if (timeDiff < 10) {
+        return;
+      }
+    }
+
     fetch(`${config.apiPrefix}/reports/${reportId}`, {
       credentials: 'include'
     })
@@ -49,10 +56,7 @@ class ReportDetailContainer extends React.Component {
       })
       .then(json => {
         if (json.retCode === 0) {
-          this.setState({
-            location: this.props.location.state.location,
-            message: json.data
-          });
+          this.props.disRefreshReport(reportId, json.data);
         } else {
           alert('请求出错！');
         }
@@ -103,13 +107,31 @@ class ReportDetailContainer extends React.Component {
   }
 
   handleGoItemReport(leftIndex, rightIndex) {
+    const reportData = this.props.reports[this.props.location.state.id.toString()].reportData;
     hashHistory.push({
       pathname: '/item-report',
-      state: this.state.message.values[leftIndex].items[rightIndex]
+      state: reportData.values[leftIndex].items[rightIndex]
     });
   }
 
   render() {
+    let reportData;
+    const report = this.props.reports[this.props.location.state.id.toString()];
+    console.log(report);
+    if (!report) {
+      reportData = {
+        checkTime: '',
+        location: '',
+        normal: 0,
+        warning: 0,
+        danger: 0,
+        imgs: [],
+        values: []
+      };
+    } else {
+      reportData = report.reportData;
+    }
+
     const styles = {
       container: {
         height: '100%',
@@ -135,14 +157,14 @@ class ReportDetailContainer extends React.Component {
           <Header headerType="1" />
           <div style={styles.scrollBox} id="scroll" className="domMoveAnimition">
             <MessageShow
-              messages={this.state.message}
-              location={this.state.location}
+              messages={reportData}
+              location={this.props.location.state.location}
               changeScrollUp={this.handleChangeScrollUp}
               changeScrollDown={this.handleChangeScrollDown}
               handleDomMove={this.handleDomMove}
             />
             <ReportShow
-              messages={this.state.message}
+              messages={reportData}
               scrollStyle={this.state.aaStyle}
               changeScrollUp={this.handleChangeScrollUp}
               changeScrollDown={this.handleChangeScrollDown}
@@ -159,12 +181,16 @@ class ReportDetailContainer extends React.Component {
 }
 ReportDetailContainer.propTypes = {
   location: React.PropTypes.object,
-  children: React.PropTypes.element
+  children: React.PropTypes.element,
+  reports: React.PropTypes.object,
+  disRefreshReport: React.PropTypes.func
 };
 
 export default connect(
   state => ({
     reports: state.reportDetail.reports
   }),
-  { disRefreshReport: refreshReport }
+  {
+    disRefreshReport: refreshReport
+  }
 )(ReportDetailContainer);
