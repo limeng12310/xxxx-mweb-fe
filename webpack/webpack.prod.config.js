@@ -55,7 +55,12 @@ module.exports = {
     new webpack.DefinePlugin({
       ENV: JSON.stringify('production'),
       CORDOVA_ENV: process.env.CORDOVA_ENV ? JSON.stringify('true') : JSON.stringify('false')
-    })
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
   ],
   module: {
     loaders: [
