@@ -73,7 +73,7 @@ test:
   tags:
   - shell
 
-cordova_test:
+cordova_prod:
   stage:
     prod
   script:
@@ -92,7 +92,7 @@ cordova_test:
   - shell
 
 prod:
-  state:
+  stage:
     prod
   script:
     - npm install
