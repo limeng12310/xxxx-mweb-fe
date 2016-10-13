@@ -1,39 +1,25 @@
 {
-  "extends": "google",
+  "parser": "babel-eslint",
+  "extends": "airbnb",
   "globals": {
-    "window": true,
-    "Dom7": true,
-    "Framework7": true,
-    "Template7": true,
-    "ThorgeneGlobal": true,
+    "React": true,
     "wx": true,
-    "dateFormat": true,
-    "Cookies": true,
-    "Base64": true,
-    "$$": true,
-    "echarts": true,
-    "f7": true
-  },
-  "env": {
-    "browser": true,
-    "node": true,
-    "jasmine": true
+    "$": true,
+    "lib": true,
+    "segue": true,
+    "SelectImagePlugin": true,
+    "FullScreenImage": true,
+    "LogoutPlugin": true,
+    "CORDOVA_ENV": true,
+    "OSS": true
   },
   "rules": {
-    "no-negated-condition": "off",
-    "radix": [
-      "error",
-      "as-needed"
-    ],
-    "indent": [
-      "error",
-      4
-    ],
-    "eol-last": "off",
-    "max-len": [
-      "error",
-      120
-    ],
-    "linebreak-style": "off"
+    "max-len": [ "error", 120 ],
+    "comma-dangle": [ "error", "never" ],
+    "eol-last": [ "off" ],
+    "react/prefer-stateless-function": [ "off" ],
+    "object-curly-spacing": [ "off" ],
+    "arrow-body-style": [ "off" ],
+    "newline-per-chained-call": [ "off" ]
   }
 }

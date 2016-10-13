@@ -1,0 +1,47 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft YaHei";
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html {
+    font-size: 50px;
+}
+
+/*  细横线  */
+.line {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0));
+}
+
+/*  粗横线 */
+.weightLine {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0));
+}
+
+.weightLineBlack {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0));
+}
+
+a, input, textarea {
+    outline: 0;
+    text-decoration: none;
+}
+
+.leftSelect {
+    border-radius: 0.026667rem;
+    display: table;
+    border: 0.026667rem solid rgb(156, 156, 156);
+}
+
+.domMoveAnimition {
+    transition: transform 300ms ease;
+    -webkit-transition: transform 300ms ease;
+}
