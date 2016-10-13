@@ -3,6 +3,7 @@ import {refreshReport} from '../../actions/reports';
 import MessageShow from './MessageShow';
 import ReportShow from './ReportShow';
 import containerBackground from './img/background1.svg';
+import ProcessIndicator from '../common/ProcessIndicator';
 import moment from 'moment';
 // import example from './img/example.jpg';
 import Header from './../common/Header';
@@ -18,6 +19,7 @@ class ReportDetailContainer extends React.Component {
     this.handleDomMove = this.handleDomMove.bind(this);
     this.handleGoItemReport = this.handleGoItemReport.bind(this);
     this.state = {
+      processOpen: false,
       aaStyle: {},
       location: '',
       message: {
@@ -44,7 +46,11 @@ class ReportDetailContainer extends React.Component {
         return;
       }
     }
-
+    // TODO
+    // 潜在风险，待调研
+    this.setState({               // eslint-disable-line react/no-did-mount-set-state
+      processOpen: true
+    });
     fetch(`${config.apiPrefix}/reports/${reportId}`, {
       credentials: 'include'
     })
@@ -57,6 +63,9 @@ class ReportDetailContainer extends React.Component {
       .then(json => {
         if (json.retCode === 0) {
           this.props.disRefreshReport(reportId, json.data);
+          this.setState({
+            processOpen: false
+          });
         } else {
           alert('请求出错！');
         }
@@ -153,6 +162,7 @@ class ReportDetailContainer extends React.Component {
     };
     return (
       <div>
+        <ProcessIndicator message={'数据加载中...'} open={this.state.processOpen} />
         <div style={styles.container}>
           <Header headerType="1" />
           <div style={styles.scrollBox} id="scroll" className="domMoveAnimition">
