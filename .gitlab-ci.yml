@@ -16,6 +16,7 @@ eslint:
   except:
   - master
   - test
+  - dev
   - "2.0"
   - tags
   tags:
