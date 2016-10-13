@@ -25,6 +25,8 @@
           // factoryMethods: ["React.createClass", "createClass"]
         }]
       ]
-    }
+    },
+    "test": {},
+    "production": {}
   }
 }
