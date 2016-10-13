@@ -342,9 +342,9 @@ class ReportShow extends React.Component {
       });
     } else {
       const dataUrl = e.target.getAttribute('data-url');
-      // const base64 = dataUrl.split(',')[1];
-      // const type = dataUrl.split(';')[0].split('/')[1];
-      FullScreenImage.showImageURL(dataUrl);
+      // FullScreenImage.showImageURL(dataUrl);
+      // FullScreenImage.showImageURL 只能预览本地图片，不能预览远程图片
+      window.PhotoViewer.show(dataUrl, ' ', { share: false });
     }
   }
 
