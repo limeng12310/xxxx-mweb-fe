@@ -59,13 +59,15 @@ class HomeContainer extends React.Component {
     this.amount = this.amount.bind(this);
     this.onUserReportDelete = this.onUserReportDelete.bind(this);
   }
+
   componentDidMount() {
     this.reportList();
     this.amount();
   }
+
   onUserReportDelete(index) {
     const newReportList = [];
-    for (let i = 0; i < this.state.reportList.length; i ++) {
+    for (let i = 0; i < this.state.reportList.length; i++) {
       if (i !== index) {
         newReportList.push(this.state.reportList[i]);
       }
@@ -99,6 +101,7 @@ class HomeContainer extends React.Component {
         console.log(error);
       });
   }
+
   amount() {
     const timeDiff = moment().diff(this.props.updateTime, 'minutes');
     if (!this.props.aggregation && timeDiff < 10) {
@@ -125,6 +128,7 @@ class HomeContainer extends React.Component {
         console.log(error);
       });
   }
+
   reportList() {
     const timeDiff = moment().diff(this.props.updateTime, 'minutes');
     if (this.props.reportList.length > 0 && timeDiff < 10) {
@@ -151,6 +155,7 @@ class HomeContainer extends React.Component {
         console.log(error);
       });
   }
+
   render() {
     console.log(this.props);
     return (
@@ -177,7 +182,7 @@ class HomeContainer extends React.Component {
     );
   }
 }
- // 上传时间
+// 上传时间
 HomeContainer.propTypes = {
   headerType: React.PropTypes.number,
   hasSubmitButton: React.PropTypes.bool,
