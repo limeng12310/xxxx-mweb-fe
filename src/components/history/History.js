@@ -112,7 +112,7 @@
             const classifyId = classifies[0].id;
             return this.fetchItems(classifyId);
           }
-          throw new Error("您还未添加有效的报告");
+          throw new Error('您还未添加有效的报告');
         })
         .then(items => {
           dataItems = items;
