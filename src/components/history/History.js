@@ -9,6 +9,7 @@
   import historyBg from './historyBg.png';
   import Category from './Category';
   import HistoryEcharts from './HistoryEcharts';
+  import ProcessIndicator from '../common/ProcessIndicator';
   import config from '../../config';
 
   import { hashHistory } from 'react-router';
@@ -82,8 +83,12 @@
       this.fetchClassifies = this.fetchClassifies.bind(this);
       this.fetchItems = this.fetchItems.bind(this);
       this.fetchItemValues = this.fetchItemValues.bind(this);
+      this.state = {
+        open: false,
+        message: 'loading...'
+      };
     }
-    componentDidMount() {
+    componentWillMount() {
       let dataClassifies;
       let dataItems;
       let dataItemValues;
@@ -94,13 +99,20 @@
           return;
         }
       }
+      this.setState({
+        open: true,
+        message: 'loading...'
+      });
       this.fetchClassifies()
         .then(classifies => {
-          dataClassifies = classifies;
-          // 获取了所有的分类
-          // 获取第一个分类的id
-          const classifyId = classifies[0].id;
-          return this.fetchItems(classifyId);
+          if (classifies && classifies.length !== 0) {
+            dataClassifies = classifies;
+            // 获取了所有的分类
+            // 获取第一个分类的id
+            const classifyId = classifies[0].id;
+            return this.fetchItems(classifyId);
+          }
+          throw new Error("您还未添加有效的报告");
         })
         .then(items => {
           dataItems = items;
@@ -111,6 +123,9 @@
           return this.fetchItemValues(itemId, unit);
         })
         .then(itemValues => {
+          this.setState({
+            open: false
+          });
           dataItemValues = itemValues;
           // 至此，获取了所有需要显示的数据
           // dispatch action
@@ -118,15 +133,14 @@
           this.props.disRefreshCheckClassifies(dataClassifies, dataItems, dataItemValues);
         })
         .catch(error => {
-          alert('出错了，请稍后重试');
+          if (error === '您还未添加有效的报告!') {
+            alert('您还未添加有效的报告!');
+            hashHistory.push('/');
+          } else {
+            alert('出错了，请稍后重试');
+          }
           console.log(error);
         });
-    }
-    componentDidUpdate() {
-      if (this.props.checkClassifies.dataClassifies.length === 0) {
-        alert('您还未添加有效的报告!');
-        hashHistory.push('/');
-      }
     }
     fetchClassifies() {
       return fetch(`${config.apiPrefix}/user-check-classifies`, {
@@ -226,6 +240,9 @@
           return;
         }
       }
+      this.setState({
+        open: true
+      });
       this.fetchItems(classifyId)
         .then(items => {
           dataItems = items;
@@ -236,6 +253,9 @@
           return this.fetchItemValues(itemId, unit);
         })
         .then(itemValues => {
+          this.setState({
+            open: false
+          });
           dataItemValues = itemValues;
           // 至此，获取了所有需要显示的数据
           // dispatch action
@@ -262,8 +282,14 @@
           return;
         }
       }
+      this.setState({
+        open: true
+      });
       this.fetchItemValues(itemId, unit)
         .then(itemValues => {
+          this.setState({
+            open: false
+          });
           dataItemValues = itemValues;
           // 至此，获取了所有需要显示的数据
           // dispatch action
@@ -345,6 +371,7 @@
             </div>
           </div>
           <ButtomBar bottombarType="1" />
+          <ProcessIndicator open={this.state.open} message={this.state.message} />
         </div>
       );
     }
