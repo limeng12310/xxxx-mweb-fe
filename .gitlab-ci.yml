@@ -37,7 +37,7 @@ test2:
   tags:
   - shell
 
-cordova:
+cordova_test:
   stage:
     test
   script:
@@ -70,6 +70,24 @@ test:
     - node_modules/
   only:
   - test
+  tags:
+  - shell
+
+cordova_test:
+  stage:
+    prod
+  script:
+  - npm install
+  - CORDOVA_ENV=production node_modules/.bin/webpack --config webpack/webpack.prod.config.js
+  cache:
+    key: "$CI_BUILD_REF_NAME"
+    paths:
+    - node_modules/
+  artifacts:
+    paths:
+    - dist/
+  only:
+  - tags
   tags:
   - shell
 
