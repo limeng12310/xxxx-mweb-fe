@@ -9,6 +9,8 @@
   import historyBg from './historyBg.png';
   import Category from './Category';
   import HistoryEcharts from './HistoryEcharts';
+  import ProcessIndicator from '../common/ProcessIndicator';
+  import Alert from '../common/Alert';
   import config from '../../config';
 
   import { hashHistory } from 'react-router';
@@ -82,8 +84,18 @@
       this.fetchClassifies = this.fetchClassifies.bind(this);
       this.fetchItems = this.fetchItems.bind(this);
       this.fetchItemValues = this.fetchItemValues.bind(this);
+      this.alertOkHandler = this.alertOkHandler.bind(this);
+      this.alertNoReportOkHandler = this.alertNoReportOkHandler.bind(this);
+      this.state = {
+        processOpen: false,
+        processMessage: 'loading...',
+        alertOpen: false,
+        alertMessage: '',
+        alertNoReportOpen: false,
+        alertNoReportMessage: ''
+      };
     }
-    componentDidMount() {
+    componentWillMount() {
       let dataClassifies;
       let dataItems;
       let dataItemValues;
@@ -94,13 +106,20 @@
           return;
         }
       }
+      this.setState({
+        processOpen: true,
+        processMessage: 'loading...'
+      });
       this.fetchClassifies()
         .then(classifies => {
-          dataClassifies = classifies;
-          // 获取了所有的分类
-          // 获取第一个分类的id
-          const classifyId = classifies[0].id;
-          return this.fetchItems(classifyId);
+          if (classifies && classifies.length !== 0) {
+            dataClassifies = classifies;
+            // 获取了所有的分类
+            // 获取第一个分类的id
+            const classifyId = classifies[0].id;
+            return this.fetchItems(classifyId);
+          }
+          throw new Error('您还未添加有效的报告');
         })
         .then(items => {
           dataItems = items;
@@ -116,17 +135,31 @@
           // dispatch action
           // this.getMaxAndMin(itemValues);
           this.props.disRefreshCheckClassifies(dataClassifies, dataItems, dataItemValues);
+          this.setState({
+            processOpen: false
+          });
         })
         .catch(error => {
-          alert('出错了，请稍后重试');
+          if (error === '您还未添加有效的报告!') {
+            // this.setState({
+            //   processOpen: false
+            // });
+            // alert('您还未添加有效的报告!');
+            this.setState({
+              processOpen: false,
+              alertNoReportOpen: true,
+              alertNoReportMessage: '您还未添加有效的报告!'
+            });
+            // hashHistory.push('/');
+          } else {
+            // alert('出错了，请稍后重试');
+            this.setState({
+              alertOpen: true,
+              alertMessage: '出错了，请稍后重试'
+            });
+          }
           console.log(error);
         });
-    }
-    componentDidUpdate() {
-      if (this.props.checkClassifies.dataClassifies.length === 0) {
-        alert('您还未添加有效的报告!');
-        hashHistory.push('/');
-      }
     }
     fetchClassifies() {
       return fetch(`${config.apiPrefix}/user-check-classifies`, {
@@ -142,11 +175,19 @@
           if (json.retCode === 0) {
             return json.data;
           }
-          alert('请求出错！');
+          // alert('请求出错！');
+          this.setState({
+            alertOpen: true,
+            alertMessage: '请求出错!'
+          });
           return true;
         })
         .catch(error => {
-          alert('出错啦！');
+          // alert('出错啦！');
+          this.setState({
+            alertOpen: true,
+            alertMessage: '出错了，请稍后重试!'
+          });
           console.log(error);
         });
     }
@@ -164,11 +205,19 @@
           if (json.retCode === 0) {
             return json.data;
           }
-          alert('请求出错！');
+          // alert('请求出错！');
+          this.setState({
+            alertOpen: true,
+            alertMessage: '请求出错！'
+          });
           return true;
         })
         .catch(error => {
-          alert('出错啦！');
+          // alert('出错啦！');
+          this.setState({
+            alertOpen: true,
+            alertMessage: '出错了，请稍后重试！'
+          });
           console.log(error);
         });
     }
@@ -186,11 +235,19 @@
           if (json.retCode === 0) {
             return json.data;
           }
-          alert('请求出错！');
+          // alert('请求出错！');
+          this.setState({
+            alertOpen: true,
+            alertMessage: '请求出错！'
+          });
           return true;
         })
         .catch(error => {
-          alert('出错啦！');
+          // alert('出错啦！');
+          this.setState({
+            alertOpen: true,
+            alertMessage: '出错了，请稍后重试！'
+          });
           console.log(error);
         });
     }
@@ -226,6 +283,9 @@
           return;
         }
       }
+      this.setState({
+        processOpen: true
+      });
       this.fetchItems(classifyId)
         .then(items => {
           dataItems = items;
@@ -241,9 +301,16 @@
           // dispatch action
           // this.getMaxAndMin(itemValues);
           this.props.disRefreshCheckItems(idOne, classifyId, dataItems, dataItemValues);
+          this.setState({
+            processOpen: false
+          });
         })
         .catch(error => {
-          alert('出错了，请稍后重试');
+          // alert('出错了，请稍后重试');
+          this.setState({
+            alertOpen: true,
+            alertMessage: '出错了，请稍后重试！'
+          });
           console.log(error);
         });
     }
@@ -262,6 +329,9 @@
           return;
         }
       }
+      this.setState({
+        processOpen: true
+      });
       this.fetchItemValues(itemId, unit)
         .then(itemValues => {
           dataItemValues = itemValues;
@@ -269,16 +339,35 @@
           // dispatch action
           // this.getMaxAndMin(itemValues);
           this.props.disRefreshCheckItemValues(idTwo, itemId, unit, dataItemValues);
+          this.setState({
+            processOpen: false
+          });
         })
         .catch(error => {
-          alert('出错了，请稍后重试');
+          // alert('出错了，请稍后重试');
+          this.setState({
+            alertOpen: true,
+            alertMessage: '出错了，请稍后重试！'
+          });
           console.log(error);
         });
     }
+    alertOkHandler() {
+      this.setState({
+        alertOpen: false
+      });
+    }
+    alertNoReportOkHandler() {
+      this.setState({
+        alertNoReportOpen: false
+      });
+      hashHistory.push('/');
+    }
     render() {
-      let name;
+      let dataClassifies = [];
+      let dataItems = [];
       let classifyId;
-      let itemName;
+      let itemName = '';
       let itemId;
       let itemUnit;
       const dataX = [];
@@ -287,11 +376,13 @@
       let minValue = '0';
       let dataItemValues;
       if (this.props.checkClassifies.dataClassifies.length !== 0) {
+        dataClassifies = this.props.checkClassifies.dataClassifies;
         classifyId = this.props.checkClassifies.dataClassifies[this.props.indexIsChoosen.idOne].id;
+        dataItems = this.props.checkItems[classifyId].dataItems;
         itemName = this.props.checkItems[classifyId].dataItems[this.props.indexIsChoosen.idTwo].name;
         itemId = this.props.checkItems[classifyId].dataItems[this.props.indexIsChoosen.idTwo].id;
         itemUnit = this.props.checkItems[classifyId].dataItems[this.props.indexIsChoosen.idTwo].unit;
-        console.log(this.props.checkItemValues);
+        // console.log(this.props.checkItemValues);
         dataItemValues = this.props.checkItemValues[itemId + itemUnit].dataItemValues;
         maxValue = dataItemValues[0].value;
         minValue = dataItemValues[0].value;
@@ -305,29 +396,16 @@
           dataX.push(dataItemValues[i].checkTime.substring(0, 10));
           dataY.push(dataItemValues[i].value);
         }
-      } else {
-        return (
-          <div></div>
-        );
-      }
-      if (this.props.checkClassifies.dataClassifies.length !== 0) {
-        name = (
-          <div style={HistoryStyle.Title}>{itemName}</div>
-        );
-      } else {
-        name = (
-          <div style={HistoryStyle.Title}></div>
-        );
       }
       return (
         <div style={HistoryStyle.history}>
           <div style={HistoryStyle.Main}>
-            <div style={HistoryStyle.Title}>{name}</div>
+            <div style={HistoryStyle.Title}>{itemName}</div>
             <HistoryEcharts style={HistoryStyle.tuBiao} dataX={dataX} dataY={dataY} />
             <Category
               style={HistoryStyle.Category}
-              itemListOne={this.props.checkClassifies.dataClassifies}
-              itemListTwo={this.props.checkItems[classifyId].dataItems}
+              itemListOne={dataClassifies}
+              itemListTwo={dataItems}
               isChoosenOne={this.props.indexIsChoosen.idOne}
               isChoosenTwo={this.props.indexIsChoosen.idTwo}
               handleChangeDataOne={this.ChangeDataOne}
@@ -345,6 +423,13 @@
             </div>
           </div>
           <ButtomBar bottombarType="1" />
+          <ProcessIndicator open={this.state.processOpen} message={this.state.processMessage} />
+          <Alert open={this.state.alertOpen} message={this.state.alertMessage} okHandler={this.alertOkHandler} />
+          <Alert
+            open={this.state.alertNoReportOpen}
+            message={this.state.alertNoReportMessage}
+            okHandler={this.alertNoReportOkHandler}
+          />
         </div>
       );
     }

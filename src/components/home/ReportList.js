@@ -5,7 +5,8 @@ import Manual from './img/ReportIcon1.png';
 import Photo from './img/ReportIcon2.png';
 import DeleteIcon from './img/delete.png';
 import moment from 'moment';
-
+import Confirm from '../common/Confirm';
+import Toast from '../common/Toast';
 import { hashHistory } from 'react-router';
 const ReportItemStyle = {
   reportList: {
@@ -101,12 +102,36 @@ class ReportItem extends React.Component {
   constructor() {
     super();
     this.reportDelete = this.reportDelete.bind(this);
+    this.cancelHandler = this.cancelHandler.bind(this);
+    this.okHandler = this.okHandler.bind(this);
+    this.closeHandler = this.closeHandler.bind(this);
+    this.state = {
+      ConfirmOpen: false,
+      index: 0,
+      ToastOpen: false
+    };
   }
   reportDelete(e) {
-    const index = parseInt(e.target.getAttribute('data-index'), 10);
-    if (confirm('确定要删除报告吗？')) {
-      this.props.onUserReportDelete(index);
-    }
+    this.setState({
+      ConfirmOpen: true,
+      index: parseInt(e.target.getAttribute('data-index'), 10)
+    });
+  }
+  okHandler() {
+    this.props.onUserReportDelete(this.state.index);
+    this.setState({
+      ConfirmOpen: false
+    });
+  }
+  cancelHandler() {
+    this.setState({
+      ConfirmOpen: false
+    });
+  }
+  closeHandler() {
+    this.setState({
+      ToastOpen: false
+    });
   }
   render() {
     const data = this.props.data;
@@ -135,7 +160,11 @@ class ReportItem extends React.Component {
                   opacity: 1
                 };
               } else {
-                ClickFunction = () => { alert('报告正在解读中'); };
+                ClickFunction = () => {
+                  this.setState({
+                    ToastOpen: true
+                  });
+                };
                 close = {
                   filter: 'alpha(opacity=60)',
                   MozOpacity: 0.6,
@@ -177,10 +206,21 @@ class ReportItem extends React.Component {
               );
             })
           }
+          <Confirm
+            open={this.state.ConfirmOpen}
+            message="确定要删除报告吗？"
+            okHandler={this.okHandler}
+            cancelHandler={this.cancelHandler}
+          />
+          <Toast
+            open={this.state.ToastOpen}
+            message="报告正在解读中"
+            duration={2000}
+            closeHandler={this.closeHandler}
+          />
         </div>
       );
     }
-
     return (
       <div style={ReportItemStyle.reportListNone}>点击右侧按钮上传报告</div>
     );

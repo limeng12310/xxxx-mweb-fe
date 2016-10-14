@@ -134,8 +134,15 @@ class PhotoUploadContainer extends React.Component {
 
     return ia;
   }
-  handleUserImageUploadCordova(imgUrl, dataUrl, imgIndex) {
-    const putKey = `/report/${moment().format('YYYY-MM-DD-HH-mm-ss')}.jpeg`;
+  handleUserImageUploadCordova(fileUrl, dataUrl, imgIndex) {
+    const len = 10;
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ0123456789';
+    const maxPos = chars.length;
+    let randomString = '';
+    for (let i = 0; i < len; i++) {
+      randomString += chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    const putKey = `/report/${moment().format('YYYY-MM-DD-HH-mm-ss-S')}/${randomString}.jpeg`; // 时间取到毫秒
     // return fetch(dataUrl)
     //   .then(res => res.arrayBuffer())
     //   .then(buf => {
@@ -257,15 +264,15 @@ class PhotoUploadContainer extends React.Component {
     });
   }
   successFunction(res) {
-    const imgUrl = res[0];
-    const dataUrl = res[1];
+    const fileUrl = res[0];
+    const dataUrl = res[1].replace(/\s/g, '');
     if ((this.state.count + 1) > 9) {
       alert('最多只能添加九张图片！');
     } else {
-      this.handleUserImageInput([imgUrl]);
+      this.handleUserImageInput([dataUrl]);
       // 当前图片的下标，因为在handleUserImageInput里加1了，所以这里要减1
       const imgIndex = this.count - 1;
-      this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(imgUrl, dataUrl, imgIndex);
+      this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(fileUrl, dataUrl, imgIndex);
     }
   }
   clickDelete() {
