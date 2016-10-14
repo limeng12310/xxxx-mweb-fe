@@ -5,7 +5,7 @@ import { REFRESH_AGGREGATION, REFRESH_REPORTLIST } from '../actions/refreshHome'
 import moment from 'moment';
 
 const initState = {
-  updateTime: moment(),
+  updateTime: moment().subtract(1, 'days'),
   aggregation: {},
   reportList: [
     // {}, {}, {}
