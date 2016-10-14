@@ -11,6 +11,11 @@ class Alert extends React.Component {
     };
   }
 
+  componentWillMount() {
+    this.setState({
+      open: this.props.open
+    });
+  }
   componentWillReceiveProps(nextProps) {
     this.setState({
       open: nextProps.open

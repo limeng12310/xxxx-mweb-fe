@@ -1,4 +1,5 @@
-import { REFRESH_CHECK_CLASSIFIES, REFRESH_CHECK_ITEMS, REFRESH_CHECK_ITEM_VALUES } from '../actions/reportHistory';
+import { REFRESH_CHECK_CLASSIFIES, REFRESH_CHECK_ITEMS, REFRESH_CHECK_ITEM_VALUES, REFRESH_MOMENT }
+  from '../actions/reportHistory';
 import moment from 'moment';
 
 const initState = {
@@ -102,6 +103,13 @@ export default (state = initState, action) => {
         }),
         indexIsChoosen: Object.assign({}, state.indexIsChoosen, {
           idTwo
+        })
+      });
+    }
+    case REFRESH_MOMENT: {
+      return Object.assign({}, state, {
+        checkClassifies: Object.assign({}, state.checkClassifies, {
+          lastUpdateTime: moment()
         })
       });
     }

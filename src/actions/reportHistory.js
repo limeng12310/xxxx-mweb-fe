@@ -2,6 +2,7 @@
 export const REFRESH_CHECK_CLASSIFIES = 'REFRESH_CHECK_CLASSIFIES';
 export const REFRESH_CHECK_ITEMS = 'REFRESH_CHECK_ITEMS';
 export const REFRESH_CHECK_ITEM_VALUES = 'REFRESH_CHECK_ITEM_VALUES';
+export const REFRESH_MOMENT = 'REFRESH_MOMENT';
 
 export const refreshCheckClassifies = (dataClassifies, dataItems, dataItemValues) => ({
   type: REFRESH_CHECK_CLASSIFIES,
@@ -22,4 +23,7 @@ export const refreshCheckItemValues = (idTwo, itemId, unit, dataItemValues) => (
   itemId,
   unit,
   dataItemValues
+});
+export const refreshMoment = () => ({
+  type: REFRESH_MOMENT
 });

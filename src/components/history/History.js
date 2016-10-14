@@ -2,7 +2,8 @@
  * Created by zc on 2016/8/16.
  */
   import { connect } from 'react-redux';
-  import { refreshCheckClassifies, refreshCheckItems, refreshCheckItemValues } from '../../actions/reportHistory';
+  import { refreshCheckClassifies, refreshCheckItems, refreshCheckItemValues, refreshMoment }
+    from '../../actions/reportHistory';
   // import Header from '../common/Header';
   import moment from 'moment';
   import ButtomBar from '../common/ButtomBar';
@@ -96,13 +97,18 @@
       };
     }
     componentWillMount() {
-      let dataClassifies;
-      let dataItems;
-      let dataItemValues;
+      let dataClassifies = [];
+      let dataItems = [];
+      let dataItemValues = [];
 
-      if (this.props.checkClassifies.dataClassifies.length > 0) {
-        const timeDiff = moment().diff(this.props.checkClassifies.lastUpdateTime, 'minutes');
-        if (timeDiff < 10) {
+      const timeDiff = moment().diff(this.props.checkClassifies.lastUpdateTime, 'minutes');
+      if (timeDiff < 10) {
+        // this.props.disRefreshMoment();
+        if (this.props.checkClassifies.dataClassifies && this.props.checkClassifies.dataClassifies.length === 0) {
+          this.setState({
+            alertNoReportOpen: true,
+            alertNoReportMessage: '您还未添加有效的报告!'
+          });
           return;
         }
       }
@@ -140,11 +146,8 @@
           });
         })
         .catch(error => {
-          if (error === '您还未添加有效的报告!') {
-            // this.setState({
-            //   processOpen: false
-            // });
-            // alert('您还未添加有效的报告!');
+          if (error.message === '您还未添加有效的报告') {
+            this.props.disRefreshMoment();
             this.setState({
               processOpen: false,
               alertNoReportOpen: true,
@@ -154,8 +157,9 @@
           } else {
             // alert('出错了，请稍后重试');
             this.setState({
+              processOpen: false,
               alertOpen: true,
-              alertMessage: '出错了，请稍后重试'
+              alertMessage: '出错了，请稍后重试!'
             });
           }
           console.log(error);
@@ -176,20 +180,21 @@
             return json.data;
           }
           // alert('请求出错！');
-          this.setState({
-            alertOpen: true,
-            alertMessage: '请求出错!'
-          });
-          return true;
-        })
-        .catch(error => {
-          // alert('出错啦！');
-          this.setState({
-            alertOpen: true,
-            alertMessage: '出错了，请稍后重试!'
-          });
-          console.log(error);
+          // this.setState({
+          //   alertOpen: true,
+          //   alertMessage: '请求出错!'
+          // });
+          // return true;
+          throw new Error('出错了，请稍后重试!');
         });
+        // .catch(error => {
+        //   // alert('出错啦！');
+        //   this.setState({
+        //     alertOpen: true,
+        //     alertMessage: '出错了，请稍后重试!'
+        //   });
+        //   console.log(error);
+        // });
     }
     fetchItems(classifyId) {
       return fetch(`${config.apiPrefix}/user-check-classifies/${classifyId}/check-items`, {
@@ -206,20 +211,21 @@
             return json.data;
           }
           // alert('请求出错！');
-          this.setState({
-            alertOpen: true,
-            alertMessage: '请求出错！'
-          });
-          return true;
-        })
-        .catch(error => {
-          // alert('出错啦！');
-          this.setState({
-            alertOpen: true,
-            alertMessage: '出错了，请稍后重试！'
-          });
-          console.log(error);
+          // this.setState({
+          //   alertOpen: true,
+          //   alertMessage: '请求出错！'
+          // });
+          // return true;
+          throw new Error('出错了，请稍后重试!');
         });
+        // .catch(error => {
+        //   // alert('出错啦！');
+        //   this.setState({
+        //     alertOpen: true,
+        //     alertMessage: '出错了，请稍后重试！'
+        //   });
+        //   console.log(error);
+        // });
     }
     fetchItemValues(itemId, unit) {
       return fetch(`${config.apiPrefix}/user-check-items/${itemId}?unit=${unit}`, {
@@ -236,20 +242,21 @@
             return json.data;
           }
           // alert('请求出错！');
-          this.setState({
-            alertOpen: true,
-            alertMessage: '请求出错！'
-          });
-          return true;
-        })
-        .catch(error => {
-          // alert('出错啦！');
-          this.setState({
-            alertOpen: true,
-            alertMessage: '出错了，请稍后重试！'
-          });
-          console.log(error);
+          // this.setState({
+          //   alertOpen: true,
+          //   alertMessage: '请求出错！'
+          // });
+          // return true;
+          throw new Error('出错了，请稍后重试!');
         });
+        // .catch(error => {
+        //   // alert('出错啦！');
+        //   this.setState({
+        //     alertOpen: true,
+        //     alertMessage: '出错了，请稍后重试！'
+        //   });
+        //   console.log(error);
+        // });
     }
     // getMaxAndMin(itemValues) {
     //   if (itemValues.length !== 0) {
@@ -273,16 +280,16 @@
       // 获取该分类的id
       const classifyId = this.props.checkClassifies.dataClassifies[idOne].id;
 
-      if (this.props.checkItems[classifyId] !== undefined) {
-        const timeDiff = moment().diff(this.props.checkItems[classifyId].lastUpdateTime, 'minutes');
-        if (timeDiff < 10) {
-          console.log(this.props);
-          this.props.disRefreshCheckItems(idOne, classifyId, this.props.checkItems[classifyId].dataItems,
-            this.props.checkItemValues[this.props.checkItems[classifyId].dataItems[0].id
-            + this.props.checkItems[classifyId].dataItems[0].unit].dataItemValues);
-          return;
-        }
+
+      const timeDiff = moment().diff(this.props.checkItems[classifyId].lastUpdateTime, 'minutes');
+      if (timeDiff < 10) {
+        console.log(this.props);
+        this.props.disRefreshCheckItems(idOne, classifyId, this.props.checkItems[classifyId].dataItems,
+          this.props.checkItemValues[this.props.checkItems[classifyId].dataItems[0].id
+          + this.props.checkItems[classifyId].dataItems[0].unit].dataItemValues);
+        return;
       }
+
       this.setState({
         processOpen: true
       });
@@ -321,13 +328,11 @@
       const unit = this.props.checkItems[this.props.checkClassifies.
         dataClassifies[this.props.indexIsChoosen.idOne].id].dataItems[idTwo].unit;
 
-      if (this.props.checkItemValues[itemId + unit] !== undefined) {
-        const timeDiff = moment().diff(this.props.checkItemValues[itemId + unit].lastUpdateTime, 'minutes');
-        if (timeDiff < 10) {
-          this.props.disRefreshCheckItemValues(idTwo, itemId, unit,
-            this.props.checkItemValues[itemId + unit].dataItemValues);
-          return;
-        }
+      const timeDiff = moment().diff(this.props.checkItemValues[itemId + unit].lastUpdateTime, 'minutes');
+      if (timeDiff < 10) {
+        this.props.disRefreshCheckItemValues(idTwo, itemId, unit,
+          this.props.checkItemValues[itemId + unit].dataItemValues);
+        return;
       }
       this.setState({
         processOpen: true
@@ -443,7 +448,8 @@
     indexIsChoosen: React.PropTypes.object,
     disRefreshCheckClassifies: React.PropTypes.func,
     disRefreshCheckItems: React.PropTypes.func,
-    disRefreshCheckItemValues: React.PropTypes.func
+    disRefreshCheckItemValues: React.PropTypes.func,
+    disRefreshMoment: React.PropTypes.func
   };
 
   export default connect(
@@ -456,6 +462,7 @@
     {
       disRefreshCheckClassifies: refreshCheckClassifies,
       disRefreshCheckItems: refreshCheckItems,
-      disRefreshCheckItemValues: refreshCheckItemValues
+      disRefreshCheckItemValues: refreshCheckItemValues,
+      disRefreshMoment: refreshMoment
     }
   )(History);
