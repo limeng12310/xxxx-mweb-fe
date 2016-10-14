@@ -12,9 +12,9 @@ class Confirm extends React.Component {
     };
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
     this.setState({
-      open: this.props.open
+      open: nextProps.open
     });
   }
 
@@ -35,6 +35,8 @@ class Confirm extends React.Component {
         background: 'rgba(0,0,0,0.5)',
         position: 'fixed',
         zIndex: '999',
+        top: 0,
+        left: 0,
         display: this.state.open ? 'block' : 'none'
       },
       ConfirmBox: {
