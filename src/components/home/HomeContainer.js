@@ -8,10 +8,10 @@ import Summary from './Summary';
 import homeBG from './img/homeBG.png';
 import config from '../../config';
 import moment from 'moment';
-
+import ProcessIndicator from '../common/ProcessIndicator';
 import { connect } from 'react-redux';
 import { refreshAggregation, refreshreportList } from '../../actions/refreshHome';
-
+import Toast from '../common/Toast';
 const HomeContainerStyle = {
   ReportListBox: {
     width: '100%',
@@ -58,6 +58,11 @@ class HomeContainer extends React.Component {
     this.reportList = this.reportList.bind(this);
     this.amount = this.amount.bind(this);
     this.onUserReportDelete = this.onUserReportDelete.bind(this);
+    this.state = {
+      PIOpen: false,
+      confirmOpen: false,
+      ToastOpen: false
+    };
   }
 
   componentDidMount() {
@@ -67,15 +72,13 @@ class HomeContainer extends React.Component {
 
   onUserReportDelete(index) {
     const newReportList = [];
-    for (let i = 0; i < this.state.reportList.length; i++) {
+    for (let i = 0; i < this.props.reportList.length; i++) {
       if (i !== index) {
-        newReportList.push(this.state.reportList[i]);
+        newReportList.push(this.props.reportList[i]);
       }
     }
-    this.setState({
-      reportList: newReportList
-    });
-    fetch(`${config.apiPrefix}/reports/${this.state.reportList[index].id}`, {
+    this.props.disRefreshReportList(newReportList);
+    fetch(`${config.apiPrefix}/reports/${this.props.reportList[index].id}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -91,7 +94,9 @@ class HomeContainer extends React.Component {
       })
       .then(json => {
         if (json.retCode === 0) {
-          // alert('成功删除一个报告！');
+          this.setState({
+            ToastOpen: true
+          });
         } else {
           alert('请求出错！');
         }
@@ -134,6 +139,9 @@ class HomeContainer extends React.Component {
     if (this.props.reportList.length > 0 && timeDiff < 10) {
       return;
     }
+    this.setState({
+      PIOpen: true
+    });
     fetch(`${config.apiPrefix}/reports?_limit=99999&_offset=0`, {
       credentials: 'include'
     })
@@ -146,6 +154,9 @@ class HomeContainer extends React.Component {
       .then(json => {
         if (json.retCode === 0) {
           this.props.disRefreshReportList(json.data);
+          this.setState({
+            PIOpen: false
+          });
         } else {
           alert('请求出错！');
         }
@@ -157,7 +168,6 @@ class HomeContainer extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div>
         <div style={HomeContainerStyle.HomeBox}>
@@ -177,6 +187,8 @@ class HomeContainer extends React.Component {
           </div>
           <ButtomBar bottombarType="0" />
         </div>
+        <ProcessIndicator open={this.state.PIOpen} message="loading" />
+        <Toast open={this.state.ToastOpen} message="成功删除一个报告" duration={2000} />
         {this.props.children}
       </div>
     );

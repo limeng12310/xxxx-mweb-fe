@@ -77,7 +77,6 @@ class Toast extends React.Component {
   // }
 
   render() {
-    console.log(this.state.open);
     const {
       message
     } = this.props;
