@@ -136,7 +136,7 @@ class HomeContainer extends React.Component {
 
   reportList() {
     const timeDiff = moment().diff(this.props.updateTime, 'minutes');
-    if (this.props.reportList.length > 0 && timeDiff < 10) {
+    if (timeDiff < 10) {
       return;
     }
     this.setState({
