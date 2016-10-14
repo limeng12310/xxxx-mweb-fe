@@ -18,7 +18,7 @@ import PhotoUploadContainer from './components/PhotoUpload/PhotoUploadContainer'
 import History from './components/history/History';
 import Enum from './components/Enum/Enum';
 import UserProfileContainer from './components/UserProfile/UserProfileContainer';
-import config from './config/default';
+import config from './config';
 
 // react router
 import { Router, Route, hashHistory } from 'react-router';

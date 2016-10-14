@@ -27,7 +27,7 @@ test2:
     test
   script:
   - npm install
-  - node_modules/.bin/webpack --config webpack/webpack.test.config.js
+  - NODE_ENV=test node_modules/.bin/webpack --config webpack/webpack.test.config.js
   - rsync -avzP build/ root@test.thorgene.com:/srv/docker/thorgene-mweb-nginx/html/
   cache:
     key: "$CI_BUILD_REF_NAME"
@@ -38,7 +38,7 @@ test2:
   tags:
   - shell
 
-cordova:
+cordova_test:
   stage:
     test
   script:
@@ -73,18 +73,52 @@ test:
   - test
   tags:
   - shell
-  
+
 prod:
   stage:
     prod
   script:
-  - rsync -avzP . root@thorgene.com:/srv/docker/thorgene-mweb-nginx/mweb-src --exclude=node_modules --exclude=build --exclude=dist --delete
-  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && sed -i 's#http://test.thorgene.com#http://thorgene.com#' app-home/js/app-home.js"
-  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && sed -i 's#http://thorgene-mweb.img-cn-beijing.aliyuncs.com#http://thorgene-mweb-prod.img-cn-beijing.aliyuncs.com#' app-home/js/app-home.js"
-  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && sed -i 's#http://test.thorgene.com#http://thorgene.com#' init-profile/js/init-profile.js"
-  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && sed -i 's#http://thorgene-mweb.oss-cn-beijing.aliyuncs.com#http://thorgene-mweb-prod.oss-cn-beijing.aliyuncs.com#' init-profile/js/init-profile.js"
-  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && npm install && node_modules/.bin/gulp clean && node_modules/.bin/gulp dist"
+    - npm install
+    - NODE_ENV=production node_modules/.bin/webpack --config webpack/webpack.prod.config.js
+    - rsync -avzP --delete dist/ root@thorgene.com:/srv/docker/thorgene-mweb-nginx/html/thorgene-mweb－$CI_BUILD_REF_NAME/
+  cache:
+    key: "$CI_BUILD_REF_NAME"
+    paths:
+    - node_modules/
   only:
   - tags
   tags:
   - shell
+
+cordova_prod:
+  stage:
+    prod
+  script:
+  - npm install
+  - CORDOVA_ENV=production node_modules/.bin/webpack --config webpack/webpack.prod.config.js
+  cache:
+    key: "$CI_BUILD_REF_NAME"
+    paths:
+    - node_modules/
+  artifacts:
+    paths:
+    - dist/
+  only:
+  - tags
+  tags:
+  - shell
+  
+#prod:
+#  stage:
+#    prod
+#  script:
+#  - rsync -avzP . root@thorgene.com:/srv/docker/thorgene-mweb-nginx/mweb-src --exclude=node_modules --exclude=build --exclude=dist --delete
+#  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && sed -i 's#http://test.thorgene.com#http://thorgene.com#' app-home/js/app-home.js"
+#  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && sed -i 's#http://thorgene-mweb.img-cn-beijing.aliyuncs.com#http://thorgene-mweb-prod.img-cn-beijing.aliyuncs.com#' app-home/js/app-home.js"
+#  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && sed -i 's#http://test.thorgene.com#http://thorgene.com#' init-profile/js/init-profile.js"
+#  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && sed -i 's#http://thorgene-mweb.oss-cn-beijing.aliyuncs.com#http://thorgene-mweb-prod.oss-cn-beijing.aliyuncs.com#' init-profile/js/init-profile.js"
+#  - ssh root@thorgene.com "cd /srv/docker/thorgene-mweb-nginx/mweb-src && npm install && node_modules/.bin/gulp clean && node_modules/.bin/gulp dist"
+#  only:
+#  - tags
+#  tags:
+#  - shell

@@ -334,10 +334,17 @@ class ReportShow extends React.Component {
   }
 
   clickPreview(e) {
-    wx.previewImage({
-      current: e.target.getAttribute('data-url'), // 当前显示图片的http链接
-      urls: this.props.messages.imgs.map(img => `${config.cdnPrefix}/${img}`) // 需要预览的图片http链接列表
-    });
+    if (CORDOVA_ENV === 'false') {
+      wx.previewImage({
+        current: e.target.getAttribute('data-url'), // 当前显示图片的http链接
+        urls: this.props.messages.imgs.map(img => `${config.cdnPrefix}/${img}`) // 需要预览的图片http链接列表
+      });
+    } else {
+      const dataUrl = e.target.getAttribute('data-url');
+      // FullScreenImage.showImageURL(dataUrl);
+      // FullScreenImage.showImageURL 只能预览本地图片，不能预览远程图片
+      window.PhotoViewer.show(dataUrl, ' ', { share: false });
+    }
   }
 
   goItemReport(e) {
