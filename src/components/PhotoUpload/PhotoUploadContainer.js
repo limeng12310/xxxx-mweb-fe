@@ -39,12 +39,12 @@ class PhotoUploadContainer extends React.Component {
       date: '',
       location: '',
       items: [],
+      count: 0,
       isDelete: false // 是否处于delete状态 ——周列淳
     };
     //  只需要isDelete这一个状态即可 ——周列淳
     // this.bigDelete = true; // true表示点击大删除按钮时小删除按钮出现，false表示点击大删除按钮时小删除按钮消失
     this.server = [];
-    this.count = 0;
     this.promiseItems = [];
   }
 
@@ -105,7 +105,7 @@ class PhotoUploadContainer extends React.Component {
         ...imgIds
       ]
     });
-    this.count = this.count + imgIds.length;
+    this.state.count = this.state.count + imgIds.length;
     $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
   }
   handleUserImageUpload(serverIds) {
@@ -196,7 +196,7 @@ class PhotoUploadContainer extends React.Component {
       items: newItems
     });
     this.server = newSever;
-    this.count = this.count - 1;
+    this.state.count = this.state.count - 1;
     if (CORDOVA_ENV === 'true') {
       const newPromiseItems = [];
       for (let i = 0; i < this.server.length; i ++) {
@@ -237,7 +237,7 @@ class PhotoUploadContainer extends React.Component {
     }
   }
   wxChooseImgSuccess(res) {
-    if ((this.count + res.localIds.length) > 9) {
+    if ((this.state.count + res.localIds.length) > 9) {
       alert('最多只能添加九张图片！');
     } else {
       this.handleUserImageInput(res.localIds);
@@ -271,7 +271,7 @@ class PhotoUploadContainer extends React.Component {
     } else {
       this.handleUserImageInput([dataUrl]);
       // 当前图片的下标，因为在handleUserImageInput里加1了，所以这里要减1
-      const imgIndex = this.count - 1;
+      const imgIndex = this.state.count - 1;
       this.promiseItems[imgIndex] = this.handleUserImageUploadCordova(fileUrl, dataUrl, imgIndex);
     }
   }
@@ -363,7 +363,7 @@ class PhotoUploadContainer extends React.Component {
     };
     let add;
     let del;
-    if (this.count >= 9) {
+    if (this.state.count >= 9) {
       add = (
         <div onClick={this.clickAlert} style={styles.add}></div>
       );
@@ -372,7 +372,7 @@ class PhotoUploadContainer extends React.Component {
         <div onClick={this.clickChange} style={styles.add}></div>
       );
     }
-    if (this.count >= 1) {
+    if (this.state.count >= 1) {
       del = (
         <div onClick={this.clickDelete} style={styles.del}></div>
       );
