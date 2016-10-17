@@ -212,8 +212,8 @@ class PhotoUploadContainer extends React.Component {
   clickAlert() {
     alert('最多只能添加九张图片！');
   }
-  clickChange() {
-    // event.preventDefault();
+  clickChange(event) {
+    event.preventDefault();
     if (CORDOVA_ENV === 'false') {
       this.setState({
         isDelete: false
