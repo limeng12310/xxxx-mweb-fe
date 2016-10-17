@@ -103,9 +103,10 @@ class PhotoUploadContainer extends React.Component {
       items: [
         ...this.state.items,
         ...imgIds
-      ]
+      ],
+      count: this.state.count + imgIds.length
     });
-    this.state.count = this.state.count + imgIds.length;
+    // this.state.count = this.state.count + imgIds.length;
     $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
   }
   handleUserImageUpload(serverIds) {
@@ -193,10 +194,11 @@ class PhotoUploadContainer extends React.Component {
       }
     }
     this.setState({
-      items: newItems
+      items: newItems,
+      count: this.state.count - 1
     });
     this.server = newSever;
-    this.state.count = this.state.count - 1;
+    // this.state.count = this.state.count - 1;
     if (CORDOVA_ENV === 'true') {
       const newPromiseItems = [];
       for (let i = 0; i < this.server.length; i ++) {
